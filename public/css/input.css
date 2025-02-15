@@ -9,6 +9,38 @@ References:
 @tailwind components;
 @tailwind utilities;
 
+@keyframes fade-in-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse-slow {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@layer utilities {
+    .animate-fade-in-down {
+        animation: fade-in-down 0.8s ease-out;
+    }
+    .animate-pulse-slow {
+        animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    .hover\:scale-102:hover {
+        transform: scale(1.02);
+    }
+}
+
 @layer components {
     /* Layout Components */
     .header {

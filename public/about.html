@@ -3,78 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About TalkTempo - Your Music Social Platform</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>TalkTempo - Music Store</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">TalkTempo</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <!-- References:
+    - Navigation layout adapted from Tailwind UI Navigation Component: https://tailwindui.com/components/application-ui/navigation/navbars
+    - Search bar design inspired by Tailwind UI Search Component: https://tailwindui.com/components/application-ui/forms/input-groups
+    - Shopping cart icon from Heroicons: https://heroicons.com/
+    -->
+    <header class="header">
+        <nav class="main-nav">
+            <div class="flex items-center space-x-8">
+                <h1 class="text-2xl font-bold">TalkTempo</h1>
+                <div class="space-x-6">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="browse.html" class="nav-link">Browse</a>
+                    <a href="albums.html" class="nav-link">Albums</a>
+                    <a href="artists.html" class="nav-link">Artists</a>
+                    <a href="about.html" class="nav-link text-white">About</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-6">
+                <input type="search" placeholder="Search music..." class="search-bar">
+                <button class="relative">
+                    <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    <span class="cart-badge">3</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto pt-24 px-6 pb-32">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl font-bold text-center mb-12 text-gray-900 animate-fade-in-down">
+                <span class="inline-block hover:scale-110 transition-transform duration-200">🎵</span>
+                <span class="hover:text-indigo-600 transition-colors duration-200">Let's TalkTempo!</span>
+                <span class="inline-block hover:scale-110 transition-transform duration-200">🎵</span>
+            </h1>
+            
+            <div class="bg-white rounded-lg shadow-md p-8 mb-8 hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <span class="bg-indigo-100 text-indigo-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 animate-pulse">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </span>
+                    What is TalkTempo?
+                </h2>
+                <p class="text-gray-600 text-lg leading-relaxed hover:text-gray-800 transition-colors duration-200">
+                    TalkTempo is the ultimate social platform for music enthusiasts. 
+                    Connect with others through your love of music!
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-6">Key Features</h2>
+                <ul class="space-y-6">
+                    <li class="flex items-center space-x-4 text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-all duration-200 transform hover:scale-102 cursor-pointer group">
+                        <span class="text-3xl group-hover:scale-125 transition-transform duration-200">🎵</span>
+                        <span class="text-lg group-hover:text-indigo-600 transition-colors duration-200">Track and rate the songs you listen to</span>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="about.html">About</a>
+                    <li class="flex items-center space-x-4 text-gray-700  hover:bg-gray-50 p-3 rounded-lg transition-all duration-200 transform hover:scale-102 cursor-pointer group">
+                        <span class="text-3xl group-hover:scale-125 transition-transform duration-200">📝</span>
+                        <span class="text-lg  group-hover:text-indigo-600 transition-colors duration-200">Write and share reviews of albums and tracks</span>
+                    </li>
+                    <li class="flex items-center space-x-4  text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-all duration-200 transform hover:scale-102 cursor-pointer group">
+                        <span class="text-3xl  group-hover:scale-125 transition-transform duration-200">🏆</span>
+                        <span class="text-lg  group-hover:text-indigo-600 transition-colors duration-200">Create and share your all-time favorite music lists</span>
+                    </li>
+                    <li class="flex items-center space-x-4 text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-all duration-200 transform hover:scale-102 cursor-pointer group">
+                        <span class="text-3xl  group-hover:scale-125 transition-transform duration-200">👥</span>
+                        <span class="text-lg  group-hover:text-indigo-600 transition-colors duration-200">Follow friends and discover new music through their activities</span>
+                    </li>
+                    <li class="flex items-center space-x-4 text-gray-700 hover:bg-gray-50 p-3 rounded-lg transition-all duration-200 transform hover:scale-102 cursor-pointer group">
+                        <span class="text-3xl  group-hover:scale-125 transition-transform duration-200">📊</span>
+                        <span class="text-lg  group-hover:text-indigo-600 transition-colors duration-200">Get personalized music recommendations</span>
                     </li>
                 </ul>
             </div>
-        </div>
-    </nav>
 
-    <main class="container my-5">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h1 class="text-center mb-4">🎵 Let's TalkTempo! 🎵</h1>
-                
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h2 class="card-title">What is TalkTempo?</h2>
-                        <p class="card-text">
-                            TalkTemp is the ultimate social platform for music enthusiasts. 
-                            Connect with others through your love of music!
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h2 class="card-title">Key Features</h2>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">🎵 Track and rate the songs you listen to</li>
-                            <li class="list-group-item">📝 Write and share reviews of albums and tracks</li>
-                            <li class="list-group-item">🏆 Create and share your all-time favorite music lists</li>
-                            <li class="list-group-item">👥 Follow friends and discover new music through their activities</li>
-                            <li class="list-group-item">📊 Get personalized music recommendations</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Join Our Community</h2>
-                        <p class="card-text">
-                            Whether you're a casual listener or a music snob, let TalkTemp be your music bestie!!!
-                            Just sign up and start sharing your thoughts on music with the world.
-                        </p>
-                        <a href="index.html" class="btn btn-primary">Get Started</a>
-                    </div>
-                </div>
+            <div class="bg-white rounded-lg shadow-md p-8 mb-8 text-center transform hover:-translate-y-1 transition-all duration-300 hover:shadow-xl relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
+                <h2 class="text-2xl font-semibold text-gray-900 mb-4 relative">Join the Community</h2>
+                <p class="text-gray-600 text-lg leading-relaxed mb-8 max-w-2xl mx-auto relative">
+                    Whether you're a casual listener or a music snob, let TalkTemp be your music bestie!!!
+                    Just sign up and start sharing your thoughts on music with the world.                
+                </p>
+                <button class="btn-primary px-12 py-3 text-lg font-semibold relative hover:scale-105 transform transition-transform duration-200 hover:shadow-lg animate-pulse-slow">
+                    Sign Up Now
+                    <span class="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </button>
             </div>
         </div>
     </main>
 
-    <footer class="bg-dark text-light py-4 mt-5">
-        <div class="container text-center">
-            <p>© 2025 TalkTempo. All rights reserved.</p>
+    <!-- Music Player -->
+    <!-- References:
+    - Player controls layout adapted from Tailwind UI Music Player Component: https://tailwindui.com/components/application-ui/media/players
+    - SVG icons from Heroicons: https://heroicons.com/
+    -->
+    <div class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="player-controls">
+                <button class="hover:text-indigo-400">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <button class="hover:text-indigo-400">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+                <button class="hover:text-indigo-400">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <div class="flex-1 mx-4">
+                    <div class="track-slider"></div>
+                </div>
+            </div>
         </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
 </body>
 </html>
