@@ -1,3 +1,16 @@
-/node_modules
+# Dependencies
+/frontend/node_modules
 /vendor
+
+# Package manager files
+/frontend/package-lock.json
 /composer.lock
+
+# Cache and generated files
+/backend/cache/*
+.DS_Store
+
+# Environment files
+.env
+.env.local
+.env.*.local
