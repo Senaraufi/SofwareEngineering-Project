@@ -1,11 +1,7 @@
--- Create Users table
-CREATE TABLE IF NOT EXISTS Users (
-    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    contact_info VARCHAR(100) NOT NULL, -- Can store either email or phone number
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+--ARTISTS/ALBUMS STUFF
+
+-- Image path constants
+PRAGMA FOREIGN_KEYS = ON;
 
 -- Create Artists table
 CREATE TABLE IF NOT EXISTS Artists (
@@ -13,6 +9,7 @@ CREATE TABLE IF NOT EXISTS Artists (
     artist_name VARCHAR(100) NOT NULL,
     genre VARCHAR(50),
     description TEXT,
+    profile_image_path VARCHAR(255) DEFAULT 'imagesForMusic/artists/',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -22,9 +19,34 @@ CREATE TABLE IF NOT EXISTS Albums (
     artist_id INTEGER,
     album_name VARCHAR(100) NOT NULL,
     release_date DATE,
+    cover_image_path VARCHAR(255) DEFAULT 'imagesForMusic/albums/',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (artist_id) REFERENCES Artists(artist_id)
 );
+
+-- Create ArtistImages table for multiple artist images
+CREATE TABLE IF NOT EXISTS ArtistImages (
+    image_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    artist_id INTEGER,
+    image_path VARCHAR(255) NOT NULL,
+    image_description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (artist_id) REFERENCES Artists(artist_id)
+);
+
+-- Create AlbumImages table for multiple album images
+CREATE TABLE IF NOT EXISTS AlbumImages (
+    image_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    album_id INTEGER,
+    image_path VARCHAR(255) NOT NULL,
+    image_description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (album_id) REFERENCES Albums(album_id)
+);
+
+
+---USER TABLES
+
 
 -- Create UserRatings table for storing user ratings of artists
 CREATE TABLE IF NOT EXISTS UserRatings (
@@ -36,4 +58,13 @@ CREATE TABLE IF NOT EXISTS UserRatings (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (artist_id) REFERENCES Artists(artist_id)
+);
+
+-- Create Users table
+CREATE TABLE IF NOT EXISTS Users (
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    contact_info VARCHAR(100) NOT NULL, -- Can store either email or phone number
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
