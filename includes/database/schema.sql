@@ -44,6 +44,67 @@ CREATE TABLE IF NOT EXISTS AlbumImages (
     FOREIGN KEY (album_id) REFERENCES Albums(album_id)
 );
 
+-- Note: Insert artists first since albums reference artist_ids
+INSERT INTO Genres (genre_name, description) VALUES ('Pop');
+INSERT INTO Genres (genre_name, description) VALUES ('R&B/Pop');
+INSERT INTO Genres (genre_name, description) VALUES ('Pop/Rock');
+INSERT INTO Genres (genre_name, description) VALUES ('Rock');
+INSERT INTO Genres (genre_name, description) VALUES ('Hip Hop');
+INSERT INTO Genres (genre_name, description) VALUES ('Alternative/Pop');
+INSERT INTO Genres (genre_name, description) VALUES ('Electronic');
+INSERT INTO Genres (genre_name, description) VALUES ('Folk');
+INSERT INTO Genres (genre_name, description) VALUES ('Country');
+INSERT INTO Genres (genre_name, description) VALUES ('Jazz');
+INSERT INTO Genres (genre_name, description) VALUES ('Blues');
+INSERT INTO Genres (genre_name, description) VALUES ('Classical');
+
+
+-- Insert Artists
+INSERT INTO Artists (artist_name, genre, description) VALUES 
+
+--Pop
+    ('Chappell Roan', 'Pop', 'American singer-songwriter'),
+    ('Sabrina Carpenter', 'Pop', 'American singer-songwriter'),
+    ('Lady Gaga', 'Pop', 'American singer-songwriter'),
+    ('Billie Eilish', 'Pop', 'American singer-songwriter'),
+   
+
+--Pop/Rock
+    ('Fiona Apple', 'Pop/Rock', 'American singer-songwriter'),
+
+--Rock
+    ('Fontaines DC', 'Rock', 'Irish rock band'),
+    ('Linkin Park', 'Rock','American rock band'),
+    ('Amyl and The Sniffers', 'Rock', 'Australian rock band')
+    ('System of a Down', 'Rock', 'American rock band'),
+    ('The Cranberries', 'Rock', 'Irish rock band'),
+
+--Hip Hop
+    ('Kendrick Lamar', 'Hip Hop', 'American rapper and songwriter'),
+    ('Tyler, The Creator', 'Hip Hop', 'American rapper and songwriter'),
+    ('Lola Young', 'Hip Hop', 'British rapper and songwriter'),
+
+
+--Folk
+    ('Joni Mitchell', 'Folk', 'American singer-songwriter'),
+
+
+-- Insert Albums (using artist_ids from above inserts)
+INSERT INTO Albums (artist_id, album_name, release_date) VALUES 
+    (1, 'Midnights', '2022-10-21'),
+    (1, '1989', '2014-10-27'),
+    (2, 'After Hours', '2020-03-20'),
+    (2, 'Dawn FM', '2022-01-07'),
+    (3, 'AM', '2013-09-09'),
+    (3, 'Favourite Worst Nightmare', '2007-04-23'),
+    (4, 'good kid, m.A.A.d city', '2012-10-22'),
+    (4, 'To Pimp a Butterfly', '2015-03-15'),
+    (5, 'Born To Die', '2012-01-27'),
+    (5, 'Norman Fucking Rockwell!', '2019-08-30');
+
+
+-- For artists: INSERT INTO Artists (artist_name, genre, description) VALUES ('Name', 'Genre', 'Description');
+-- For albums: INSERT INTO Albums (artist_id, album_name, release_date) VALUES (artist_id, 'Album Name', 'YYYY-MM-DD');
 
 ---USER TABLES
 
