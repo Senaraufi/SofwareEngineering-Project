@@ -5,6 +5,383 @@ References:
 - Card hover effects inspired by Tailwind CSS Blog examples: https://tailwindcss.com/docs/hover-focus-and-other-states
 */
 
+/* Music Player Styles 
+ * References:
+ * - Fixed positioning and transform animations: https://developer.mozilla.org/en-US/docs/Web/CSS/position
+ * - Gradient background implementation: https://tailwindcss.com/docs/gradient-color-stops
+ * - Smooth transitions: https://developer.mozilla.org/en-US/docs/Web/CSS/transition
+ * - Toggle button positioning: https://developer.mozilla.org/en-US/docs/Web/CSS/position#sticky_positioning
+ */
+
+/* Main container - referenced in footer.html.twig as the root element
+ * Controls the positioning and appearance of the entire music player
+ * Works with music-player.js toggle functionality
+ */
+.music-player-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: linear-gradient(to right, #1f2937, #111827);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Collapsed state - toggled by music-player.js
+ * Slides up the player but keeps 40px visible for the toggle button
+ */
+.music-player-container.collapsed {
+    transform: translateY(calc(100% - 40px));
+}
+
+/* Toggle button - referenced in footer.html.twig
+ * Positioned above the player container
+ * Stays visible even when player is collapsed
+ */
+.music-player-toggle {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, #1f2937, #111827);
+    border: none;
+    border-radius: 8px 8px 0 0;
+    padding: 8px 16px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.music-player-toggle:hover {
+    background: linear-gradient(to right, #374151, #1f2937);
+}
+
+.music-player-container.collapsed .music-player-toggle svg {
+    transform: rotate(180deg);
+}
+
+.music-player-toggle svg {
+    transition: transform 0.3s ease;
+}
+
+.music-player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.music-player-controls button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0.5rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.music-player-controls button:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.music-player-progress {
+    transition: width 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    height: 4px;
+    border-radius: 9999px;
+    background: rgba(99, 102, 241, 0.6);
+}
+
+.music-player-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+}
+
+.music-player-volume {
+    position: relative;
+    width: 100px;
+}
+
+.music-player-volume input[type='range'] {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    appearance: none;
+}
+
+.music-player-volume input[type='range']::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.music-player-volume input[type='range']::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* Footer Styles */
+.main-footer {
+    margin-bottom: 80px;
+    background: linear-gradient(to right, #1f2937, #111827);
+    color: #fff;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+}
+
+.main-footer h3 {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.main-footer ul {
+    margin-bottom: 1rem;
+}
+
+.main-footer ul li a {
+    display: inline-block;
+    padding: 0.25rem 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.main-footer ul li a:hover {
+    color: #fff;
+    transform: translateX(2px);
+}
+
+.main-footer .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.main-footer .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease-in-out;
+}
+
+.main-footer .social-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.main-footer .copyright {
+    text-align: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+    .main-footer {
+        padding-top: 1.5rem;
+        padding-bottom: 1rem;
+    }
+
+    .main-footer h3 {
+        font-size: 0.875rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .main-footer ul {
+        margin-bottom: 1rem;
+    }
+
+    .main-footer .social-links {
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .main-footer .copyright {
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+}
+
+.main-footer ul li a {
+    color: #CBD5E1;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+    text-transform: capitalize;
+}
+
+.main-footer ul li a:hover {
+    color: #fff;
+}
+
+.main-footer .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.main-footer .social-links a {
+    color: #CBD5E1;
+    transition: color 0.2s ease;
+}
+
+.main-footer .social-links a:hover {
+    color: #fff;
+}
+
+.main-footer .copyright {
+    color: #94A3B8;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+/* About Page Styles */
+.about-section {
+  padding: 6rem 0;
+  background-color: #fff;
+}
+
+.about-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.about-header {
+  max-width: 800px;
+  margin-bottom: 4rem;
+}
+
+.about-header h2 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+.about-header p {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: #4B5563;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.stat-card {
+  padding: 2rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-card-light {
+  background-color: #F9FAFB;
+}
+
+.stat-card-dark {
+  background-color: #111827;
+  color: white;
+}
+
+.stat-card-purple {
+  background-color: #4F46E5;
+  color: white;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.stat-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.stat-description {
+  font-size: 1rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.stat-card-light .stat-number,
+.stat-card-light .stat-title {
+  color: #111827;
+}
+
+.stat-card-light .stat-description {
+  color: #4B5563;
+}
+
+.stat-card-dark .stat-description {
+  color: #D1D5DB;
+}
+
+.stat-card-purple .stat-description {
+  color: #E0E7FF;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .about-header h2 {
+    font-size: 3rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-header h2 {
+    font-size: 2.5rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-section {
+    padding: 4rem 0;
+  }
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
