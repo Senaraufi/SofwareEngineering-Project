@@ -2,7 +2,9 @@
 module.exports = {
   content: [
     "../frontend/templates/**/*.{html,twig}",
-    "../frontend/public/**/*.{html,js}"
+    "../public/**/*.{html,js}",
+    "./templates/**/*.{html,twig}",
+    "../public/js/**/*.js"
   ],
   theme: {
     extend: {},
