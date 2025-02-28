@@ -1,10 +1,14 @@
 # Dependencies
+/node_modules
 /frontend/node_modules
 /vendor
 
 # Package manager files
+package-lock.json
 /frontend/package-lock.json
 /composer.lock
+composer.phar
+composer.bat
 
 # Cache and generated files
 /backend/cache/*
