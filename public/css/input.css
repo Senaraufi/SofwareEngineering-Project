@@ -86,12 +86,28 @@ References:
     }
 
     /* Music Player Elements */
-    .player-controls {
-        @apply flex items-center space-x-4 bg-gray-900 text-white p-4 rounded-lg;
+    .music-player-container {
+        @apply fixed bottom-0 left-0 right-0 bg-[#3E4142] text-white z-[9999] w-full;
+        display: block !important;
+        min-height: 48px;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
     }
 
-    .track-slider {
-        @apply w-full h-2 bg-gray-700 rounded-full cursor-pointer;
+    .track-progress {
+        @apply w-full h-1 bg-white/20 cursor-pointer;
+    }
+
+    .track-progress-bar {
+        @apply h-full bg-white transition-all duration-300;
+    }
+
+    /* Player Controls */
+    .prev-button,
+    .play-button,
+    .next-button {
+        @apply focus:outline-none text-white/80 hover:text-white transition-colors;
     }
 
     /* Category Tags */
