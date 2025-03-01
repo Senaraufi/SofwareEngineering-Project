@@ -4,22 +4,22 @@
 - Search bar design inspired by Tailwind UI Search Component: https://tailwindui.com/components/application-ui/forms/input-groups
 - Shopping cart icon from Heroicons: https://heroicons.com/
 -->
-<header class="header">
-    <nav class="main-nav">
+<header class="fixed top-0 left-0 right-0 bg-gray-800 shadow-md z-50">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <div class="flex items-center space-x-8">
-            <h1 class="text-2xl font-bold">{{ site_name|default('TalkTempo') }}</h1>
+            <h1 class="text-2xl font-bold text-white">{{ site_name|default('TalkTempo') }}</h1>
             <div class="space-x-6">
-                <a href="/" class="nav-link{% if active_page == 'home' %} active{% endif %}">Home</a>
-                <a href="/browse" class="nav-link{% if active_page == 'browse' %} active{% endif %}">Browse</a>
-                <a href="/albums" class="nav-link{% if active_page == 'albums' %} active{% endif %}">Albums</a>
-                <a href="/artists" class="nav-link{% if active_page == 'artists' %} active{% endif %}">Artists</a>
-                <a href="/about" class="nav-link{% if active_page == 'about' %} active{% endif %}">About</a>
+                <a href="/" class="text-gray-300 hover:text-white{% if active_page == 'home' %} text-white font-medium{% endif %}">Home</a>
+                <a href="/browse" class="text-gray-300 hover:text-white{% if active_page == 'browse' %} text-white font-medium{% endif %}">Browse</a>
+                <a href="/albums" class="text-gray-300 hover:text-white{% if active_page == 'albums' %} text-white font-medium{% endif %}">Albums</a>
+                <a href="/artists" class="text-gray-300 hover:text-white{% if active_page == 'artists' %} text-white font-medium{% endif %}">Artists</a>
+                <a href="/about" class="text-gray-300 hover:text-white{% if active_page == 'about' %} text-white font-medium{% endif %}">About</a>
             </div>
         </div>
         <div class="flex items-center space-x-6">
-            <input type="search" placeholder="Search music..." class="search-bar">
+            <input type="search" placeholder="Search music..." class="w-64 px-4 py-2 rounded-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:bg-gray-600">
             <button class="relative">
-                <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                 </svg>
                 <span class="cart-badge">{{ cart_count|default(0) }}</span>

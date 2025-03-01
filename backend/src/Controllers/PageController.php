@@ -6,7 +6,7 @@ use App\Controller;
 
 class PageController extends Controller {
     public function home() {
-        return $this->render('index.html.twig', [
+        return $this->render('home.html.twig', [
             'active_page' => 'home'
         ]);
     }
