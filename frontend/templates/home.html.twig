@@ -3,17 +3,6 @@
 {% block title %}Welcome to TalkTempo{% endblock %}
 
 {% block content %}
-    <!-- Genre Filters 
-    <div class="container mx-auto px-4 py-4">
-        <div class="flex flex-wrap justify-center gap-4">
-            <button class="px-6 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">Rock</button>
-            <button class="px-6 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">Jazz</button>
-            <button class="px-6 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">Classic</button>
-            <button class="px-6 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">Pop</button>
-            <button class="px-6 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">Electronic</button>
-        </div>
-    </div>--->
-
     <!-- Welcome Section -->
     <div class="relative min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('/assets/images/music-bg.jpg');">
         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
@@ -28,10 +17,12 @@
                 </div>
                 <div>
                     <p class="text-lg mb-8 text-white">Whether you're a casual listener or a music snob, let TalkTemp be your music bestie!!! Just sign up and start sharing your thoughts on music with the world.</p>
-                    <div class="flex gap-4">
-                        <a href="/signup" class="inline-block px-8 py-3 rounded-full bg-white text-black hover:bg-gray-200 transition-colors font-semibold">SIGN UP</a>
-                        <a href="/login" class="inline-block px-8 py-3 rounded-full border-2 border-white text-white hover:bg-white hover:text-black transition-colors font-semibold">LOG IN</a>
-                    </div>
+                    {% if not is_logged_in|default(false) %}
+                        <div class="flex gap-4">
+                            <a href="/signup" class="inline-block px-8 py-3 rounded-full bg-white text-black hover:bg-gray-200 transition-colors font-semibold">SIGN UP</a>
+                            <a href="/login" class="inline-block px-8 py-3 rounded-full border-2 border-white text-white hover:bg-white hover:text-black transition-colors font-semibold">LOG IN</a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
