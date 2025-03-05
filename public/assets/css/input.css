@@ -1,0 +1,157 @@
+/*
+References:
+- Base Tailwind directives from Tailwind CSS documentation: https://tailwindcss.com/docs/installation
+- Component patterns adapted from Tailwind UI examples: https://tailwindui.com/
+- Card hover effects inspired by Tailwind CSS Blog examples: https://tailwindcss.com/docs/hover-focus-and-other-states
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fade-in-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse-slow {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@layer utilities {
+    .animate-fade-in-down {
+        animation: fade-in-down 0.8s ease-out;
+    }
+    .animate-pulse-slow {
+        animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    .hover\:scale-102:hover {
+        transform: scale(1.02);
+    }
+}
+
+@layer components {
+    /* Layout Components */
+    .header {
+        @apply fixed w-full bg-gray-900 text-white py-4 px-6 z-50;
+    }
+
+    .main-nav {
+        @apply flex items-center justify-between max-w-7xl mx-auto;
+    }
+
+    .nav-link {
+        @apply text-gray-300 hover:text-white transition-colors duration-200;
+    }
+
+    /* Product Cards */
+    .product-card {
+        @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300;
+    }
+
+    .product-image {
+        @apply w-full aspect-square object-cover hover:scale-105 transition-transform duration-300;
+    }
+
+    .product-info {
+        @apply p-4 space-y-2;
+    }
+
+    .product-title {
+        @apply text-lg font-semibold text-gray-800 line-clamp-2;
+    }
+
+    .product-price {
+        @apply text-xl font-bold text-indigo-600;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        @apply bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition-colors duration-200;
+    }
+
+    .btn-secondary {
+        @apply bg-gray-200 text-gray-800 px-6 py-2 rounded-full hover:bg-gray-300 transition-colors duration-200;
+    }
+
+    /* Music Player Elements */
+    .music-player-container {
+        @apply fixed bottom-0 left-0 right-0 text-white z-[9999] w-full;
+        background-color: #1A1B26 !important;
+        display: block !important;
+        min-height: 80px;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    .track-progress {
+        @apply w-full cursor-pointer;
+        height: 3px;
+        background: rgba(255,255,255,0.1);
+    }
+
+    .track-progress-bar {
+        @apply h-full transition-all duration-300;
+        background: #1DB954;
+    }
+
+    /* Player Controls */
+    .prev-button,
+    .play-button,
+    .next-button {
+        @apply focus:outline-none transition-all duration-200;
+        opacity: 0.7;
+    }
+
+    .prev-button:hover,
+    .play-button:hover,
+    .next-button:hover {
+        opacity: 1;
+    }
+
+    .play-button {
+        @apply rounded-full;
+        background: rgba(255,255,255,0.1);
+        padding: 12px;
+    }
+
+    /* Category Tags */
+    .genre-tag {
+        @apply inline-block px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200;
+    }
+
+    /* Search Bar */
+    .search-bar {
+        @apply w-full max-w-md px-4 py-2 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all duration-200;
+    }
+
+    /* Cart Elements */
+    .cart-badge {
+        @apply absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center;
+    }
+
+    .cart-item {
+        @apply flex items-center space-x-4 border-b border-gray-200 py-4;
+    }
+
+    /* Reviews */
+    .review-card {
+        @apply bg-gray-50 rounded-lg p-4 space-y-2;
+    }
+
+    .star-rating {
+        @apply flex text-yellow-400 space-x-1;
+    }
+}
