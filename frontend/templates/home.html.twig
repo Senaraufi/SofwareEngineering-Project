@@ -3,20 +3,22 @@
 {% block title %}Welcome to TalkTempo{% endblock %}
 
 {% block content %}
-    <!-- Welcome Section -->
-    <div class="relative min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('/assets/images/music-bg.jpg');">
+    <!-- Welcome Section with Music Theme -->
+    <div class="relative min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('/assets/images/concert.jpg');">
         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div class="absolute inset-0 flex items-center justify-center opacity-30">
+        </div>
         <div class="container mx-auto px-4 pb-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
                 <div>
-                    <h1 class="text-6xl font-bold leading-tight text-white">
+                    <h1 class="text-6xl font-bold leading-tight text-white animate-pulse">
                         WELCOME<br>
                         TO<br>
                         TALKTEMPO
                     </h1>
                 </div>
                 <div>
-                    <p class="text-lg mb-8 text-white">Whether you're a casual listener or a music snob, let TalkTemp be your music bestie!!! Just sign up and start sharing your thoughts on music with the world.</p>
+                    <p class="text-lg mb-8 text-white">Whether you're a casual listener or a music snob, let TalkTempo be your music bestie!!! Just sign up and start sharing your thoughts on music with the world.</p>
                     {% if not is_logged_in|default(false) %}
                         <div class="flex gap-4">
                             <a href="/signup" class="inline-block px-8 py-3 rounded-full bg-white text-black hover:bg-gray-200 transition-colors font-semibold">SIGN UP</a>
@@ -31,53 +33,29 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <h1 class="text-3xl font-bold text-center mb-8">Top Albums of The Week</h1>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <!-- Album Card 1 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
-                <div class="aspect-square overflow-hidden">
-                    <img src="/assets/images/pixies-album.jpg" alt="Pixies - Trompe Le Monde" class="w-full h-full object-contain">
-                </div>
-                <div class="p-4">
-                    <div class="uppercase tracking-wide text-xs text-indigo-500 font-semibold">ALTERNATIVE ROCK</div>
-                    <div class="text-gray-500 text-xs mb-2">Released September 23, 1991</div>
-                    <h3 class="text-base font-semibold mb-3">Pixies - Trompe Le Monde</h3>
-                    <div class="flex gap-2">
-                        <button class="bg-gray-700 text-white px-3 py-1.5 rounded text-sm hover:bg-gray-800">Comment</button>
-                        <button class="border border-gray-300 text-gray-700 px-3 py-1.5 rounded text-sm hover:bg-gray-50">Reviews</button>
-                    </div>
-                </div>
-            </div>
+            <!-- Album Cards -->
+            {% set albums = [
+                { 'image': 'pixies-album.jpg', 'genre': 'ALTERNATIVE ROCK', 'release': 'Released September 23, 1991', 'title': 'Pixies - Trompe Le Monde' },
+                { 'image': 'system-album.jpg', 'genre': 'METAL', 'release': 'Released September 4, 2001', 'title': 'System of a Down - Toxicity' },
+                { 'image': 'BTS-album.jpg', 'genre': 'K-POP', 'release': 'Released August 24, 2018', 'title': "BTS - Love Yourself 結 'Answer'" }
+            ] %}
 
-            <!-- Album Card 2 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
-                <div class="aspect-square overflow-hidden">
-                    <img src="/assets/images/system-album.jpg" alt="System of a Down - Toxicity" class="w-full h-full object-contain">
-                </div>
-                <div class="p-4">
-                    <div class="uppercase tracking-wide text-xs text-indigo-500 font-semibold">METAL</div>
-                    <div class="text-gray-500 text-xs mb-2">Released September 4, 2001</div>
-                    <h3 class="text-base font-semibold mb-3">System of a Down - System of a Down</h3>
-                    <div class="flex gap-2">
-                        <button class="bg-gray-700 text-white px-3 py-1.5 rounded text-sm hover:bg-gray-800">Comment</button>
-                        <button class="border border-gray-300 text-gray-700 px-3 py-1.5 rounded text-sm hover:bg-gray-50">Reviews</button>
+            {% for album in albums %}
+                <div class="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="/assets/images/{{ album.image }}" alt="{{ album.title }}" class="w-full h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <div class="uppercase tracking-wide text-xs text-indigo-500 font-semibold">{{ album.genre }}</div>
+                        <div class="text-gray-500 text-xs mb-2">{{ album.release }}</div>
+                        <h3 class="text-base font-semibold mb-3">{{ album.title }}</h3>
+                        <div class="flex gap-2">
+                            <button class="bg-gray-700 text-white px-3 py-1.5 rounded text-sm hover:bg-gray-800">Comment</button>
+                            <button class="border border-gray-300 text-gray-700 px-3 py-1.5 rounded text-sm hover:bg-gray-50">Reviews</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Album Card 3 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
-                <div class="aspect-square overflow-hidden">
-                    <img src="/assets/images/BTS-album.jpg" alt="BTS - Love Yourself 結 'Answer'" class="w-full h-full object-contain">
-                </div>
-                <div class="p-4">
-                    <div class="uppercase tracking-wide text-xs text-indigo-500 font-semibold">K-POP</div>
-                    <div class="text-gray-500 text-xs mb-2">Released August 24, 2018</div>
-                    <h3 class="text-base font-semibold mb-3">BTS - Love Yourself 結 'Answer'</h3>
-                    <div class="flex gap-2">
-                        <button class="bg-gray-700 text-white px-3 py-1.5 rounded text-sm hover:bg-gray-800">Comment</button>
-                        <button class="border border-gray-300 text-gray-700 px-3 py-1.5 rounded text-sm hover:bg-gray-50">Reviews</button>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

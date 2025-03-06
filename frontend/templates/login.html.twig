@@ -3,47 +3,62 @@
 {% block title %}Log In - TalkTempo{% endblock %}
 
 {% block content %}
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 bg-gray-700 p-8 rounded-lg shadow-lg">
-        <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-white">
-                Log In
-            </h2>
-        </div>
-        <form class="mt-8 space-y-6" action="/login" method="POST">
-            <div class="rounded-md shadow-sm -space-y-px">
-                <div class="mb-4">
-                    <label for="email" class="sr-only">Email</label>
-                    <input id="email" name="email" type="email" required 
-                           class="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 
-                                  placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 
-                                  focus:border-indigo-500 focus:z-10 sm:text-sm" 
-                           placeholder="Email">
-                </div>
-                <div class="mb-4">
-                    <label for="password" class="sr-only">Password</label>
-                    <input id="password" name="password" type="password" required 
-                           class="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 
-                                  placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 
-                                  focus:border-indigo-500 focus:z-10 sm:text-sm" 
-                           placeholder="Password">
-                </div>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div class="bg-gray-700 p-8 rounded-xl shadow-2xl">
+            <!-- Logo/Brand Section -->
+            <div class="text-center">
+                <h2 class="text-4xl font-bold text-white mb-2">Welcome Back!</h2>
+                <p class="text-gray-300">Sign in to continue to TalkTempo</p>
             </div>
 
-            <div>
+            <!-- Form Section -->
+            <form class="mt-8 space-y-6" action="/login" method="POST">
+                <div class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                        <input id="email" name="email" type="email" required 
+                               class="w-full px-4 py-2 rounded-lg bg-gray-600 border border-gray-500 
+                                      text-white placeholder-gray-400 focus:outline-none focus:ring-2 
+                                      focus:ring-indigo-500 focus:border-transparent transition-all" 
+                               placeholder="Enter your email">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                        <input id="password" name="password" type="password" required 
+                               class="w-full px-4 py-2 rounded-lg bg-gray-600 border border-gray-500 
+                                      text-white placeholder-gray-400 focus:outline-none focus:ring-2 
+                                      focus:ring-indigo-500 focus:border-transparent transition-all" 
+                               placeholder="Enter your password">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox" 
+                               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-500 rounded bg-gray-600">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-300">Remember me</label>
+                    </div>
+                    <a href="#" class="text-sm text-indigo-400 hover:text-indigo-300 transition-colors">
+                        Forgot password?
+                    </a>
+                </div>
+
                 <button type="submit" 
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent 
-                               text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 
-                               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Log In
+                        class="w-full flex justify-center py-3 px-4 rounded-lg text-sm font-semibold text-white
+                               bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 
+                               focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                    Sign In
                 </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-gray-300">Don't have an account? 
+                    <a href="/signup" class="font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
+                        Sign up now
+                    </a>
+                </p>
             </div>
-        </form>
-        
-        <div class="text-center mt-4">
-            <p class="text-white">Don't Have an Account? 
-                <a href="/signup" class="font-medium text-indigo-400 hover:text-indigo-300">Sign Up!</a>
-            </p>
         </div>
     </div>
 </div>
