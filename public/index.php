@@ -25,6 +25,8 @@ $router->get('/browse', [$pageController, 'browse']);
 $router->get('/albums', [$pageController, 'albums']);
 $router->get('/artists', [$pageController, 'artists']);
 $router->get('/about', [$pageController, 'about']);
+$router->get('/login', [$pageController, 'login']);
+$router->get('/signup', [$pageController, 'signup']);
 
 // Get the requested path and method
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

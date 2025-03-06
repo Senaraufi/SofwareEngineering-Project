@@ -34,4 +34,16 @@ class PageController extends Controller {
             'active_page' => 'about'
         ]);
     }
+
+    public function login() {
+        return $this->render('login.html.twig', [
+            'active_page' => 'login'
+        ]);
+    }
+
+    public function signup() {
+        return $this->render('signup.html.twig', [
+            'active_page' => 'signup'
+        ]);
+    }
 }
