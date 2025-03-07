@@ -35,16 +35,18 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <!-- Album Cards -->
             {% set albums = [
-                { 'image': 'pixies-album.jpg', 'genre': 'ALTERNATIVE ROCK', 'release': 'Released September 23, 1991', 'title': 'Pixies - Trompe Le Monde' },
-                { 'image': 'system-album.jpg', 'genre': 'METAL', 'release': 'Released September 4, 2001', 'title': 'System of a Down - Toxicity' },
-                { 'image': 'BTS-album.jpg', 'genre': 'K-POP', 'release': 'Released August 24, 2018', 'title': "BTS - Love Yourself 結 'Answer'" }
+                { 'image': 'pixies-album.jpg', 'genre': 'ALTERNATIVE ROCK', 'release': 'Released September 23, 1991', 'title': 'Pixies - Trompe Le Monde', 'link': 'https://open.spotify.com/album/1xtaONLuwdb5STNnLGNVGi?si=1SAGEOPLQZuB08YQb-LMiA' },
+                { 'image': 'system-album.jpg', 'genre': 'METAL', 'release': 'Released September 4, 2001', 'title': 'System of a Down - Toxicity', 'link': 'https://open.spotify.com/album/3sSfjX4fhZonjyZ10x0l0f?si=5Xvm2SeeSziv5mEKEQahWg' },
+                { 'image': 'BTS-album.jpg', 'genre': 'K-POP', 'release': 'Released August 24, 2018', 'title': "BTS - Love Yourself 結 'Answer'", 'link': 'https://open.spotify.com/album/43wFM1HquliY3iwKWzPN4y?si=G3ywSgxNSwWRrv-gqDjlHA' }
             ] %}
 
             {% for album in albums %}
                 <div class="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
-                    <div class="aspect-square overflow-hidden">
-                        <img src="/assets/images/{{ album.image }}" alt="{{ album.title }}" class="w-full h-full object-contain">
-                    </div>
+                    <a href="{{ album.link }}" target="_blank" class="block">
+                        <div class="aspect-square overflow-hidden">
+                            <img src="/assets/images/{{ album.image }}" alt="{{ album.title }}" class="w-full h-full object-contain">
+                        </div>
+                    </a>
                     <div class="p-4">
                         <div class="uppercase tracking-wide text-xs text-indigo-500 font-semibold">{{ album.genre }}</div>
                         <div class="text-gray-500 text-xs mb-2">{{ album.release }}</div>
