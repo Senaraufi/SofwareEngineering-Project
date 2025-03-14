@@ -11,17 +11,41 @@
                 <h2 class="text-4xl font-bold text-white mb-2">Welcome Back!</h2>
                 <p class="text-gray-300">Sign in to continue to TalkTempo</p>
             </div>
+            
+            <!-- Success Message -->
+            {% if success %}
+            <div class="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                <p>{{ success }}</p>
+            </div>
+            {% endif %}
+            
+            <!-- Error Messages -->
+            {% if error %}
+            <div class="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                <p>{{ error }}</p>
+            </div>
+            {% endif %}
+            
+            {% if errors %}
+            <div class="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                <ul class="list-disc pl-5">
+                    {% for field, message in errors %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
 
             <!-- Form Section -->
             <form class="mt-8 space-y-6" action="/login" method="POST">
                 <div class="space-y-4">
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                        <input id="email" name="email" type="email" required 
+                        <label for="username" class="block text-sm font-medium text-gray-300 mb-2">Username</label>
+                        <input id="username" name="username" type="text" required 
                                class="w-full px-4 py-2 rounded-lg bg-gray-600 border border-gray-500 
                                       text-white placeholder-gray-400 focus:outline-none focus:ring-2 
                                       focus:ring-indigo-500 focus:border-transparent transition-all" 
-                               placeholder="Enter your email">
+                               placeholder="Enter your username" value="{{ input.username|default('') }}">
                     </div>
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>

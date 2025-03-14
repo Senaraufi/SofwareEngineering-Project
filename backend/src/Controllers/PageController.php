@@ -245,9 +245,4 @@ class PageController extends Controller {
         ]);
     }
 
-    public function signup() {
-        return $this->render('signup.html.twig', [
-            'active_page' => 'signup'
-        ]);
-    }
 }

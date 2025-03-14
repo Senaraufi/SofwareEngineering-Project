@@ -1,0 +1,82 @@
+
+
+2025-03-14 14:17:13 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => formuser
+    [email] => formuser@example.com
+    [password] => password123
+    [confirm_password] => password123
+    [terms] => on
+)
+
+Attempting to insert user: formuser
+User inserted successfully with ID: 2
+
+
+2025-03-14 14:19:08 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => sena
+    [email] => sena@gmail.com
+    [password] => 12345
+    [confirm_password] => 12345
+    [terms] => on
+)
+
+
+
+2025-03-14 14:19:31 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => sena
+    [email] => sena@gmail.com
+    [password] => 123456789
+    [confirm_password] => 123456789
+    [terms] => on
+)
+
+Attempting to insert user: sena
+User inserted successfully with ID: 3
+
+
+2025-03-14 14:30:47 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => sena
+    [email] => sena@email.com
+    [password] => 12345
+    [confirm_password] => 12345
+    [terms] => on
+)
+
+
+
+2025-03-14 14:31:03 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => sena
+    [email] => sena@email.com
+    [password] => 123456789
+    [confirm_password] => 123456789
+    [terms] => on
+)
+
+
+
+2025-03-14 14:40:54 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => sena
+    [email] => sena@email.com
+    [password] => 123456789
+    [confirm_password] => 123456789
+    [terms] => on
+)
+
