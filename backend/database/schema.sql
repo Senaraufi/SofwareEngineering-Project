@@ -1,5 +1,5 @@
 -- Users table is for every users profile: Both admins and Users of the site will be stored here
-CREATE TABLE Users (
+CREATE TABLE IF NOT EXISTS Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE Users (
 );
 
 -- Genres table
-CREATE TABLE Genres (
+CREATE TABLE IF NOT EXISTS Genres (
     genre_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
     description TEXT,
@@ -20,7 +20,7 @@ CREATE TABLE Genres (
 );
 
 -- Artists table
-CREATE TABLE Artists (
+CREATE TABLE IF NOT EXISTS Artists (
     artist_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description TEXT,
@@ -32,7 +32,7 @@ CREATE TABLE Artists (
 );
 
 -- Artist Genres (many-to-many relationship)
-CREATE TABLE ArtistGenres (
+CREATE TABLE IF NOT EXISTS ArtistGenres (
     artist_id INT,
     genre_id INT,
     PRIMARY KEY (artist_id, genre_id),
@@ -41,7 +41,7 @@ CREATE TABLE ArtistGenres (
 );
 
 -- Albums table
-CREATE TABLE Albums (
+CREATE TABLE IF NOT EXISTS Albums (
     album_id INT AUTO_INCREMENT PRIMARY KEY,
     artist_id INT NOT NULL,
     title VARCHAR(100) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE Albums (
 );
 
 -- Album Genres (many-to-many relationship)
-CREATE TABLE AlbumGenres (
+CREATE TABLE IF NOT EXISTS AlbumGenres (
     album_id INT,
     genre_id INT,
     PRIMARY KEY (album_id, genre_id),
@@ -65,7 +65,7 @@ CREATE TABLE AlbumGenres (
 );
 
 -- Concerts table (ALSO could use it to redirect to ticketmaster with upcoming gig)
-CREATE TABLE Concerts (
+CREATE TABLE IF NOT EXISTS Concerts (
     concert_id INT AUTO_INCREMENT PRIMARY KEY,
     artist_id INT NOT NULL,
     name VARCHAR(100) NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE Concerts (
 );
 
 -- Reviews table
-CREATE TABLE Reviews (
+CREATE TABLE IF NOT EXISTS Reviews (
     review_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     album_id INT,
@@ -100,7 +100,7 @@ CREATE TABLE Reviews (
 );
 
 -- Comments on reviews
-CREATE TABLE Comments (
+CREATE TABLE IF NOT EXISTS Comments (
     comment_id INT AUTO_INCREMENT PRIMARY KEY,
     review_id INT NOT NULL,
     user_id INT NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE Comments (
 );
 
 -- User Lists (like Letterboxd lists)
-CREATE TABLE Lists (
+CREATE TABLE IF NOT EXISTS Lists (
     list_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     title VARCHAR(100) NOT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE Lists (
 );
 
 -- List Items
-CREATE TABLE ListItems (
+CREATE TABLE IF NOT EXISTS ListItems (
     list_id INT,
     album_id INT,
     position INT NOT NULL,
@@ -136,7 +136,7 @@ CREATE TABLE ListItems (
 );
 
 -- User Following
-CREATE TABLE UserFollows (
+CREATE TABLE IF NOT EXISTS UserFollows (
     follower_id INT,
     following_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
