@@ -1,4 +1,4 @@
-# Music Website Project (Letterboxd-inspired)
+#TalkTempo 
 
 A comprehensive music platform inspired by Letterboxd, allowing users to discover, review, and share music. Users can create profiles, rate albums, create lists, purchase merchandise, and buy concert tickets.
 
@@ -28,16 +28,31 @@ A comprehensive music platform inspired by Letterboxd, allowing users to discove
 
 ## Project Structure
 ```
-├── assets/                 # Static assets
-│   ├── css/               # CSS files and Bootstrap/Tailwind
-│   ├── js/                # JavaScript files
-│   └── images/            # Image assets
-├── public/                # Public HTML files
-├── includes/              # PHP components
-│   ├── config/            # Configuration files
-│   ├── database/          # Database connection and queries
-│   └── functions/         # Reusable PHP functions
-└── design/                # Figma designs and prototypes
+📂 SoftwareEngineeringProject
+├── 📂 backend
+│   ├── 📂 cache
+│   ├── 📂 config
+│   ├── 📂 database
+│   ├── 📂 docs
+│   ├── 📂 logs
+│   ├── 📂 src
+├── 📂 frontend
+│   ├── 📂 assets
+│   ├── 📂 node_modules
+│   ├── 📂 templates
+│   ├── 📄 package-lock.json
+│   ├── 📄 package.json
+│   ├── 📄 tailwind.config.js
+├── 📂 public
+├── 📂 vendor
+├── 📄 .gitattributes
+├── 📄 .gitignore
+├── 📄 composer.json
+├── 📄 composer.lock
+├── 📄 README.md
+├── 🖥️ start.bat
+├── 🖥️ start.sh
+              # Figma designs and prototypes
 ```
 
 ## Core Features
