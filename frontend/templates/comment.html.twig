@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comment - TalkTempo{% endblock %}
+
+{% block content %}
+<body>
+    <div class="container">
+        <h1>Album Comments</h1>
+        <div class="comments-section">
+            <div class="comment">
+                <span class="username">User1</span>
+                <p class="comment-text">This album is a masterpiece! The production is top-notch.</p>
+            </div>
+            <div class="comment">
+                <span class="username">User2</span>
+                <p class="comment-text">Not my favorite, but I respect the creativity.</p>
+            </div>
+        </div>
+        <div class="comment-box">
+            <textarea placeholder="Write your review..."></textarea>
+            <button>Post Comment</button>
+        </div>
+    </div>
+</body>
