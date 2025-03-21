@@ -49,8 +49,8 @@
                         <div class="text-gray-500 text-xs mb-2">{{ album.release }}</div>
                         <h3 class="text-base font-semibold mb-3 hover:text-indigo-600 transition-colors">{{ album.title }}</h3>
                         <div class="flex gap-2">
-                            <button class="bg-gray-700 text-white px-3 py-1.5 rounded text-sm hover:bg-indigo-600 transition-colors duration-300 transform hover:scale-105">Comment</button>
-                            <button class="border border-gray-300 text-gray-700 px-3 py-1.5 rounded text-sm hover:bg-gray-50 transition-colors duration-300 transform hover:scale-105">Reviews</button>
+                            <a href="{{ path('comment', { 'albumId': album.id }) }}" class="bg-gray-700 text-white px-3 py-1.5 rounded text-sm hover:bg-indigo-600 transition-colors duration-300 transform hover:scale-105">Comment</a>
+                            <a href="{{ path('reviews', { 'albumId': album.id }) }}" class="border border-gray-300 text-gray-700 px-3 py-1.5 rounded text-sm hover:bg-gray-50 transition-colors duration-300 transform hover:scale-105">Reviews</a>
                         </div>
                     </div>
                 </div>
