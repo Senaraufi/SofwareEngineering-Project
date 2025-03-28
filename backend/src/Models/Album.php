@@ -7,7 +7,7 @@ namespace App\Models;
  * 
  * Represents a music album in the TalkTempo application
  */
-class Album extends BaseModel {
+class Album extends Artist {
     private $album_id;
     private $artist_id;
     private $title;
