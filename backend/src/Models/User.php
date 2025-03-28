@@ -7,7 +7,7 @@ namespace App\Models;
  * 
  * Represents a user in the TalkTempo application
  */
-class User {
+class User extends BaseModel {
     private $user_id;
     private $username;
     private $password;
@@ -15,7 +15,7 @@ class User {
     private $phone_number;
     private $bio;
     private $profile_image_url;
-    private $created_at;
+
     private $is_admin;
     
     /**
@@ -31,7 +31,7 @@ class User {
         $this->phone_number = $data['phone_number'] ?? null;
         $this->bio = $data['bio'] ?? null;
         $this->profile_image_url = $data['profile_image_url'] ?? null;
-        $this->created_at = $data['created_at'] ?? null;
+        parent::__construct($data);
         $this->is_admin = $data['is_admin'] ?? 0;
     }
     

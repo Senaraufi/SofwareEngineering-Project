@@ -7,7 +7,7 @@ namespace App\Models;
  * 
  * Represents a user review for an album or concert in the TalkTempo application
  */
-class Review {
+class Review extends BaseModel {
     private $review_id;
     private $user_id;
     private $album_id;
@@ -15,8 +15,7 @@ class Review {
     private $rating;
     private $title;
     private $content;
-    private $created_at;
-    private $updated_at;
+
     private $user;
     private $album;
     private $concert;
@@ -34,8 +33,7 @@ class Review {
         $this->rating = $data['rating'] ?? null;
         $this->title = $data['title'] ?? null;
         $this->content = $data['content'] ?? null;
-        $this->created_at = $data['created_at'] ?? null;
-        $this->updated_at = $data['updated_at'] ?? null;
+        parent::__construct($data);
     }
     
     /**
