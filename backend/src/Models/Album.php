@@ -7,15 +7,14 @@ namespace App\Models;
  * 
  * Represents a music album in the TalkTempo application
  */
-class Album {
+class Album extends BaseModel {
     private $album_id;
     private $artist_id;
     private $title;
     private $release_date;
     private $description;
     private $image_url;
-    private $created_at;
-    private $updated_at;
+
     private $updated_by;
     private $artist;
     private $genres = [];
@@ -32,8 +31,7 @@ class Album {
         $this->release_date = $data['release_date'] ?? null;
         $this->description = $data['description'] ?? null;
         $this->image_url = $data['image_url'] ?? null;
-        $this->created_at = $data['created_at'] ?? null;
-        $this->updated_at = $data['updated_at'] ?? null;
+        parent::__construct($data);
         $this->updated_by = $data['updated_by'] ?? null;
     }
     

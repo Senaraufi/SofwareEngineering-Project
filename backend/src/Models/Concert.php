@@ -7,7 +7,7 @@ namespace App\Models;
  * 
  * Represents a concert in the TalkTempo application
  */
-class Concert {
+class Concert extends BaseModel {
     private $concert_id;
     private $artist_id;
     private $name;
@@ -17,8 +17,7 @@ class Concert {
     private $concert_time;
     private $description;
     private $image_url;
-    private $created_at;
-    private $updated_at;
+
     private $updated_by;
     private $artist;
     
@@ -37,8 +36,7 @@ class Concert {
         $this->concert_time = $data['concert_time'] ?? null;
         $this->description = $data['description'] ?? null;
         $this->image_url = $data['image_url'] ?? null;
-        $this->created_at = $data['created_at'] ?? null;
-        $this->updated_at = $data['updated_at'] ?? null;
+        parent::__construct($data);
         $this->updated_by = $data['updated_by'] ?? null;
     }
     

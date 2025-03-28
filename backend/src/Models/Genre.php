@@ -7,11 +7,11 @@ namespace App\Models;
  * 
  * Represents a music genre in the TalkTempo application
  */
-class Genre {
+class Genre extends BaseModel {
     private $genre_id;
     private $name;
     private $description;
-    private $created_at;
+
     
     /**
      * Constructor
@@ -22,7 +22,7 @@ class Genre {
         $this->genre_id = $data['genre_id'] ?? null;
         $this->name = $data['name'] ?? '';
         $this->description = $data['description'] ?? null;
-        $this->created_at = $data['created_at'] ?? null;
+        parent::__construct($data);
     }
     
     /**

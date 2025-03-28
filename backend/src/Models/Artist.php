@@ -7,13 +7,12 @@ namespace App\Models;
  * 
  * Represents a music artist in the TalkTempo application
  */
-class Artist {
+class Artist extends BaseModel {
     private $artist_id;
     private $name;
     private $description;
     private $image_url;
-    private $created_at;
-    private $updated_at;
+
     private $updated_by;
     private $genres = [];
     
@@ -27,8 +26,7 @@ class Artist {
         $this->name = $data['name'] ?? '';
         $this->description = $data['description'] ?? null;
         $this->image_url = $data['image_url'] ?? null;
-        $this->created_at = $data['created_at'] ?? null;
-        $this->updated_at = $data['updated_at'] ?? null;
+        parent::__construct($data);
         $this->updated_by = $data['updated_by'] ?? null;
     }
     
