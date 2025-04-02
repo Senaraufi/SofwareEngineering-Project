@@ -3,6 +3,36 @@
 {% block title %}Artists - TalkTempo{% endblock %}
 
 {% block content %}
-    <h2 class="text-3xl font-bold mb-6">Artists</h2>
-    <!-- Add your artists page content here -->
+    <div class="min-h-screen bg-white">
+        <div class="container mx-auto px-4 py-8">
+            <h2 class="text-4xl font-bold text-gray-900 mb-8">All Artists</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {% for artist in artists %}
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
+                        <a href="/artist/{{ artist.getId() }}">
+                            <div class="w-full h-48 overflow-hidden">
+                                <img src="{{ artist.getImageUrl() }}" 
+                                     alt="{{ artist.getName() }}" 
+                                     class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ artist.getName() }}</h3>
+                                {% if artist.getGenres() %}
+                                    <div class="flex flex-wrap gap-1">
+                                        {% for genre in artist.getGenres() %}
+                                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs">
+                                                {{ genre }}
+                                            </span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <p class="mt-2 text-sm text-gray-600 line-clamp-2">{{ artist.getDescription() }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

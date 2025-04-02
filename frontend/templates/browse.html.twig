@@ -7,7 +7,7 @@
         <div class="container mx-auto px-1 pb-2 relative z-3">
             <div class="flex flex-col items-center text-center max-w-3xl mx-auto">
                 <div class="transform transition-all duration-700 translate-y-8 opacity-0 animate-slide-up space-y-4">
-                    <h1 class="text-6xl font-bold leading-tight text-gray-900 hover:text-indigo-600 transition-colors duration-300" style = "padding-top: 50px">
+                    <h1 class="text-6xl font-bold leading-tight text-gray-900 hover:text-indigo-600 transition-colors duration-300" style="padding-top: 50px">
                         BROWSE
                     </h1>
                 </div>
@@ -24,6 +24,34 @@
                         >
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Artists Section -->
+        <div class="container mx-auto px-4 py-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Featured Artists</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {% for artist in artists %}
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
+                        <a href="/artist/{{ artist.getId() }}">
+                            <div class="w-full h-48 overflow-hidden">
+                                <img src="{{ artist.getImageUrl()|default('/assets/images/artists/' ~ artist.getName()|lower|replace({' ': '-'}) ~ '-artist.jpg') }}" alt="{{ artist.getName() }}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ artist.getName() }}</h3>
+                                {% if artist.getGenres() %}
+                                    <div class="flex flex-wrap gap-1">
+                                        {% for genre in artist.getGenres()|slice(0, 2) %}
+                                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs">
+                                                {{ genre }}
+                                            </span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
         </div>
 

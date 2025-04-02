@@ -8,6 +8,8 @@ use App\Router;
 use App\Controllers\PageController;
 use App\Controllers\UserController;
 use App\Controllers\AdminController;
+use App\Controllers\ArtistController;
+use App\Twig\AppExtension;
 
 // Create Twig environment
 $loader = new FilesystemLoader(__DIR__ . '/../frontend/templates');
@@ -17,23 +19,30 @@ $twig = new Environment($loader, [
     'auto_reload' => true
 ]);
 
+// Add custom extensions
+$twig->addExtension(new AppExtension());
+
 // Initialize router
 $router = new Router();
 $pageController = new PageController();
 $userController = new UserController();
 $adminController = new AdminController();
+$artistController = new ArtistController();
 
 // Define routes
 $router->get('/', [$pageController, 'home']);
 $router->get('/browse', [$pageController, 'browse']);
 $router->get('/albums', [$pageController, 'albums']);
-$router->get('/artists', [$pageController, 'artists']);
+$router->get('/artists', [$artistController, 'index']);
 $router->get('/about', [$pageController, 'about']);
 $router->get('/login', [$userController, 'login']);
 $router->post('/login', [$userController, 'processLogin']);
 $router->get('/signup', [$userController, 'signup']);
 $router->post('/signup', [$userController, 'processSignup']);
 $router->get('/logout', [$userController, 'logout']);
+
+// Artist routes
+$router->get('/artist/{id}', [$artistController, 'show']);
 
 // Admin routes
 $router->get('/admin/users', [$adminController, 'users']);

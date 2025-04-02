@@ -12,8 +12,35 @@ class PageController extends Controller {
     }
 
     public function browse() {
-        // Hardcoded album data for display
+        // Hardcoded artist and album data for display
         // In a real implementation, this would come from the database
+        $artists = [
+            [
+                'artist_id' => 1,
+                'name' => 'Pixies',
+                'image_url' => 'pixies-artist.jpg',
+                'genres' => ['Alternative Rock', 'Indie Rock']
+            ],
+            [
+                'artist_id' => 2,
+                'name' => 'System of a Down',
+                'image_url' => 'system-artist.jpg',
+                'genres' => ['Metal', 'Alternative Metal']
+            ],
+            [
+                'artist_id' => 3,
+                'name' => 'BTS',
+                'image_url' => 'bts-artist.jpg',
+                'genres' => ['K-Pop', 'Pop']
+            ],
+            [
+                'artist_id' => 4,
+                'name' => 'Kendrick Lamar',
+                'image_url' => 'kendrick-artist.jpg',
+                'genres' => ['Hip Hop', 'Rap']
+            ]
+        ];
+
         $albums = [
             [
                 'id' => 1,
@@ -115,7 +142,10 @@ class PageController extends Controller {
         
         return $this->render('browse.html.twig', [
             'active_page' => 'browse',
-            'albums' => $albums
+            'albums' => $albums,
+            'artists' => array_map(function($artist) {
+                return new \App\Models\Artist($artist);
+            }, $artists)
         ]);
     }
 

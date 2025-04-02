@@ -26,6 +26,7 @@ class Artist extends Genre {
         $this->name = $data['name'] ?? '';
         $this->description = $data['description'] ?? null;
         $this->image_url = $data['image_url'] ?? null;
+        $this->genres = $data['genres'] ?? [];
         parent::__construct($data);
         $this->updated_by = $data['updated_by'] ?? null;
     }
