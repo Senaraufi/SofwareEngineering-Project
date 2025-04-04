@@ -30,7 +30,6 @@ class AuthenticationTest extends TestCase
             'password' => 'password123'
         ]);
         
-        // Assuming successful login redirects to dashboard
         $this->assertTrue($this->browser->getResponse()->isRedirect('/dashboard'));
     }
 
@@ -41,7 +40,6 @@ class AuthenticationTest extends TestCase
             'password' => 'wrongpass'
         ]);
         
-        // Should stay on login page with error message
         $this->assertStringContainsString('Invalid credentials', $crawler->filter('.error-message')->text());
     }
 }
