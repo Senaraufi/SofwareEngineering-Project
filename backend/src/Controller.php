@@ -4,12 +4,20 @@ namespace App;
 
 class Controller {
     protected function render($template, $data = []) {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $defaultData = [
+            'cart_count' => $this->getCartCount(),
+            'current_track' => $this->getCurrentTrack(),
+            'is_logged_in' => isset($_SESSION['Active']) && $_SESSION['Active'] === true,
+            'user_initials' => isset($_SESSION['username']) ? strtoupper(substr($_SESSION['username'], 0, 1)) : 'U'
+        ];
+
         return [
             'template' => $template,
-            'data' => array_merge($data, [
-                'cart_count' => $this->getCartCount(),
-                'current_track' => $this->getCurrentTrack()
-            ])
+            'data' => array_merge($defaultData, $data)
         ];
     }
 

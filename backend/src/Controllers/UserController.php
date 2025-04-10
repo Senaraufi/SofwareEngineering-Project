@@ -174,11 +174,19 @@ class UserController extends Controller {
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
         
-        // Basic validation
-        if (empty($username) || empty($password)) {
+        // Always require password input
+        if (empty($password)) {
             return $this->render('login.html.twig', [
                 'active_page' => 'login',
-                'error' => 'Username and password are required',
+                'error' => 'Password is required',
+                'input' => ['username' => $username]
+            ]);
+        }
+        
+        if (empty($username)) {
+            return $this->render('login.html.twig', [
+                'active_page' => 'login',
+                'error' => 'Username is required',
                 'input' => ['username' => $username]
             ]);
         }
