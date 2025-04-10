@@ -80,3 +80,46 @@ POST Data: Array
     [terms] => on
 )
 
+
+
+2025-04-10 13:47:23 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => randomuser
+    [email] => a.user@gmail.com
+    [password] => 123456789
+    [confirm_password] => 123456789
+    [terms] => on
+)
+
+Attempting to insert user: randomuser
+User inserted successfully with ID: 4
+
+
+2025-04-10 13:49:56 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => user1
+    [email] => user1@email.com
+    [password] => 12345
+    [confirm_password] => 12345
+    [terms] => on
+)
+
+
+
+2025-04-10 13:50:17 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => user1
+    [email] => user1@email.com
+    [password] => 12341234
+    [confirm_password] => 12341234
+    [terms] => on
+)
+
+Attempting to insert user: user1
+User inserted successfully with ID: 5

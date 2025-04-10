@@ -168,36 +168,40 @@ class UserController extends Controller {
     }
     
     public function processLogin() {
-        // Make sure we have a session
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        session_start();
         
         // Get form data
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
         
-        // Validate input
-        $errors = [];
-        
-        if (empty($username)) {
-            $errors['username'] = 'Username is required';
-        }
-        
-        if (empty($password)) {
-            $errors['password'] = 'Password is required';
-        }
-        
-        // If there are errors, return to the login form with error messages
-        if (!empty($errors)) {
+        // Basic validation
+        if (empty($username) || empty($password)) {
             return $this->render('login.html.twig', [
                 'active_page' => 'login',
-                'errors' => $errors,
-                'input' => [
-                    'username' => $username
-                ]
+                'error' => 'Username and password are required',
+                'input' => ['username' => $username]
             ]);
         }
+
+        // Check if user exists and verify password
+        $user = $this->db->findOne('Users', ['username' => $username]);
+
+        if ($user && password_verify($password, $user['password'])) {
+            // Set session variables
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['Active'] = true;
+
+            // Redirect to dashboard
+            header('Location: /dashboard');
+            exit;
+        }
+
+        return $this->render('login.html.twig', [
+            'active_page' => 'login',
+            'error' => 'Invalid username or password',
+            'input' => ['username' => $username]
+        ]);
         
         // Check if user exists - use the findOne method
         $user = $this->db->findOne('Users', ['username' => $username]);
