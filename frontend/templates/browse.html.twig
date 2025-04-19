@@ -4,43 +4,172 @@
 
 {% block content %}
     <div class="min-h-screen bg-white">
-        <div class="container mx-auto px-1 pb-2 relative z-3">
-            <div class="flex flex-col items-center text-center max-w-3xl mx-auto">
-                <div class="transform transition-all duration-700 translate-y-8 opacity-0 animate-slide-up space-y-4">
-                    <h1 class="text-6xl font-bold leading-tight text-gray-900 hover:text-indigo-600 transition-colors duration-300" style="padding-top: 50px">
-                        BROWSE
-                    </h1>
-                </div>
-                
-                <div class="mt-8 transform transition-all duration-700 delay-300 translate-y-8 opacity-0 animate-slide-up">
-                    <h3 class="text-4xl font-bold mb-8 text-gray-800 hover:text-gray-600 transition-colors duration-300">
-                        Discover new music, share your thoughts,<br>
-                        and connect with other music lovers
-                    </h3>
-                    <div class="flex justify-center gap-4 mt-12">
-                        <input type="text" 
-                               placeholder="Search for albums, artists, or genres..." 
-                               class="w-full max-w-xl px-6 py-3 rounded-full bg-gray-100 text-gray-900 border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                        >
+        <!-- Hero Section with Parallax Effect -->
+        <div class="relative overflow-hidden bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
+            <div class="absolute inset-0 z-0 opacity-20">
+                <div class="absolute inset-0 bg-repeat" style="background-image: url('/assets/images/music-pattern.png');"></div>
+            </div>
+            <div class="container mx-auto px-4 py-20 relative z-10">
+                <div class="flex flex-col items-center text-center max-w-3xl mx-auto">
+                    <div class="animate-fade-in-up">
+                        <h1 class="text-6xl font-bold leading-tight mb-4">
+                            DISCOVER MUSIC
+                        </h1>
+                        <div class="w-24 h-1 bg-white mx-auto mb-8 rounded-full"></div>
+                    </div>
+                    
+                    <div class="animate-fade-in-up animation-delay-300">
+                        <h3 class="text-2xl font-medium mb-8 text-white/90">
+                            Explore new sounds, share your thoughts,<br>
+                            and connect with other music enthusiasts
+                        </h3>
+                        
+                        <!-- Search Bar with Icon -->
+                        <div class="flex justify-center mt-8 w-full max-w-2xl mx-auto">
+                            <div class="relative w-full">
+                                <input type="text" 
+                                       id="search-input"
+                                       placeholder="Search for albums, artists, or genres..." 
+                                       class="w-full px-6 py-4 pl-12 rounded-full bg-white/20 backdrop-blur-sm text-white placeholder-white/70 border border-white/30 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+                                >
+                                <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Wave Divider -->
+            <div class="absolute bottom-0 left-0 right-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" class="w-full h-auto fill-white">
+                    <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Filter and Browse Controls -->
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+                <div class="flex items-center space-x-2">
+                    <h2 class="text-2xl font-bold text-gray-900">Browse Collection</h2>
+                    <div class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium">{{ albums|length + artists|length }} items</div>
+                </div>
+                
+                <div class="flex flex-wrap gap-3">
+                    <!-- Filter Dropdown -->
+                    <div class="relative">
+                        <button id="filter-dropdown" class="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                            </svg>
+                            Filter
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="filter-menu" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg z-10 border border-gray-200">
+                            <div class="p-4">
+                                <h3 class="font-medium text-gray-900 mb-2">Filter by Genre</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 rounded" value="rock">
+                                        <span class="ml-2 text-gray-700">Rock</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 rounded" value="pop">
+                                        <span class="ml-2 text-gray-700">Pop</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 rounded" value="hiphop">
+                                        <span class="ml-2 text-gray-700">Hip Hop</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 rounded" value="electronic">
+                                        <span class="ml-2 text-gray-700">Electronic</span>
+                                    </label>
+                                </div>
+                                
+                                <h3 class="font-medium text-gray-900 mt-4 mb-2">Filter by Decade</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 rounded" value="2020s">
+                                        <span class="ml-2 text-gray-700">2020s</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 rounded" value="2010s">
+                                        <span class="ml-2 text-gray-700">2010s</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 rounded" value="2000s">
+                                        <span class="ml-2 text-gray-700">2000s</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 rounded" value="1990s">
+                                        <span class="ml-2 text-gray-700">1990s</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 rounded" value="older">
+                                        <span class="ml-2 text-gray-700">Older</span>
+                                    </label>
+                                </div>
+                                
+                                <div class="mt-4 flex justify-end">
+                                    <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">Apply Filters</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- View Toggle -->
+                    <div class="flex rounded-lg border border-gray-300 overflow-hidden">
+                        <button class="px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-700 transition-colors" id="grid-view">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                            </svg>
+                        </button>
+                        <button class="px-4 py-2 bg-white text-gray-700 hover:bg-gray-50 transition-colors" id="list-view">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="border-b border-gray-200 mb-8">
+                <nav class="-mb-px flex space-x-8">
+                    <button class="category-tab border-indigo-600 text-indigo-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-category="all">
+                        All
+                    </button>
+                    <button class="category-tab border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-category="artists">
+                        Artists
+                    </button>
+                    <button class="category-tab border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-category="albums">
+                        Albums
+                    </button>
+                </nav>
             </div>
         </div>
 
         <!-- Artists Section -->
-        <div class="container mx-auto px-4 py-16">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">Featured Artists</h2>
+        <div class="container mx-auto px-4 pb-16" id="artists-section">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Featured Artists</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {% for artist in artists %}
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
-                        <a href="/artist/{{ artist.getId() }}">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-100">
+                        <a href="/artist/{{ artist.getId() }}" class="block h-full">
                             <div class="w-full h-48 overflow-hidden">
-                                <img src="{{ artist.getImageUrl()|default('/assets/images/artists/' ~ artist.getName()|lower|replace({' ': '-'}) ~ '-artist.jpg') }}" alt="{{ artist.getName() }}" class="w-full h-full object-cover">
+                                <img src="{{ artist.getImageUrl()|default('/assets/images/artists/' ~ artist.getName()|lower|replace({' ': '-'}) ~ '-artist.jpg') }}" alt="{{ artist.getName() }}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                             </div>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ artist.getName() }}</h3>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2 hover:text-indigo-600 transition-colors">{{ artist.getName() }}</h3>
                                 {% if artist.getGenres() %}
-                                    <div class="flex flex-wrap gap-1">
+                                    <div class="flex flex-wrap gap-1 mb-3">
                                         {% for genre in artist.getGenres()|slice(0, 2) %}
                                             <span class="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs">
                                                 {{ genre }}
@@ -48,8 +177,54 @@
                                         {% endfor %}
                                     </div>
                                 {% endif %}
+                                <div class="flex items-center justify-between mt-2">
+                                    <div class="flex items-center text-gray-500 text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                                        </svg>
+                                        Albums: 3+
+                                    </div>
+                                    <a href="/artist/{{ artist.getId() }}/comments" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors">
+                                        View Profile
+                                    </a>
+                                </div>
                             </div>
                         </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Albums Section -->
+        <div class="container mx-auto px-4 pb-16" id="albums-section">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Popular Albums</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                {% for album in albums %}
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-100 flex flex-col h-full">
+                        <div class="aspect-square overflow-hidden relative group">
+                            <a href="{{ album.link }}" target="_blank" rel="noopener noreferrer">
+                                <img src="/assets/images/{{ album.image }}" alt="{{ album.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
+                                    <div class="transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="p-4 flex-grow">
+                            <div class="uppercase tracking-wide text-xs text-indigo-500 font-semibold mb-1">{{ album.genre }}</div>
+                            <div class="text-gray-500 text-xs mb-2">{{ album.release }}</div>
+                            <h3 class="text-base font-semibold mb-3 hover:text-indigo-600 transition-colors line-clamp-2">{{ album.title }}</h3>
+                        </div>
+                        <div class="p-4 pt-0 mt-auto">
+                            <div class="flex gap-2">
+                                <a href="/album/{{ album.id }}/comments" class="bg-gray-700 text-white px-3 py-1.5 rounded text-sm hover:bg-indigo-600 transition-colors duration-300 transform hover:scale-105 inline-block text-center flex-1">Comments</a>
+                                <a href="/album/{{ album.id }}/reviews" class="border border-gray-300 text-gray-700 px-3 py-1.5 rounded text-sm hover:bg-gray-50 transition-colors duration-300 transform hover:scale-105 inline-block text-center flex-1">Reviews</a>
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
@@ -57,21 +232,135 @@
 
        
 
-        <!-- Contact Section -->
-        <div class="bg-gray-100 py-32 mt-32 mb-16 border-t border-gray-200" style = "padding-bottom: 100px; padding-top: 100px">
-            <div class="container mx-auto px-4 max-w-3xl text-center">
-                <h2 class="text-4xl font-bold mb-8 text-gray-900">Contact us for more Info</h2>
-                <p class="text-gray-600 mb-10 max-w-2xl mx-auto text-base leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tristique convallis massa at amet tortor. Maecenas in imperdiet orci. Phasellus non porttitor erat.
+        <!-- Newsletter Section with Gradient Background -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 py-16 mt-16 relative overflow-hidden">
+            <!-- Decorative Elements -->
+            <div class="absolute top-0 left-0 w-full h-full opacity-10">
+                <div class="absolute top-10 left-10 w-40 h-40 rounded-full bg-white"></div>
+                <div class="absolute bottom-10 right-10 w-60 h-60 rounded-full bg-white"></div>
+                <div class="absolute top-1/2 left-1/4 w-20 h-20 rounded-full bg-white"></div>
+            </div>
+            
+            <div class="container mx-auto px-4 max-w-4xl text-center relative z-10">
+                <h2 class="text-3xl font-bold mb-4 text-white">Stay Updated with New Music</h2>
+                <p class="text-white/80 mb-8 max-w-2xl mx-auto text-base leading-relaxed">
+                    Subscribe to our newsletter to receive updates on new albums, artist spotlights, and exclusive content delivered straight to your inbox.
                 </p>
-                <div class="flex justify-center mt-8">
-                    <a href="#" class="inline-block bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition-colors duration-300 font-medium shadow-md">
-                        Contact
-                    </a>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-lg mx-auto">
+                    <input type="email" placeholder="Your email address" class="px-6 py-3 rounded-lg bg-white/20 backdrop-blur-sm text-white placeholder-white/70 border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 flex-grow">
+                    <button class="px-6 py-3 bg-white text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors duration-300 font-medium shadow-md whitespace-nowrap">
+                        Subscribe Now
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- JavaScript for Interactive Features -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter dropdown toggle
+            const filterDropdown = document.getElementById('filter-dropdown');
+            const filterMenu = document.getElementById('filter-menu');
+            
+            if (filterDropdown && filterMenu) {
+                filterDropdown.addEventListener('click', function() {
+                    filterMenu.classList.toggle('hidden');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!filterDropdown.contains(event.target) && !filterMenu.contains(event.target)) {
+                        filterMenu.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // Category tabs functionality
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const artistsSection = document.getElementById('artists-section');
+            const albumsSection = document.getElementById('albums-section');
+            
+            if (categoryTabs.length && artistsSection && albumsSection) {
+                categoryTabs.forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        // Remove active class from all tabs
+                        categoryTabs.forEach(t => {
+                            t.classList.remove('border-indigo-600', 'text-indigo-600');
+                            t.classList.add('border-transparent', 'text-gray-500');
+                        });
+                        
+                        // Add active class to clicked tab
+                        this.classList.remove('border-transparent', 'text-gray-500');
+                        this.classList.add('border-indigo-600', 'text-indigo-600');
+                        
+                        // Show/hide sections based on selected category
+                        const category = this.getAttribute('data-category');
+                        if (category === 'all') {
+                            artistsSection.style.display = 'block';
+                            albumsSection.style.display = 'block';
+                        } else if (category === 'artists') {
+                            artistsSection.style.display = 'block';
+                            albumsSection.style.display = 'none';
+                        } else if (category === 'albums') {
+                            artistsSection.style.display = 'none';
+                            albumsSection.style.display = 'block';
+                        }
+                    });
+                });
+            }
+            
+            // View toggle functionality
+            const gridViewBtn = document.getElementById('grid-view');
+            const listViewBtn = document.getElementById('list-view');
+            const albumGrid = document.querySelector('#albums-section .grid');
+            
+            if (gridViewBtn && listViewBtn && albumGrid) {
+                gridViewBtn.addEventListener('click', function() {
+                    // Activate grid view button
+                    gridViewBtn.classList.remove('bg-white', 'text-gray-700');
+                    gridViewBtn.classList.add('bg-indigo-600', 'text-white');
+                    listViewBtn.classList.remove('bg-indigo-600', 'text-white');
+                    listViewBtn.classList.add('bg-white', 'text-gray-700');
+                    
+                    // Change grid layout
+                    albumGrid.classList.remove('grid-cols-1');
+                    albumGrid.classList.add('grid-cols-1', 'sm:grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4', 'xl:grid-cols-5');
+                });
+                
+                listViewBtn.addEventListener('click', function() {
+                    // Activate list view button
+                    listViewBtn.classList.remove('bg-white', 'text-gray-700');
+                    listViewBtn.classList.add('bg-indigo-600', 'text-white');
+                    gridViewBtn.classList.remove('bg-indigo-600', 'text-white');
+                    gridViewBtn.classList.add('bg-white', 'text-gray-700');
+                    
+                    // Change grid layout
+                    albumGrid.classList.remove('sm:grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4', 'xl:grid-cols-5');
+                    albumGrid.classList.add('grid-cols-1');
+                });
+            }
+            
+            // Search functionality
+            const searchInput = document.getElementById('search-input');
+            const allItems = document.querySelectorAll('#artists-section .grid > div, #albums-section .grid > div');
+            
+            if (searchInput && allItems.length) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    
+                    allItems.forEach(item => {
+                        const title = item.querySelector('h3').textContent.toLowerCase();
+                        const genre = item.querySelector('.text-indigo-500, .text-indigo-800')?.textContent.toLowerCase() || '';
+                        
+                        if (title.includes(searchTerm) || genre.includes(searchTerm)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 {% endblock %}
-
-
