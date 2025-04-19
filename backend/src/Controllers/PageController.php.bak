@@ -52,9 +52,9 @@ class PageController extends Controller {
             ],
             [
                 'id' => 2,
-                'title' => 'System of a Down - System of a Down',
+                'title' => 'System of a Down - Toxicity',
                 'genre' => 'METAL',
-                'release' => 'Released June 30, 1998',
+                'release' => 'Released September 4, 2001',
                 'image' => 'system-album.jpg',
                 'link' => 'https://open.spotify.com/album/3sSfjX4fhZonjyZ10x0l0f?si=5Xvm2SeeSziv5mEKEQahWg'
             ],
@@ -163,9 +163,9 @@ class PageController extends Controller {
             ],
             [
                 'id' => 2,
-                'title' => 'System of a Down - System of a Down',
+                'title' => 'System of a Down - Toxicity',
                 'genre' => 'METAL',
-                'release' => 'Released June 30, 1998',
+                'release' => 'Released September 4, 2001',
                 'image' => 'system-album.jpg',
                 'link' => 'https://open.spotify.com/album/3sSfjX4fhZonjyZ10x0l0f?si=5Xvm2SeeSziv5mEKEQahWg'
             ],

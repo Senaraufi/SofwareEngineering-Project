@@ -1,24 +1,427 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Comment - TalkTempo{% endblock %}
+{% block title %}Album Discussion - TalkTempo{% endblock %}
 
 {% block content %}
-<body>
-    <div class="container">
-        <h1>Album Comments</h1>
-        <div class="comments-section">
-            <div class="comment">
-                <span class="username">User1</span>
-                <p class="comment-text">This album is a masterpiece! The production is top-notch.</p>
+<style>
+    /* Letterboxd-inspired styling */
+    :root {
+        --primary-color: #00b020; /* Letterboxd-inspired green */
+        --text-color: #2c3440;
+        --light-text: #678;
+        --border-color: #eee;
+        --bg-color: #f4f4f4;
+        --card-bg: #fff;
+    }
+    
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: 'Graphik', 'Helvetica Neue', Arial, sans-serif;
+    }
+    
+    .discussion-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .album-card {
+        display: flex;
+        background: var(--card-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .album-cover {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+    }
+    
+    .album-info {
+        padding: 16px;
+        flex: 1;
+    }
+    
+    .album-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0 0 4px 0;
+    }
+    
+    .album-artist {
+        font-size: 18px;
+        color: var(--light-text);
+        margin: 0 0 12px 0;
+    }
+    
+    .album-meta {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: var(--light-text);
+        margin-bottom: 12px;
+    }
+    
+    .rating {
+        display: flex;
+        margin-right: 16px;
+    }
+    
+    .star {
+        color: var(--primary-color);
+        margin-right: 2px;
+    }
+    
+    .login-banner, .add-comment-banner {
+        background: linear-gradient(135deg, #00b020 0%, #40c080 100%);
+        color: white;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .login-button {
+        background: white;
+        color: var(--primary-color);
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .comment-section {
+        margin-top: 24px;
+    }
+    
+    .comment-form-container {
+        background: var(--card-bg);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        margin-bottom: 24px;
+    }
+    
+    .form-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 0;
+        margin-bottom: 16px;
+        color: var(--text-color);
+    }
+    
+    .section-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .section-title::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border-color);
+        margin-left: 12px;
+    }
+    
+    .comment {
+        background: var(--card-bg);
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    
+    .comment-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+    
+    .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #ddd;
+        margin-right: 12px;
+        overflow: hidden;
+    }
+    
+    .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .user-info {
+        flex: 1;
+    }
+    
+    .username {
+        font-weight: 600;
+        color: var(--text-color);
+        text-decoration: none;
+    }
+    
+    .comment-date {
+        font-size: 12px;
+        color: var(--light-text);
+    }
+    
+    .comment-content {
+        font-size: 15px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+    }
+    
+    .comment-actions {
+        display: flex;
+        gap: 16px;
+        font-size: 13px;
+    }
+    
+    .comment-action {
+        color: var(--light-text);
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        display: flex;
+        align-items: center;
+    }
+    
+    .comment-action:hover {
+        color: var(--primary-color);
+    }
+    
+    .comment-action svg {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+    }
+    
+    .reply-form {
+        margin-top: 16px;
+        display: none;
+    }
+    
+    .comment-textarea {
+        width: 100%;
+        min-height: 80px;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        resize: vertical;
+        font-family: inherit;
+        margin-bottom: 8px;
+    }
+    
+    .comment-button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    
+    .child-comments {
+        margin-left: 48px;
+        border-left: 2px solid var(--border-color);
+        padding-left: 16px;
+    }
+    
+    .empty-comments {
+        text-align: center;
+        padding: 40px 20px;
+        background: var(--card-bg);
+        border-radius: 8px;
+        color: var(--light-text);
+    }
+    
+    .empty-icon {
+        font-size: 32px;
+        margin-bottom: 16px;
+        color: var(--border-color);
+    }
+</style>
+
+{% macro render_comments(comments, children, parent_id, level) %}
+    {% for comment in children[parent_id]|default([]) %}
+        <div class="comment" id="comment-{{ comment.id }}">
+            <div class="comment-header">
+                <div class="avatar">
+                    <img src="https://i.pravatar.cc/150?u={{ comment.user }}" alt="{{ comment.user }}">
+                </div>
+                <div class="user-info">
+                    <a href="#" class="username">{{ comment.user }}</a>
+                    <div class="comment-date">{{ comment.created_at|date('M d, Y') }}</div>
+                </div>
             </div>
-            <div class="comment">
-                <span class="username">User2</span>
-                <p class="comment-text">Not my favorite, but I respect the creativity.</p>
+            <div class="comment-content">{{ comment.content }}</div>
+            <div class="comment-actions">
+                <button class="comment-action" onclick="toggleReplyForm('reply-form-{{ comment.id }}')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 10h10a8 8 0 1 1-8 8v-5"></path>
+                        <polyline points="3 10 8 15 3 20"></polyline>
+                    </svg>
+                    Reply
+                </button>
+                <button class="comment-action">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                        <polyline points="16 6 12 2 8 6"></polyline>
+                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                    </svg>
+                    Share
+                </button>
+                <button class="comment-action">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                    </svg>
+                    Like
+                </button>
             </div>
+            
+            <!-- Reply form (hidden by default) -->
+            <form id="reply-form-{{ comment.id }}" class="reply-form" method="post" action="/comment/reply">
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                <input type="hidden" name="type" value="{{ type }}">  <!-- 'album' or 'artist' -->
+                <input type="hidden" name="item_id" value="{{ item.id }}">
+                <textarea name="content" class="comment-textarea" placeholder="Write a reply..."></textarea>
+                <button type="submit" class="comment-button">Post Reply</button>
+            </form>
+            
+            <!-- Child comments -->
+            {% if children[comment.id]|default([])|length > 0 %}
+                <div class="child-comments">
+                    {{ _self.render_comments(comments, children, comment.id, level + 1) }}
+                </div>
+            {% endif %}
         </div>
-        <div class="comment-box">
-            <textarea placeholder="Write your review..."></textarea>
-            <button>Post Comment</button>
+    {% endfor %}
+{% endmacro %}
+
+<body>
+    <div class="discussion-container">
+        <!-- Login banner for non-logged in users -->
+        {% if not is_logged_in %}
+        <div class="login-banner">
+            <div>
+                <strong>Want to join the conversation?</strong>
+                <p>Log in to review albums and join discussions with other music lovers.</p>
+            </div>
+            <a href="/login" class="login-button">Log In</a>
+        </div>
+        {% else %}
+        <!-- Add Comment Button for logged-in users -->
+        <div class="add-comment-banner">
+            <div>
+                <strong>Share your thoughts!</strong>
+                <p>What did you think about this {{ type }}? Let others know!</p>
+            </div>
+            <a href="#comment-form" class="comment-button">Add Comment</a>
+        </div>
+        {% endif %}
+        
+        <!-- Item info card (album or artist) -->
+        <div class="album-card">
+            {% if type == 'album' %}
+                <!-- Album info -->
+                <img src="/assets/images/{{ item.image }}" alt="{{ item.title }} by {{ item.artist }}" class="album-cover">
+                <div class="album-info">
+                    <h2 class="album-title">{{ item.title }}</h2>
+                    <h3 class="album-artist">{{ item.artist }}</h3>
+                    <div class="album-meta">
+                        <div class="rating">
+                            {% for i in 1..5 %}
+                                {% if i <= item.rating %}
+                                    <span class="star">★</span>
+                                {% else %}
+                                    <span class="star" style="color: var(--border-color);">★</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <span>{{ item.genre }} • {{ item.release_year }}</span>
+                    </div>
+                    <p>{{ item.description }}</p>
+                </div>
+            {% else %}
+                <!-- Artist info -->
+                <img src="/assets/images/{{ item.image }}" alt="{{ item.name }}" class="album-cover">
+                <div class="album-info">
+                    <h2 class="album-title">{{ item.name }}</h2>
+                    <div class="album-meta">
+                        <div class="rating">
+                            {% for i in 1..5 %}
+                                {% if i <= item.rating %}
+                                    <span class="star">★</span>
+                                {% else %}
+                                    <span class="star" style="color: var(--border-color);">★</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <span>{{ item.genres|join(', ') }}</span>
+                    </div>
+                    <p>{{ item.description }}</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Comment section -->
+        <div class="comment-section">
+            <h3 class="section-title">Comments & Reviews</h3>
+            
+            <!-- Comment form for logged in users -->
+            {% if is_logged_in %}
+            <div id="comment-form" class="comment-form-container">
+                <h4 class="form-title">Add Your Comment</h4>
+                <form method="post" action="/comment/add">
+                    <input type="hidden" name="type" value="{{ type }}">  <!-- 'album' or 'artist' -->
+                    <input type="hidden" name="item_id" value="{{ item.id }}">
+                    <textarea name="content" class="comment-textarea" placeholder="What did you think of this {{ type }}?"></textarea>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button type="submit" class="comment-button">Post Comment</button>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+            
+            <!-- Comments list -->
+            <div class="comments-list">
+                {{ _self.render_comments(comments, children, 0, 0) }}
+                {% if not children[0]|default([])|length %}
+                    <div class="empty-comments">
+                        <div class="empty-icon">🎵</div>
+                        <p>No comments yet</p>
+                        <p>Be the first to share your thoughts on this album</p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
+    
+    <script>
+        function toggleReplyForm(formId) {
+            const form = document.getElementById(formId);
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+    </script>
 </body>
+{% endblock %}
