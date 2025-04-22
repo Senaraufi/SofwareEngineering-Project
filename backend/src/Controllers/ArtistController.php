@@ -102,38 +102,42 @@ class ArtistController extends Controller {
         $allAlbums = [
             1 => [
                 'id' => 1,
+                'album_id' => 1,
                 'title' => 'Trompe Le Monde',
                 'artist_id' => 1,
                 'genre' => 'Alternative Rock',
                 'release_date' => '1991-09-23',
-                'image_url' => '/assets/images/albums/pixies-album.jpg',
+                'image_url' => '/assets/images/pixies-album.jpg',
                 'description' => 'The fourth studio album by the Pixies.'
             ],
             2 => [
                 'id' => 2,
+                'album_id' => 2,
                 'title' => 'Toxicity',
                 'artist_id' => 2,
                 'genre' => 'Metal',
                 'release_date' => '2001-09-04',
-                'image_url' => '/assets/images/albums/system-album.jpg',
+                'image_url' => '/assets/images/system-album.jpg',
                 'description' => 'The second studio album by System of a Down.'
             ],
             3 => [
                 'id' => 3,
+                'album_id' => 3,
                 'title' => "Love Yourself 結 'Answer'",
                 'artist_id' => 3,
                 'genre' => 'K-Pop',
                 'release_date' => '2018-08-24',
-                'image_url' => '/assets/images/albums/BTS-album.jpg',
+                'image_url' => '/assets/images/BTS-album.jpg',
                 'description' => 'A compilation album by BTS.'
             ],
             4 => [
                 'id' => 4,
+                'album_id' => 4,
                 'title' => 'To Pimp a Butterfly',
                 'artist_id' => 4,
                 'genre' => 'Hip Hop',
                 'release_date' => '2015-03-15',
-                'image_url' => '/assets/images/albums/kendrick-album.jpg',
+                'image_url' => '/assets/images/kendrick-album.jpg',
                 'description' => 'The third studio album by Kendrick Lamar.'
             ]
         ];

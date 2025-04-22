@@ -41,7 +41,7 @@ $router->get('/login', [$userController, 'login']);
 $router->post('/login', [$userController, 'processLogin']);
 $router->get('/signup', [$userController, 'signup']);
 $router->post('/signup', [$userController, 'processSignup']);
-$router->get('/logout', [$userController, 'logout']);
+$router->post('/logout', [$userController, 'logout']);
 
 // Artist routes
 $router->get('/artist/{id}', [$artistController, 'show']);

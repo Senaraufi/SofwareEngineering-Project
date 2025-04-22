@@ -36,10 +36,9 @@ class Router {
                 
                 // Extract parameter names from the route
                 preg_match_all('/{([^}]+)}/', $route, $paramNames);
-                $params = array_combine($paramNames[1], $matches);
                 
-                // Call the callback with parameters
-                return call_user_func_array($callback, $params);
+                // Call the callback with parameters as positional arguments
+                return call_user_func_array($callback, $matches);
             }
         }
         
