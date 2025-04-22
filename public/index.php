@@ -10,6 +10,8 @@ use App\Controllers\UserController;
 use App\Controllers\AdminController;
 use App\Controllers\ArtistController;
 use App\Controllers\CommentController;
+use App\Controllers\ConcertController;
+use App\Controllers\CartController;
 use App\Twig\AppExtension;
 
 // Create Twig environment
@@ -30,13 +32,25 @@ $userController = new UserController();
 $adminController = new AdminController();
 $artistController = new ArtistController();
 $commentController = new CommentController();
+$concertController = new ConcertController();
+$cartController = new CartController();
 
 // Define routes
 $router->get('/', [$pageController, 'home']);
 $router->get('/browse', [$pageController, 'browse']);
 $router->get('/albums', [$pageController, 'albums']);
 $router->get('/artists', [$artistController, 'index']);
-$router->get('/about', [$pageController, 'about']);
+
+// Concert routes (protected, only for logged-in users)
+$router->get('/concerts', [$concertController, 'index']);
+$router->get('/concerts/buy/{id}', [$concertController, 'buyTicket']);
+
+// Cart routes (protected, only for logged-in users)
+$router->get('/cart', [$cartController, 'index']);
+$router->post('/cart/add', [$cartController, 'addToCart']);
+$router->post('/cart/remove', [$cartController, 'removeFromCart']);
+$router->post('/cart/update', [$cartController, 'updateQuantity']);
+$router->post('/cart/checkout', [$cartController, 'checkout']);
 $router->get('/login', [$userController, 'login']);
 $router->post('/login', [$userController, 'processLogin']);
 $router->get('/signup', [$userController, 'signup']);

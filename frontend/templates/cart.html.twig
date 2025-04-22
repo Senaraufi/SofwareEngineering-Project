@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shopping Cart - TalkTempo{% endblock %}
+
+{% block content %}
+<div class="bg-gray-100 min-h-screen py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Your Shopping Cart</h1>
+            <p class="text-gray-600 mt-2">Review your items before checkout</p>
+        </div>
+
+        {% if cart_items|length > 0 %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <!-- Cart Items -->
+                <div class="divide-y divide-gray-200">
+                    {% for item in cart_items %}
+                        <div class="p-6 flex flex-col md:flex-row items-center md:items-start gap-4">
+                            <!-- Item Image -->
+                            <div class="w-24 h-24 flex-shrink-0 overflow-hidden rounded-md">
+                                <img src="{{ item.image }}" alt="{{ item.artist }}" class="w-full h-full object-cover">
+                            </div>
+                            
+                            <!-- Item Details -->
+                            <div class="flex-1">
+                                <h3 class="text-lg font-medium text-gray-900">{{ item.artist }} Concert</h3>
+                                <div class="mt-1 text-sm text-gray-500 space-y-1">
+                                    <p class="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        {{ item.venue }}
+                                    </p>
+                                    <p class="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        {{ item.date|date('F j, Y') }} at {{ item.time }}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Price and Quantity -->
+                            <div class="flex items-center gap-4">
+                                <!-- Quantity Selector -->
+                                <form action="/cart/update" method="post" class="flex items-center">
+                                    <input type="hidden" name="item_id" value="{{ item.id }}">
+                                    <label for="quantity-{{ item.id }}" class="sr-only">Quantity</label>
+                                    <select id="quantity-{{ item.id }}" name="quantity" class="rounded-md border-gray-300 py-1.5 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" onchange="this.form.submit()">
+                                        {% for i in 1..10 %}
+                                            <option value="{{ i }}" {% if i == item.quantity %}selected{% endif %}>{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </form>
+                                
+                                <!-- Price -->
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">${{ (item.price * item.quantity)|number_format(2) }}</p>
+                                    <p class="text-xs text-gray-500">${{ item.price|number_format(2) }} each</p>
+                                </div>
+                                
+                                <!-- Remove Button -->
+                                <form action="/cart/remove" method="post">
+                                    <input type="hidden" name="item_id" value="{{ item.id }}">
+                                    <button type="submit" class="text-red-500 hover:text-red-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="bg-gray-50 p-6 border-t border-gray-200">
+                    <div class="flex justify-between text-base font-medium text-gray-900 mb-4">
+                        <p>Subtotal</p>
+                        <p>${{ total_price|number_format(2) }}</p>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-500 mb-4">
+                        <p>Service Fee (10%)</p>
+                        <p>${{ (total_price * 0.10)|number_format(2) }}</p>
+                    </div>
+                    <div class="flex justify-between text-lg font-bold text-gray-900 mb-6">
+                        <p>Total</p>
+                        <p>${{ (total_price * 1.10)|number_format(2) }}</p>
+                    </div>
+                    <div class="mt-6">
+                        <form action="/cart/checkout" method="post">
+                            <button type="submit" class="w-full flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Proceed to Checkout
+                            </button>
+                        </form>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <a href="/concerts" class="text-sm text-indigo-600 hover:text-indigo-500">
+                            Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <!-- Empty Cart -->
+            <div class="bg-white rounded-lg shadow-md p-12 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <h3 class="mt-4 text-xl font-medium text-gray-900">Your cart is empty</h3>
+                <p class="mt-2 text-gray-500">Looks like you haven't added any tickets to your cart yet.</p>
+                <div class="mt-6">
+                    <a href="/concerts" class="inline-flex items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Browse Concerts
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

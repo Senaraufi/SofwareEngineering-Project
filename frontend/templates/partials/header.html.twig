@@ -13,7 +13,9 @@
                 <a href="/browse" class="text-gray-300 hover:text-white{% if active_page == 'browse' %} text-white font-medium{% endif %}">Browse</a>
                 <a href="/albums" class="text-gray-300 hover:text-white{% if active_page == 'albums' %} text-white font-medium{% endif %}">Albums</a>
                 <a href="/artists" class="text-gray-300 hover:text-white{% if active_page == 'artists' %} text-white font-medium{% endif %}">Artists</a>
-                <a href="/about" class="text-gray-300 hover:text-white{% if active_page == 'about' %} text-white font-medium{% endif %}">About</a>
+                {% if is_logged_in|default(false) %}
+                <a href="/concerts" class="text-gray-300 hover:text-white{% if active_page == 'concerts' %} text-white font-medium{% endif %}">Concerts</a>
+                {% endif %}
             </div>
         </div>
         <div class="flex items-center space-x-6">
