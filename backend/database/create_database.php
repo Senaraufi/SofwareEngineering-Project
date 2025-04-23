@@ -2,11 +2,12 @@
 
 $host = 'localhost';
 $username = 'root';
-$password = 'Abbeyvale7';
+$password = '';
+$port = 3307;
 
 try {
     // Create connection to MySQL server using PDO
-    $pdo = new PDO("mysql:host=$host", $username, $password);
+    $pdo = new PDO("mysql:host=$host;port=$port", $username, $password);
     
     // Set error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

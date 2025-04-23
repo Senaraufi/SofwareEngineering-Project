@@ -11,6 +11,7 @@ class Database {
     
     private function __construct() {
         $host = 'localhost';
+        $port = 3307;
         $dbname = 'talktempo';
         $username = 'root';
         $password = ''; // Empty password for local development
@@ -18,11 +19,11 @@ class Database {
         try {
             // First try to connect to the database
             try {
-                $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+                $this->pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname", $username, $password);
             } catch (PDOException $e) {
                 // If database doesn't exist, try connecting without specifying a database
                 if (strpos($e->getMessage(), "Unknown database") !== false) {
-                    $this->pdo = new PDO("mysql:host=$host", $username, $password);
+                    $this->pdo = new PDO("mysql:host=$host;port=$port", $username, $password);
                     // Create the database
                     $this->pdo->exec("CREATE DATABASE IF NOT EXISTS $dbname");
                     $this->pdo->exec("USE $dbname");

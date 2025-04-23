@@ -160,13 +160,12 @@ INSERT INTO Users (username, password, email, phone_number, bio, profile_image_u
 ('PixieStix', 'root1234SQL', 'pixiestix@talktempo.com', '+1234567890', 'My names Pixie and Im one of the founders of TalkTempo!', 'https://example.com/admin.jpg', 1),
 ('SenaRaufi', 'superCool1234HTML', 'senaraufi@talktempo.com', '+1234567890', 'My names Sena and Im one of the founders of TalkTempo!', 'https://example.com/admin.jpg', 1),
 ('OjalRakwal', 'woahdude1234PHP', 'ojalrakwal@talktempo.com', '+1234567890', 'My names Ojal and Im one of the founders of TalkTempo!', 'https://example.com/admin.jpg', 1),
----Normal User Accounts from here---
+-- Normal User Accounts from here
 ('UltimateSOADFan45', 'soadBestBandEver', 'serjtankian@yahoo.com', '+5556667778', 'I love System Of A Down theyre the best band in the world!', 'https://example.com/user1.jpg', 0),
 ('FionnaAppleStan78', 'bonnie2984', 'marieyunova@gmail.com', '+5556667778', 'I love music and love to listen to it', 'https://example.com/user2.jpg', 0);
 
 
-
---INFO FOR: Albums and Artists (Only Admins can add/edit these)
+-- INFO FOR: Albums and Artists (Only Admins can add/edit these)
 -- Insert System of a Down artist profile
 INSERT INTO Artists (name, description, image_url, updated_by) VALUES 
 ('System of a Down', 'System of a Down is an Armenian-American heavy metal band formed in Glendale, California, in 1994. Known for their unique style combining alternative metal, hard rock, and Armenian folk music.', 'https://example.com/soad.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));
