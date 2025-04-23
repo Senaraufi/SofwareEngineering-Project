@@ -1,0 +1,17 @@
+/* This code is citied and from Robert Smith and Tania Malik, and is apart of our course material in our Web Devlopment module */
+
+label {
+    display: block;
+    margin: 5px 0;
+    }
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    }
+
+td,
+th {
+    padding: 5px;
+    border-bottom: 1px solid #aaa;
+    }
