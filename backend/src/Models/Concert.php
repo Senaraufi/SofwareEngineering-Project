@@ -17,6 +17,8 @@ class Concert extends BaseModel {
     private $concert_time;
     private $description;
     private $image_url;
+    private $available_tickets;
+    private $ticket_price;
 
     private $updated_by;
     private $artist;
@@ -36,6 +38,8 @@ class Concert extends BaseModel {
         $this->concert_time = $data['concert_time'] ?? null;
         $this->description = $data['description'] ?? null;
         $this->image_url = $data['image_url'] ?? null;
+        $this->available_tickets = $data['available_tickets'] ?? 0;
+        $this->ticket_price = $data['ticket_price'] ?? 0;
         parent::__construct($data);
         $this->updated_by = $data['updated_by'] ?? null;
     }
@@ -190,22 +194,62 @@ class Concert extends BaseModel {
     }
     
     /**
-     * Get concert image URL
+     * Get image URL
      * 
-     * @return string|null Concert image URL
+     * @return string|null Image URL
      */
     public function getImageUrl(): ?string {
         return $this->image_url;
     }
     
     /**
-     * Set concert image URL
+     * Set image URL
      * 
-     * @param string|null $image_url New concert image URL
+     * @param string|null $image_url New image URL
      * @return Concert This Concert instance for method chaining
      */
     public function setImageUrl(?string $image_url): Concert {
         $this->image_url = $image_url;
+        return $this;
+    }
+    
+    /**
+     * Get available tickets
+     * 
+     * @return int Available tickets
+     */
+    public function getAvailableTickets(): int {
+        return $this->available_tickets;
+    }
+    
+    /**
+     * Set available tickets
+     * 
+     * @param int $available_tickets New available tickets count
+     * @return Concert This Concert instance for method chaining
+     */
+    public function setAvailableTickets(int $available_tickets): Concert {
+        $this->available_tickets = $available_tickets;
+        return $this;
+    }
+    
+    /**
+     * Get ticket price
+     * 
+     * @return float Ticket price
+     */
+    public function getTicketPrice(): float {
+        return $this->ticket_price;
+    }
+    
+    /**
+     * Set ticket price
+     * 
+     * @param float $ticket_price New ticket price
+     * @return Concert This Concert instance for method chaining
+     */
+    public function setTicketPrice(float $ticket_price): Concert {
+        $this->ticket_price = $ticket_price;
         return $this;
     }
     
@@ -271,9 +315,31 @@ class Concert extends BaseModel {
     }
     
     /**
+     * Book tickets for this concert
+     * 
+     * @param int $numTickets Number of tickets to book
+     * @return bool True if booking successful, false otherwise
+     */
+    public function bookTickets(int $numTickets): bool {
+        // Cannot book negative or zero tickets
+        if ($numTickets <= 0) {
+            return false;
+        }
+        
+        // Cannot book more tickets than available
+        if ($numTickets > $this->available_tickets) {
+            return false;
+        }
+        
+        // Update available tickets
+        $this->available_tickets -= $numTickets;
+        return true;
+    }
+    
+    /**
      * Convert concert to array
      * 
-     * @param bool $include_artist Whether to include artist in the array
+     * @param bool $include_artist Whether to include artist data
      * @return array Concert data as array
      */
     public function toArray(bool $include_artist = false): array {
