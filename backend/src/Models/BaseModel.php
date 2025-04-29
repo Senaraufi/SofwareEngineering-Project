@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
+use App\Database;
+
 /**
  * BaseModel
  * 
  * Base class for all models in the TalkTempo application
+ * Provides common CRUD operations and database connectivity
  */
 abstract class BaseModel {
+    protected $db;
+    protected $table;
+    protected $primaryKey = 'id';
     protected $created_at;
     protected $updated_at;
     
@@ -17,8 +23,111 @@ abstract class BaseModel {
      * @param array $data Model data from database
      */
     public function __construct(array $data = []) {
+        $this->db = Database::getInstance();
         $this->created_at = $data['created_at'] ?? null;
         $this->updated_at = $data['updated_at'] ?? null;
+    }
+    
+    /**
+     * Find all records
+     * 
+     * @return array All records
+     */
+    public function findAll() {
+        $sql = "SELECT * FROM {$this->table}";
+        return $this->db->query($sql)->fetchAll();
+    }
+    
+    /**
+     * Find record by ID
+     * 
+     * @param int $id Record ID
+     * @return array|false Record data or false if not found
+     */
+    public function findById($id) {
+        $sql = "SELECT * FROM {$this->table} WHERE {$this->primaryKey} = ?";
+        return $this->db->query($sql, [$id])->fetch();
+    }
+    
+    /**
+     * Find records by field value
+     * 
+     * @param string $field Field name
+     * @param mixed $value Field value
+     * @return array Records matching criteria
+     */
+    public function findBy($field, $value) {
+        $sql = "SELECT * FROM {$this->table} WHERE {$field} = ?";
+        return $this->db->query($sql, [$value])->fetchAll();
+    }
+    
+    /**
+     * Create a new record
+     * 
+     * @param array $data Record data
+     * @return int|false New record ID or false on failure
+     */
+    public function create(array $data) {
+        // Add timestamps if table supports them
+        if (!isset($data['created_at']) && $this->hasTimestamps()) {
+            $data['created_at'] = date('Y-m-d H:i:s');
+        }
+        if (!isset($data['updated_at']) && $this->hasTimestamps()) {
+            $data['updated_at'] = date('Y-m-d H:i:s');
+        }
+        
+        return $this->db->insert($this->table, $data);
+    }
+    
+    /**
+     * Update a record
+     * 
+     * @param int $id Record ID
+     * @param array $data Updated data
+     * @return bool Success status
+     */
+    public function update($id, array $data) {
+        // Add updated timestamp if table supports it
+        if (!isset($data['updated_at']) && $this->hasTimestamps()) {
+            $data['updated_at'] = date('Y-m-d H:i:s');
+        }
+        
+        $setClauses = [];
+        $params = [];
+        
+        foreach ($data as $key => $value) {
+            $setClauses[] = "{$key} = ?";
+            $params[] = $value;
+        }
+        
+        $params[] = $id; // Add ID for WHERE clause
+        
+        $sql = "UPDATE {$this->table} SET " . implode(', ', $setClauses) . " WHERE {$this->primaryKey} = ?";
+        $stmt = $this->db->query($sql, $params);
+        
+        return $stmt->rowCount() > 0;
+    }
+    
+    /**
+     * Delete a record
+     * 
+     * @param int $id Record ID
+     * @return bool Success status
+     */
+    public function delete($id) {
+        $sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = ?";
+        $stmt = $this->db->query($sql, [$id]);
+        
+        return $stmt->rowCount() > 0;
+    }
+    
+    /**
+     * Check if table has timestamp columns
+     * 
+     * @return bool True if table has timestamp columns
+     */
+    protected function hasTimestamps() {
+        return true; // Override in child classes if needed
     }
     
     /**

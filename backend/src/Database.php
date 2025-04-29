@@ -10,23 +10,23 @@ class Database {
     private $pdo;
     
     private function __construct() {
-        $host = 'localhost';
-        $port = 3307;
-        $dbname = 'talktempo';
-        $username = 'root';
-        $password = ''; // Empty password for local development
+        // Load database configuration
+        $config = require __DIR__ . '/config/database.php';
         
         try {
             // First try to connect to the database
             try {
-                $this->pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname", $username, $password);
+                $dsn = "mysql:host={$config['host']};dbname={$config['dbname']};charset={$config['charset']}";
+                $this->pdo = new PDO($dsn, $config['username'], $config['password'], $config['options']);
             } catch (PDOException $e) {
                 // If database doesn't exist, try connecting without specifying a database
                 if (strpos($e->getMessage(), "Unknown database") !== false) {
-                    $this->pdo = new PDO("mysql:host=$host;port=$port", $username, $password);
+                    $dsn = "mysql:host={$config['host']}";
+                    $this->pdo = new PDO($dsn, $config['username'], $config['password']);
+                    
                     // Create the database
-                    $this->pdo->exec("CREATE DATABASE IF NOT EXISTS $dbname");
-                    $this->pdo->exec("USE $dbname");
+                    $this->pdo->exec("CREATE DATABASE IF NOT EXISTS {$config['dbname']}");
+                    $this->pdo->exec("USE {$config['dbname']}");
                     
                     // Import schema
                     $schema = file_get_contents(__DIR__ . '/../database/schema.sql');
@@ -47,10 +47,14 @@ class Database {
                 }
             }
             
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            // Set PDO attributes from config
+            foreach ($config['options'] as $attribute => $value) {
+                $this->pdo->setAttribute($attribute, $value);
+            }
         } catch (PDOException $e) {
-            die("Database connection failed: " . $e->getMessage());
+            // Log error instead of exposing details
+            error_log("Database connection error: " . $e->getMessage());
+            throw new \Exception("Database connection failed. See error log for details.");
         }
     }
     
@@ -71,7 +75,8 @@ class Database {
             $stmt->execute($params);
             return $stmt;
         } catch (PDOException $e) {
-            die("Query failed: " . $e->getMessage());
+            error_log("Query failed: " . $e->getMessage());
+            throw new \Exception("Database query failed. See error log for details.");
         }
     }
     
@@ -86,7 +91,8 @@ class Database {
             $stmt->execute(array_values($data));
             return $this->pdo->lastInsertId();
         } catch (PDOException $e) {
-            die("Insert failed: " . $e->getMessage());
+            error_log("Insert failed: " . $e->getMessage());
+            throw new \Exception("Database insert operation failed. See error log for details.");
         }
     }
     
