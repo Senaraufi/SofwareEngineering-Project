@@ -167,14 +167,22 @@ class UserController extends Controller {
         ]);
     }
     
+    /**
+     * Process login form submission
+     * 
+     * @return string Rendered template
+     */
     public function processLogin() {
-        session_start();
+        // Start session if not already started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         
         // Get form data
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
         
-        // Always require password input
+        // Validate input
         if (empty($password)) {
             return $this->render('login.html.twig', [
                 'active_page' => 'login',
@@ -182,7 +190,7 @@ class UserController extends Controller {
                 'input' => ['username' => $username]
             ]);
         }
-        
+
         if (empty($username)) {
             return $this->render('login.html.twig', [
                 'active_page' => 'login',
@@ -191,57 +199,80 @@ class UserController extends Controller {
             ]);
         }
 
-        // Check if user exists and verify password
-        $user = $this->db->findOne('Users', ['username' => $username]);
+        try {
+            // Check if Users table exists
+            $checkTableQuery = "SHOW TABLES LIKE 'Users'";
+            $tableExists = $this->db->query($checkTableQuery)->rowCount() > 0;
+            
+            if (!$tableExists) {
+                // Users table doesn't exist
+                error_log("Users table does not exist");
+                return $this->render('login.html.twig', [
+                    'active_page' => 'login',
+                    'error' => 'Login system is currently unavailable. Please try again later.',
+                    'input' => ['username' => $username]
+                ]);
+            }
+            
+            // Check if user exists and verify password
+            $user = $this->db->findOne('Users', ['username' => $username]);
+            
+            // For debugging purposes
+            if ($user) {
+                error_log("User found: $username");
+            } else {
+                error_log("User not found: $username");
+            }
+            
+            // TEMPORARY: Development login bypass
+            // This allows login with specific test credentials while database is being set up
+            // IMPORTANT: Remove this in production!
+            $devBypass = false;
+            if (($username === 'admin' && $password === 'admin123') ||
+                ($username === 'sena' && $password === '123456789') ||
+                ($username === 'test' && $password === 'test123')) {
+                $devBypass = true;
+                $user = [
+                    'user_id' => 1,
+                    'username' => $username,
+                    'is_admin' => ($username === 'admin') ? 1 : 0
+                ];
+                error_log("DEVELOPMENT MODE: Login bypass activated for user: $username");
+            }
 
-        if ($user && password_verify($password, $user['password'])) {
-            // Set session variables
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['Active'] = true;
+            if (($user && password_verify($password, $user['password'])) || $devBypass) {
+                // Set session variables
+                $_SESSION['user_id'] = $user['user_id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['Active'] = true;
+                
+                // Set admin flag if applicable
+                if (isset($user['is_admin']) && $user['is_admin'] == 1) {
+                    $_SESSION['is_admin'] = true;
+                }
 
-            // Redirect to dashboard
-            header('Location: /dashboard');
-            exit;
-        }
+                // Redirect to dashboard or home page
+                $redirect = isset($_GET['redirect']) ? $_GET['redirect'] : 'dashboard';
+                header('Location: /' . $redirect);
+                exit;
+            }
 
-        return $this->render('login.html.twig', [
-            'active_page' => 'login',
-            'error' => 'Invalid username or password',
-            'input' => ['username' => $username]
-        ]);
-        
-        // Check if user exists - use the findOne method
-        $user = $this->db->findOne('Users', ['username' => $username]);
-        
-        // For debugging purposes
-        if ($user) {
-            error_log("User found: $username");
-        } else {
-            error_log("User not found: $username");
-        }
-        
-        if (!$user || !password_verify($password, $user['password'])) {
             return $this->render('login.html.twig', [
                 'active_page' => 'login',
                 'error' => 'Invalid username or password',
-                'input' => [
-                    'username' => $username
-                ]
+                'input' => ['username' => $username]
+            ]);
+        } catch (\Exception $e) {
+            // Log database error
+            error_log("Database error in processLogin: " . $e->getMessage());
+            
+            // Return error message to user
+            return $this->render('login.html.twig', [
+                'active_page' => 'login',
+                'error' => 'Login system is currently unavailable. Please try again later.',
+                'input' => ['username' => $username]
             ]);
         }
-        
-        // Store user data in session
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['is_admin'] = $user['is_admin'];
-        
-        // Set a success message
-        $_SESSION['login_success'] = 'You have been successfully logged in.';
-        
-        // Redirect to home page
-        header('Location: /');
-        exit;
     }
     
     public function logout() {

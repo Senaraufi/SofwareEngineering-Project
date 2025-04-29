@@ -75,7 +75,15 @@ class Database {
             $stmt->execute($params);
             return $stmt;
         } catch (PDOException $e) {
-            error_log("Query failed: " . $e->getMessage());
+            // Log the full error details for debugging
+            error_log("Query failed: " . $e->getMessage() . " SQL: " . $sql);
+            
+            // Check if the error is related to a missing table
+            if (strpos($e->getMessage(), "Table") !== false && strpos($e->getMessage(), "doesn't exist") !== false) {
+                throw new \Exception("Database table not found. The application may need to be initialized.");
+            }
+            
+            // Generic error message for other database issues
             throw new \Exception("Database query failed. See error log for details.");
         }
     }
@@ -97,19 +105,34 @@ class Database {
     }
     
     public function findOne($table, $conditions) {
-        $where = [];
-        $params = [];
-        
-        foreach ($conditions as $key => $value) {
-            $where[] = "$key = ?";
-            $params[] = $value;
+        try {
+            // Check if table exists first
+            $checkTableQuery = "SHOW TABLES LIKE '$table'";
+            $tableExists = $this->query($checkTableQuery)->rowCount() > 0;
+            
+            if (!$tableExists) {
+                error_log("Table does not exist: $table");
+                return null;
+            }
+            
+            $where = [];
+            $params = [];
+            
+            foreach ($conditions as $key => $value) {
+                $where[] = "$key = ?";
+                $params[] = $value;
+            }
+            
+            $whereClause = implode(' AND ', $where);
+            $sql = "SELECT * FROM $table WHERE $whereClause LIMIT 1";
+            
+            $stmt = $this->query($sql, $params);
+            return $stmt->fetch();
+        } catch (\Exception $e) {
+            // Log the error but return null instead of throwing an exception
+            error_log("findOne failed: " . $e->getMessage());
+            return null;
         }
-        
-        $whereClause = implode(' AND ', $where);
-        $sql = "SELECT * FROM $table WHERE $whereClause LIMIT 1";
-        
-        $stmt = $this->query($sql, $params);
-        return $stmt->fetch();
     }
     
     // The getConnection method is already defined above (line 62)
