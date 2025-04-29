@@ -111,7 +111,7 @@ GitHub Repository: https://github.com/Senaraufi/SofwareEngineering-Project
 
 ## Contribution Statement
 
-I, [YOUR NAME], declare that all work presented in this project is my own original work, except where clearly acknowledged. Third-party assets and code references have been properly cited in the References section above.
+We, Sena Raufi, Pixie Grogan, and Ojal Rakwal declare that all work presented in this project is our own original work, except where clearly acknowledged. Third-party assets and code references have been properly cited in the References section above.
 
 The following components were developed entirely by me:
 - Database design and implementation
