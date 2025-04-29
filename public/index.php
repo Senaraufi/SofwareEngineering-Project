@@ -12,6 +12,7 @@ use App\Controllers\ArtistController;
 use App\Controllers\CommentController;
 use App\Controllers\ConcertController;
 use App\Controllers\CartController;
+use App\Controllers\ReviewController;
 use App\Twig\AppExtension;
 
 // Create Twig environment
@@ -34,6 +35,7 @@ $artistController = new ArtistController();
 $commentController = new CommentController();
 $concertController = new ConcertController();
 $cartController = new CartController();
+$reviewController = new ReviewController();
 
 // Define routes
 $router->get('/', [$pageController, 'home']);
@@ -81,6 +83,14 @@ $router->get('/comment/{id}', [$commentController, 'showAlbumComments']); // Spe
 // Comment submission routes
 $router->post('/comment/add', [$commentController, 'addComment']);
 $router->post('/comment/reply', [$commentController, 'replyToComment']);
+
+// Review routes
+$router->get('/album/{id}/reviews', [$reviewController, 'albumReviews']);
+$router->get('/album/{id}/review/new', [$reviewController, 'newReview']);
+$router->post('/album/{id}/review/submit', [$reviewController, 'submitReview']);
+$router->get('/review/{id}/edit', [$reviewController, 'editReview']);
+$router->post('/review/{id}/update', [$reviewController, 'updateReview']);
+$router->post('/review/{id}/delete', [$reviewController, 'deleteReview']);
 
 // Get the requested path and method
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
