@@ -170,9 +170,11 @@ INSERT INTO Users (username, password, email, phone_number, bio, profile_image_u
 
 -- INFO FOR: Albums and Artists (Only Admins can add/edit these)
 -- Insert System of a Down artist profile
+--GET PHOTOS OF ARTISTS TOO PLSSSSS DONT FORGET
 INSERT INTO Artists (name, description, image_url, updated_by) VALUES 
 ('System of a Down', 'System of a Down is an Armenian-American heavy metal band formed in Glendale, California, in 1994. Known for their unique style combining alternative metal, hard rock, and Armenian folk music.', '/database/images/system-album.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),
-('BTS', 'BTS is a South Korean boy band formed in 2013. Known for their unique style combining K-pop, hip-hop, and R&B.', '/database/images/BTS-album.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));
+('BTS', 'BTS is a South Korean boy band formed in 2013. Known for their unique style combining K-pop, hip-hop, and R&B.', '/database/images/BTS-album.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),
+('Kendrick Lamar', 'Kendrick Lamar is an American rapper, singer, songwriter, and actor known for his socially conscious lyrics and innovative style.', '/database/images/kendrick-lamar.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
 -- Connect System of a Down to their genres
 INSERT INTO ArtistGenres (artist_id, genre_id) VALUES 
@@ -182,8 +184,10 @@ INSERT INTO ArtistGenres (artist_id, genre_id) VALUES
 ((SELECT artist_id FROM Artists WHERE name = 'BTS'), (SELECT genre_id FROM Genres WHERE name = 'K-pop')),
 ((SELECT artist_id FROM Artists WHERE name = 'BTS'), (SELECT genre_id FROM Genres WHERE name = 'Hip Hop')),
 ((SELECT artist_id FROM Artists WHERE name = 'BTS'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
+((SELECT artist_id FROM Artists WHERE name = 'Kendrick Lamar'), (SELECT genre_id FROM Genres WHERE name = 'Hip Hop')),
+((SELECT artist_id FROM Artists WHERE name = 'Kendrick Lamar'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
 
--- Insert Mezmerize album (added by admin)
+-- Insert System of a Down (self titled) album 
 INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
 ((SELECT artist_id FROM Artists WHERE name = 'System of a Down'), 
 'System of A Down (self titled)', 
@@ -192,7 +196,7 @@ INSERT INTO Albums (artist_id, title, release_date, description, image_url, upda
 '/database/images/system-album.jpg', -- Image source: Designer = John Heartfield, found on Wikipedia
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
---Insert Love Yourself: Answer (added by admin)
+--Insert Love Yourself: Answer 
 INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
 ((SELECT artist_id FROM Artists WHERE name = 'BTS'), 
 'Love Yourself: Answer', 
@@ -200,6 +204,15 @@ INSERT INTO Albums (artist_id, title, release_date, description, image_url, upda
 'Love Yourself: Answer is the second studio album by South Korean boy band BTS. It was released on January 25, 2018, as a follow-up to their debut album Love Yourself: Her.',--Source: Fandom.com
 '/database/images/bts-album.jpg', -- Image source: Designer = HuskyFox, found on Wikipedia
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'Kendrick Lamar')),
+('Pimp a Butterfly', 
+'2015-06-02', 
+'Pimp a Butterfly is the third studio album by American rapper Kendrick Lamar, released on June 2, 2015.', --Source: Fandom.com
+'/database/images/kendrick-lamar.jpg', --Image source: Denis Rourve, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
 
 -- Connect System of A Down to its genres
 INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
@@ -211,3 +224,8 @@ INSERT INTO AlbumGenres (album_id, genre_id) VALUES
 ((SELECT album_id FROM Albums WHERE title = 'Love Yourself: Answer'), (SELECT genre_id FROM Genres WHERE name = 'K-pop')),
 ((SELECT album_id FROM Albums WHERE title = 'Love Yourself: Answer'), (SELECT genre_id FROM Genres WHERE name = 'Hip Hop')),
 ((SELECT album_id FROM Albums WHERE title = 'Love Yourself: Answer'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
+
+-- Connect Pimp a Butterfly to its genres
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = 'Pimp a Butterfly'), (SELECT genre_id FROM Genres WHERE name = 'Hip Hop')),
+((SELECT album_id FROM Albums WHERE title = 'Pimp a Butterfly'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
