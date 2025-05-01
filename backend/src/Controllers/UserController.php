@@ -184,6 +184,42 @@ class UserController extends Controller {
         return $user !== false;
     }
     
+    /**
+     * Check if session is active and valid
+     * 
+     * This method can be used to verify if a user is logged in
+     * and optionally enforce session timeout for security
+     * 
+     * @param int $timeout Optional session timeout in seconds (default: 3600 = 1 hour)
+     * @return bool True if session is valid, false otherwise
+     */
+    public function isSessionValid($timeout = 3600) {
+        // Start session if not already started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        // Check if user is logged in
+        if (!isset($_SESSION['user_id']) || !isset($_SESSION['Active']) || $_SESSION['Active'] !== true) {
+            return false;
+        }
+        
+        // Check for session timeout if last_activity is set
+        if (isset($_SESSION['last_activity'])) {
+            $inactive = time() - $_SESSION['last_activity'];
+            if ($inactive >= $timeout) {
+                // Session has timed out, destroy it
+                $this->logout();
+                return false;
+            }
+        }
+        
+        // Update last activity time
+        $_SESSION['last_activity'] = time();
+        
+        return true;
+    }
+    
     public function login() {
         // Start session to access session variables
         if (session_status() == PHP_SESSION_NONE) {
@@ -214,11 +250,27 @@ class UserController extends Controller {
      * 
      * @return string Rendered template
      */
+    /**
+     * Process login form submission
+     * 
+     * References:
+     * - Session management: PHP Manual - Session Handling
+     *   URL: https://www.php.net/manual/en/book.session.php
+     *   Section: "Session Functions"
+     * 
+     * - Authentication best practices: OWASP Authentication Cheat Sheet
+     *   URL: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
+     * 
+     * @return string Rendered template or redirect
+     */
     public function processLogin() {
         // Start session if not already started
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+        
+        // Clear any existing session data for security
+        session_regenerate_id(true);
         
         // Get form data
         $username = $_POST['username'] ?? '';
@@ -283,15 +335,24 @@ class UserController extends Controller {
             }
 
             if (($user && password_verify($password, $user['password'])) || $devBypass) {
-                // Set session variables
+                // Set session variables with enhanced security
+                // Regenerate session ID to prevent session fixation attacks
+                session_regenerate_id(true);
+                
+                // Store user information in session
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['Active'] = true;
+                $_SESSION['login_time'] = time();
+                $_SESSION['last_activity'] = time();
                 
                 // Set admin flag if applicable
                 if (isset($user['is_admin']) && $user['is_admin'] == 1) {
                     $_SESSION['is_admin'] = true;
                 }
+                
+                // Log successful login
+                error_log("User login successful: {$user['username']} (ID: {$user['user_id']})");
 
                 // Redirect to dashboard or home page
                 $redirect = isset($_GET['redirect']) ? $_GET['redirect'] : 'dashboard';
@@ -317,10 +378,27 @@ class UserController extends Controller {
         }
     }
     
+    /**
+     * Logout user and destroy session
+     * 
+     * References:
+     * - Secure logout implementation: PHP Manual - Session Security
+     *   URL: https://www.php.net/manual/en/session.security.php
+     *   Section: "Session and Cookie Hijacking"
+     * 
+     * - OWASP Session Management Cheat Sheet
+     *   URL: https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
+     *   Section: "Session Expiration"
+     */
     public function logout() {
         // Start session if not already started
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
+        }
+        
+        // Log the logout event if user was logged in
+        if (isset($_SESSION['username'])) {
+            error_log("User logout: {$_SESSION['username']} (ID: {$_SESSION['user_id']})");
         }
         
         // Unset all session variables
@@ -338,8 +416,8 @@ class UserController extends Controller {
         // Destroy the session
         session_destroy();
         
-        // Redirect to home page
-        header('Location: /');
+        // Redirect to home page with logout message
+        header('Location: /?msg=logout_success');
         exit;
     }
 }
