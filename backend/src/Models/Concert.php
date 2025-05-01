@@ -6,6 +6,18 @@ namespace App\Models;
  * Concert Model
  * 
  * Represents a concert in the TalkTempo application
+ * 
+ * References:
+ * - Domain modeling approach: Domain-Driven Design by Eric Evans
+ *   Chapter: "Building Domain Models"
+ * 
+ * - Object property structure: Laravel's Eloquent ORM Models
+ *   URL: https://laravel.com/docs/8.x/eloquent
+ *   Section: "Eloquent Model Conventions"
+ * 
+ * - Getter/Setter pattern: PHP Objects, Patterns, and Practice (5th Edition)
+ *   Author: Matt Zandstra
+ *   Chapter: "Generating Objects"
  */
 class Concert extends BaseModel {
     private $concert_id;
@@ -317,6 +329,15 @@ class Concert extends BaseModel {
     /**
      * Book tickets for this concert
      * 
+     * References:
+     * - Ticket booking validation logic inspired by:
+     *   Ticketmaster Developer Documentation - Commerce API
+     *   URL: https://developer.ticketmaster.com/products-and-docs/apis/getting-started/
+     * 
+     * - Validation pattern from:
+     *   PHP: The Right Way - Data Validation
+     *   URL: https://phptherightway.com/#data_validation
+     * 
      * @param int $numTickets Number of tickets to book
      * @return bool True if booking successful, false otherwise
      */
@@ -338,6 +359,16 @@ class Concert extends BaseModel {
     
     /**
      * Convert concert to array
+     * 
+     * References:
+     * - Array serialization pattern from:
+     *   Laravel's Eloquent ORM: Model::toArray() method
+     *   URL: https://laravel.com/docs/8.x/eloquent-serialization#serializing-models-and-collections
+     * 
+     * - Recursive serialization approach from:
+     *   PHP Object to Array Conversion Best Practices
+     *   URL: https://stackoverflow.com/questions/4345554/convert-php-object-to-associative-array
+     *   Author: StackOverflow user "Gordon"
      * 
      * @param bool $include_artist Whether to include artist data
      * @return array Concert data as array
