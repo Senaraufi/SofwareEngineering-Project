@@ -174,7 +174,8 @@ INSERT INTO Users (username, password, email, phone_number, bio, profile_image_u
 INSERT INTO Artists (name, description, image_url, updated_by) VALUES 
 ('System of a Down', 'System of a Down is an Armenian-American heavy metal band formed in Glendale, California, in 1994. Known for their unique style combining alternative metal, hard rock, and Armenian folk music.', '/database/images/system-album.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),
 ('BTS', 'BTS is a South Korean boy band formed in 2013. Known for their unique style combining K-pop, hip-hop, and R&B.', '/database/images/BTS-album.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),
-('Kendrick Lamar', 'Kendrick Lamar is an American rapper, singer, songwriter, and actor known for his socially conscious lyrics and innovative style.', '/database/images/kendrick-lamar.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));
+('Kendrick Lamar', 'Kendrick Lamar is an American rapper, singer, songwriter, and actor known for his socially conscious lyrics and innovative style.', '/database/images/kendrick-lamar.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),
+('Fleetwood Mac', 'Fleetwood Mac is an English/American rock band formed in 1967. Known for their unique style combining rock, folk, and blues.', '/database/images/fleetwood-mac.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
 -- Connect System of a Down to their genres
 INSERT INTO ArtistGenres (artist_id, genre_id) VALUES 
@@ -186,6 +187,13 @@ INSERT INTO ArtistGenres (artist_id, genre_id) VALUES
 ((SELECT artist_id FROM Artists WHERE name = 'BTS'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
 ((SELECT artist_id FROM Artists WHERE name = 'Kendrick Lamar'), (SELECT genre_id FROM Genres WHERE name = 'Hip Hop')),
 ((SELECT artist_id FROM Artists WHERE name = 'Kendrick Lamar'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
+((SELECT artist_id FROM Artists WHERE name = 'Fleetwood Mac'), (SELECT genre_id FROM Genres WHERE name = 'Rock')),
+((SELECT artist_id FROM Artists WHERE name = 'Fleetwood Mac'), (SELECT genre_id FROM Genres WHERE name = 'Folk'));
+
+((SELECT artist_id FROM Artists WHERE name = 'Pixies'), (SELECT genre_id FROM Genres WHERE name = 'Alternative')),
+((SELECT artist_id FROM Artists WHERE name = 'Pixies'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
+
+
 
 -- Insert System of a Down (self titled) album 
 INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
@@ -205,6 +213,8 @@ INSERT INTO Albums (artist_id, title, release_date, description, image_url, upda
 '/database/images/bts-album.jpg', -- Image source: Designer = HuskyFox, found on Wikipedia
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
+
+-- Insert Pimp a Butterfly album
 INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
 ((SELECT artist_id FROM Artists WHERE name = 'Kendrick Lamar')),
 ('Pimp a Butterfly', 
@@ -213,6 +223,23 @@ INSERT INTO Albums (artist_id, title, release_date, description, image_url, upda
 '/database/images/kendrick-lamar.jpg', --Image source: Denis Rourve, found on Wikipedia
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
+-- Insert Rumours album
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'Fleetwood Mac')),
+('Rumours', 
+'1977-11-01', 
+'Rumours is the eighth studio album by Fleetwood Mac, released on November 1, 1977.', --Source: Fandom.com
+'/database/images/fleetwood-mac.jpg', --Image source: Designer = John Heartfield, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
+-- Insert Pixies album
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'Pixies')),
+('Trompe Le Monde', 
+'September 23, 1991', 
+'Trompe le Monde is the fourth studio album by the American alternative rock band Pixies, released on September 23, 1991[1] on 4AD in the United Kingdom and on September 24, 1991, on Elektra Records in the United States.', --Source: Wikipedia.com
+'/database/images/pixies.jpg', --Image source: Designer = Vaughan Oliver, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
 -- Connect System of A Down to its genres
 INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
@@ -229,3 +256,13 @@ INSERT INTO AlbumGenres (album_id, genre_id) VALUES
 INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
 ((SELECT album_id FROM Albums WHERE title = 'Pimp a Butterfly'), (SELECT genre_id FROM Genres WHERE name = 'Hip Hop')),
 ((SELECT album_id FROM Albums WHERE title = 'Pimp a Butterfly'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
+
+-- Connect Rumours to its genres
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = 'Rumours'), (SELECT genre_id FROM Genres WHERE name = 'Rock')),
+((SELECT album_id FROM Albums WHERE title = 'Rumours'), (SELECT genre_id FROM Genres WHERE name = 'Folk'));
+
+--Connect Trompe Le Monde to its genres
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = 'Trompe Le Monde'), (SELECT genre_id FROM Genres WHERE name = 'Alternative')),
+((SELECT album_id FROM Albums WHERE title = 'Trompe Le Monde'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
