@@ -1,4 +1,8 @@
 -- Users table is for every users profile: Both admins and Users of the site will be stored here
+-- Images stored in /backend/database/images/ 
+
+--USE THIS FORMAT FOR THE PHOTOS IN THE FUTURE!!!!: 'Image source: [Photographer Name] - [Website/Platform] - [License if applicable]'
+
 CREATE TABLE IF NOT EXISTS Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -157,18 +161,18 @@ INSERT INTO Genres (name) VALUES
 
 -- Insert sample users
 INSERT INTO Users (username, password, email, phone_number, bio, profile_image_url, is_admin) VALUES 
-('PixieStix', 'root1234SQL', 'pixiestix@talktempo.com', '+1234567890', 'My names Pixie and Im one of the founders of TalkTempo!', 'https://example.com/admin.jpg', 1),
-('SenaRaufi', 'superCool1234HTML', 'senaraufi@talktempo.com', '+1234567890', 'My names Sena and Im one of the founders of TalkTempo!', 'https://example.com/admin.jpg', 1),
-('OjalRakwal', 'woahdude1234PHP', 'ojalrakwal@talktempo.com', '+1234567890', 'My names Ojal and Im one of the founders of TalkTempo!', 'https://example.com/admin.jpg', 1),
+('PixieStix', 'root1234SQL', 'pixiestix@talktempo.com', '+1234567890', 'My names Pixie and Im one of the founders of TalkTempo!', '/database/images/profile-default.jpg', 1),
+('SenaRaufi', 'superCool1234HTML', 'senaraufi@talktempo.com', '+1234567890', 'My names Sena and Im one of the founders of TalkTempo!', '/database/images/profile-default.jpg', 1),
+('OjalRakwal', 'woahdude1234PHP', 'ojalrakwal@talktempo.com', '+1234567890', 'My names Ojal and Im one of the founders of TalkTempo!', '/database/images/profile-default.jpg', 1),
 -- Normal User Accounts from here
-('UltimateSOADFan45', 'soadBestBandEver', 'serjtankian@yahoo.com', '+5556667778', 'I love System Of A Down theyre the best band in the world!', 'https://example.com/user1.jpg', 0),
-('FionnaAppleStan78', 'bonnie2984', 'marieyunova@gmail.com', '+5556667778', 'I love music and love to listen to it', 'https://example.com/user2.jpg', 0);
-
+('UltimateSOADFan45', 'soadBestBandEver', 'serjtankian@yahoo.com', '+5556667778', 'I love System Of A Down theyre the best band in the world!', '/database/images/profile-default.jpg', 0),
+('FionnaAppleStan78', 'bonnie2984', 'marieyunova@gmail.com', '+5556667778', 'I love music and love to listen to it', '/database/images/profile-default.jpg', 0);
 
 -- INFO FOR: Albums and Artists (Only Admins can add/edit these)
 -- Insert System of a Down artist profile
 INSERT INTO Artists (name, description, image_url, updated_by) VALUES 
-('System of a Down', 'System of a Down is an Armenian-American heavy metal band formed in Glendale, California, in 1994. Known for their unique style combining alternative metal, hard rock, and Armenian folk music.', 'https://example.com/soad.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));
+('System of a Down', 'System of a Down is an Armenian-American heavy metal band formed in Glendale, California, in 1994. Known for their unique style combining alternative metal, hard rock, and Armenian folk music.', '/database/images/system-album.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),
+('BTS', 'BTS is a South Korean boy band formed in 2013. Known for their unique style combining K-pop, hip-hop, and R&B.', '/database/images/BTS-album.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
 -- Connect System of a Down to their genres
 INSERT INTO ArtistGenres (artist_id, genre_id) VALUES 
@@ -182,7 +186,7 @@ INSERT INTO Albums (artist_id, title, release_date, description, image_url, upda
 'Mezmerize', 
 '2005-05-17', 
 'Mezmerize is the fourth studio album by System of a Down. It was released on May 17, 2005, six months before the release of its companion album Hypnotize.',
-'https://example.com/mezmerize.jpg',
+'/database/images/system-album.jpg',
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
 -- Connect Mezmerize to its genres
