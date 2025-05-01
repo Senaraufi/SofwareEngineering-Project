@@ -1,3 +1,4 @@
+--THIS CODE HAS BEEN LEARNED FROM OUR DATABASE MODULE LAST SEMESTER, Everything I have is this file is from that module
 -- Users table is for every users profile: Both admins and Users of the site will be stored here
 -- Images stored in /backend/database/images/ 
 
@@ -149,6 +150,9 @@ CREATE TABLE IF NOT EXISTS UserFollows (
     FOREIGN KEY (following_id) REFERENCES Users(user_id)
 );
 
+
+
+
 -- Insert some basic genres
 INSERT INTO Genres (name) VALUES 
 ('Rock'), ('Pop'), ('Hip Hop'), ('Jazz'), ('Classical'), 
@@ -168,14 +172,32 @@ INSERT INTO Users (username, password, email, phone_number, bio, profile_image_u
 ('UltimateSOADFan45', 'soadBestBandEver', 'serjtankian@yahoo.com', '+5556667778', 'I love System Of A Down theyre the best band in the world!', '/database/images/profile-default.jpg', 0),
 ('FionnaAppleStan78', 'bonnie2984', 'marieyunova@gmail.com', '+5556667778', 'I love music and love to listen to it', '/database/images/profile-default.jpg', 0);
 
+
+
+
+
+
+
 -- INFO FOR: Albums and Artists (Only Admins can add/edit these)
 -- Insert System of a Down artist profile
 --GET PHOTOS OF ARTISTS TOO PLSSSSS DONT FORGET
 INSERT INTO Artists (name, description, image_url, updated_by) VALUES 
-('System of a Down', 'System of a Down is an Armenian-American heavy metal band formed in Glendale, California, in 1994. Known for their unique style combining alternative metal, hard rock, and Armenian folk music.', '/database/images/system-album.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),
-('BTS', 'BTS is a South Korean boy band formed in 2013. Known for their unique style combining K-pop, hip-hop, and R&B.', '/database/images/BTS-album.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),
-('Kendrick Lamar', 'Kendrick Lamar is an American rapper, singer, songwriter, and actor known for his socially conscious lyrics and innovative style.', '/database/images/kendrick-lamar.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),
-('Fleetwood Mac', 'Fleetwood Mac is an English/American rock band formed in 1967. Known for their unique style combining rock, folk, and blues.', '/database/images/fleetwood-mac.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
+('Radiohead', 'Radiohead is an English rock band formed in Liverpool in 1985. Known for their unique style combining rock, folk, and blues.', '/database/images/radiohead-artist.jpeg', (SELECT user_id FROM Users WHERE username = 'PixieStix')); --Source: https://www.fanpop.com/login?redirect_url=%2Fclubs%2Fradiohead%2Fimages%2F22916726%2Ftitle%2Fradiohead-photo
+
+
+('System of a Down', 'System of a Down is an Armenian-American heavy metal band formed in Glendale, California, in 1994. Known for their unique style combining alternative metal, hard rock, and Armenian folk music.', '/database/images/systemofadown-artist.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));--Source: https://wall.alphacoders.com/big.php?i=506126
+('Kendrick Lamar', 'Kendrick Lamar is an American rapper, singer, songwriter, and actor known for his socially conscious lyrics and innovative style.', '/database/images/kendricklamar-artist.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')), --Source: https://www.cnnbrasil.com.br/entretenimento/kendrick-lamar-promete-storytelling-em-seu-show-no-super-bowl/
+('Taylor Swift', 'Taylor Swift is an American singer-songwriter known for her powerful voice and innovative style.', '/database/images/taylorswift-artist.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),--Source: https://people.com/music/taylor-swift-makes-surprise-donations-to-local-food-banks-amid-tour/
+('The Beatles', 'The Beatles are an English rock band formed in Liverpool in 1960. Known for their unique style combining rock, folk, and blues.', '/database/images/thebeatles-artist.jpeg', (SELECT user_id FROM Users WHERE username = 'PixieStix')), --Source: https://www.loudersound.com/features/the-beatles-how-the-white-album-changed-everything
+('Artic Monkeys', 'Artic Monkeys are an English rock band formed in Liverpool in 2004. Known for their unique style combining rock, folk, and blues.', '/database/images/articmonkeys-artist.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')), --Source: https://www.nme.com/news/music/james-ford-arctic-monkeys-the-car-originally-bigger-more-outward-facing-3452052
+('BTS', 'BTS is a South Korean boy band formed in 2013. Known for their unique style combining K-pop, hip-hop, and R&B.', '/database/images/bts-artist.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),--Source: https://c2.castu.org/tob-696-bangtan-sonyeondan-dynamite-saeroun-eobdeiteu-71-bun-jeon/
+('Fleetwood Mac', 'Fleetwood Mac is an English/American rock band formed in 1967. Known for their unique style combining rock, folk, and blues.', '/database/images/fleetwoodmac-artist.jpeg', (SELECT user_id FROM Users WHERE username = 'PixieStix')), --Source: https://kiel-recht.de/mick-fleetwood-uber-die-zukunft-von-fleetwood-mac-nach-dem-tod-von-christine-mcvie/
+('Beyonce', 'Beyonce is an American singer-songwriter known for her powerful voice and innovative style.', '/database/images/beyonce-artist.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));--Source: https://www.forbes.com/profile/beyonce-knowles-carter/
+('Pixies', 'Pixies are an English rock band formed in London in 1986. Known for their unique style combining rock, folk, and blues.', '/database/images/pixies-artist.jpeg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));--Source: https://www.last.fm/music/Pixies
+('Pink Floyd', 'Pink Floyd is an English rock band formed in London in 1965. Known for their unique style combining rock, folk, and blues.', '/database/images/pinkfloyd-artist.jpeg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));--Source: https://www.reaction.life/the-enduring-relevance-of-pink-floyd
+('Nirvana', 'Nirvana is an American rock band formed in Aberdeen, Washington in 1987. Known for their unique style combining rock, folk, and blues.', '/database/images/nirvana-artist.jpeg', (SELECT user_id FROM Users WHERE username = 'PixieStix')); --Source: https://getwallpapers.com/collection/nirvana-wallpapers
+
 
 -- Connect Artists to their genres
 INSERT INTO ArtistGenres (artist_id, genre_id) VALUES 
@@ -198,6 +220,27 @@ INSERT INTO ArtistGenres (artist_id, genre_id) VALUES
 
 ((SELECT artist_id FROM Artists WHERE name = 'The Beatles'), (SELECT genre_id FROM Genres WHERE name = 'Rock')),
 ((SELECT artist_id FROM Artists WHERE name = 'The Beatles'), (SELECT genre_id FROM Genres WHERE name = 'Pop'));
+
+((SELECT artist_id FROM Artists WHERE name = 'Pink Floyd'), (SELECT genre_id FROM Genres WHERE name = 'Rock')),
+((SELECT artist_id FROM Artists WHERE name = 'Pink Floyd'), (SELECT genre_id FROM Genres WHERE name = 'Alternative'));
+
+((SELECT artist_id FROM Artists WHERE name = 'Nirvana'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
+((SELECT artist_id FROM Artists WHERE name = 'Nirvana'), (SELECT genre_id FROM Genres WHERE name = 'Alternative'));
+((SELECT artist_id FROM Artists WHERE name = 'Nirvana'), (SELECT genre_id FROM Genres WHERE name = 'Grunge'));
+
+((SELECT artist_id FROM Artists WHERE name = 'Radiohead'), (SELECT genre_id FROM Genres WHERE name = 'Alternative'));
+((SELECT artist_id FROM Artists WHERE name = 'Radiohead'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
+
+((SELECT artist_id FROM Artists WHERE name = 'Artic Monkeys'), (SELECT genre_id FROM Genres WHERE name = 'Alternative'));
+((SELECT artist_id FROM Artists WHERE name = 'Artic Monkeys'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
+
+((SELECT artist_id FROM Artists WHERE name = 'Taylor Swift'), (SELECT genre_id FROM Genres WHERE name = 'Pop'));
+((SELECT artist_id FROM Artists WHERE name = 'Taylor Swift'), (SELECT genre_id FROM Genres WHERE name = 'Country'));
+
+
+
+
+
 
 
 
@@ -266,6 +309,58 @@ INSERT INTO Albums (artist_id, title, release_date, description, image_url, upda
 '/database/images/beatles-album.jpg', --Image source: Designer = Iain Macmillan, found on Wikipedia
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
+-- Insert Pink Floyd album
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'Pink Floyd')),
+('The Dark Side of the Moon', 
+'1973-03-01', 
+'The Dark Side of the Moon is the eighth studio album by English rock band Pink Floyd, released on March 1, 1973.', --Source: Wikipedia.com
+'/database/images/pinkfloyd-album.jpg', --Image source: Designer = Hipgnosis, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
+--Insert Nirvana album
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'Nirvana')),
+('Nevermind', 
+'1991-09-23', 
+'Nevermind is the debut studio album by American grunge band Nirvana, released on September 23, 1991.', --Source: Wikipedia.com
+'/database/images/nirvana-album.jpg', --Image source: Designer = Robert Fisher, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
+--Insert Radiohead album
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'Radiohead')),
+('OK Computer', 
+'1997-09-23', 
+'OK Computer is the third studio album by English rock band Radiohead, released on September 23, 1997.', --Source: Wikipedia.com
+'/database/images/radiohead-album.jpg', --Image source: Designer = Stanley Donwood & Thom York, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
+--Insert Artic Monkeys album
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'Artic Monkeys')),
+('Fluorescent Adolescent', 
+'2010-09-23', 
+'Fluorescent Adolescent is the third studio album by English rock band Artic Monkeys, released on September 23, 2010.', --Source: Wikipedia.com
+'/database/images/artic-album.jpg', --Image source: Designer = Johanna Bennett, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'))
+
+--Insert Tayor Swift album
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'Taylor Swift')),
+('1989', 
+'2014-09-23', 
+'1989 is the debut studio album by American singer-songwriter Taylor Swift, released on September 23, 2014.', --Source: Wikipedia.com
+'/database/images/taylor-album.jpg', --Image source: Designer = Taylor Swift, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
+
+
+
+
+
+
+
 -- Connect System of A Down to its genres
 INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
 ((SELECT album_id FROM Albums WHERE title = 'System of A Down (self titled)'), (SELECT genre_id FROM Genres WHERE name = 'Metal')),
@@ -299,4 +394,28 @@ INSERT INTO AlbumGenres (album_id, genre_id) VALUES
 INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
 ((SELECT album_id FROM Albums WHERE title = 'Abbey Road'), (SELECT genre_id FROM Genres WHERE name = 'Rock')),
 ((SELECT album_id FROM Albums WHERE title = 'Abbey Road'), (SELECT genre_id FROM Genres WHERE name = 'Pop'));
+
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = 'The Dark Side of the Moon'), (SELECT genre_id FROM Genres WHERE name = 'Rock')),
+((SELECT album_id FROM Albums WHERE title = 'The Dark Side of the Moon'), (SELECT genre_id FROM Genres WHERE name = 'Progressive Rock'));
+
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = 'Nevermind'), (SELECT genre_id FROM Genres WHERE name = 'Rock')),
+((SELECT album_id FROM Albums WHERE title = 'Nevermind'), (SELECT genre_id FROM Genres WHERE name = 'Alternative')),
+((SELECT album_id FROM Albums WHERE title = 'Nevermind'), (SELECT genre_id FROM Genres WHERE name = 'Grunge'));
+
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = 'OK Computer'), (SELECT genre_id FROM Genres WHERE name = 'Alternative')),
+((SELECT album_id FROM Albums WHERE title = 'OK Computer'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
+
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = 'Fluorescent Adolescent'), (SELECT genre_id FROM Genres WHERE name = 'Alternative')),
+((SELECT album_id FROM Albums WHERE title = 'Fluorescent Adolescent'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
+
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = '1989'), (SELECT genre_id FROM Genres WHERE name = 'Pop')),
+((SELECT album_id FROM Albums WHERE title = '1989'), (SELECT genre_id FROM Genres WHERE name = 'Country'));
+
+
+
 
