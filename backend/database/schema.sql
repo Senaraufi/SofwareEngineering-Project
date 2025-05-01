@@ -177,7 +177,7 @@ INSERT INTO Artists (name, description, image_url, updated_by) VALUES
 ('Kendrick Lamar', 'Kendrick Lamar is an American rapper, singer, songwriter, and actor known for his socially conscious lyrics and innovative style.', '/database/images/kendrick-lamar.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),
 ('Fleetwood Mac', 'Fleetwood Mac is an English/American rock band formed in 1967. Known for their unique style combining rock, folk, and blues.', '/database/images/fleetwood-mac.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
--- Connect System of a Down to their genres
+-- Connect Artists to their genres
 INSERT INTO ArtistGenres (artist_id, genre_id) VALUES 
 ((SELECT artist_id FROM Artists WHERE name = 'System of a Down'), (SELECT genre_id FROM Genres WHERE name = 'Metal')),
 ((SELECT artist_id FROM Artists WHERE name = 'System of a Down'), (SELECT genre_id FROM Genres WHERE name = 'Alternative')),
@@ -192,6 +192,13 @@ INSERT INTO ArtistGenres (artist_id, genre_id) VALUES
 
 ((SELECT artist_id FROM Artists WHERE name = 'Pixies'), (SELECT genre_id FROM Genres WHERE name = 'Alternative')),
 ((SELECT artist_id FROM Artists WHERE name = 'Pixies'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
+
+((SELECT artist_id FROM Artists WHERE name = 'Beyonce'), (SELECT genre_id FROM Genres WHERE name = 'Pop')),
+((SELECT artist_id FROM Artists WHERE name = 'Beyonce'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
+
+((SELECT artist_id FROM Artists WHERE name = 'The Beatles'), (SELECT genre_id FROM Genres WHERE name = 'Rock')),
+((SELECT artist_id FROM Artists WHERE name = 'The Beatles'), (SELECT genre_id FROM Genres WHERE name = 'Pop'));
+
 
 
 
@@ -210,7 +217,7 @@ INSERT INTO Albums (artist_id, title, release_date, description, image_url, upda
 'Love Yourself: Answer', 
 '2018-01-25', 
 'Love Yourself: Answer is the second studio album by South Korean boy band BTS. It was released on January 25, 2018, as a follow-up to their debut album Love Yourself: Her.',--Source: Fandom.com
-'/database/images/bts-album.jpg', -- Image source: Designer = HuskyFox, found on Wikipedia
+'/database/images/BTS-album.jpg', -- Image source: Designer = HuskyFox, found on Wikipedia
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
 
@@ -220,7 +227,7 @@ INSERT INTO Albums (artist_id, title, release_date, description, image_url, upda
 ('Pimp a Butterfly', 
 '2015-06-02', 
 'Pimp a Butterfly is the third studio album by American rapper Kendrick Lamar, released on June 2, 2015.', --Source: Fandom.com
-'/database/images/kendrick-lamar.jpg', --Image source: Denis Rourve, found on Wikipedia
+'/database/images/kendrick-album.jpg', --Image source: Denis Rourve, found on Wikipedia
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
 -- Insert Rumours album
@@ -229,16 +236,34 @@ INSERT INTO Albums (artist_id, title, release_date, description, image_url, upda
 ('Rumours', 
 '1977-11-01', 
 'Rumours is the eighth studio album by Fleetwood Mac, released on November 1, 1977.', --Source: Fandom.com
-'/database/images/fleetwood-mac.jpg', --Image source: Designer = John Heartfield, found on Wikipedia
+'/database/images/fleetwood-album.jpg', --Image source: Designer = John Heartfield, found on Wikipedia
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
 -- Insert Pixies album
 INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
 ((SELECT artist_id FROM Artists WHERE name = 'Pixies')),
 ('Trompe Le Monde', 
-'September 23, 1991', 
+'1991-09-23', 
 'Trompe le Monde is the fourth studio album by the American alternative rock band Pixies, released on September 23, 1991[1] on 4AD in the United Kingdom and on September 24, 1991, on Elektra Records in the United States.', --Source: Wikipedia.com
-'/database/images/pixies.jpg', --Image source: Designer = Vaughan Oliver, found on Wikipedia
+'/database/images/pixies-album.jpg', --Image source: Designer = Vaughan Oliver, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
+-- Insert Beyonce album
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'Beyonce')),
+('Lemonade', 
+'2016-04-23', 
+'Lemonade is the sixth studio album by American singer and songwriter Beyoncé. It was released on April 23, 2016, by Parkwood Entertainment and Columbia Records, accompanied by a 65-minute film of the same name. ', --Source: Wikipedia.com
+'/database/images/beyonce-album.jpg', --Image source: Designer = Agnez Deréon, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
+-- Insert The Beatles album
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'The Beatles')),
+('Abbey Road', 
+'1969-12-02', 
+'Abbey Road is the eleventh studio album by English rock band The Beatles, released on December 2, 1969.', --Source: Wikipedia.com
+'/database/images/beatles-album.jpg', --Image source: Designer = Iain Macmillan, found on Wikipedia
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
 -- Connect System of A Down to its genres
@@ -266,3 +291,12 @@ INSERT INTO AlbumGenres (album_id, genre_id) VALUES
 INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
 ((SELECT album_id FROM Albums WHERE title = 'Trompe Le Monde'), (SELECT genre_id FROM Genres WHERE name = 'Alternative')),
 ((SELECT album_id FROM Albums WHERE title = 'Trompe Le Monde'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
+
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = 'Lemonade'), (SELECT genre_id FROM Genres WHERE name = 'Pop')),
+((SELECT album_id FROM Albums WHERE title = 'Lemonade'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
+
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = 'Abbey Road'), (SELECT genre_id FROM Genres WHERE name = 'Rock')),
+((SELECT album_id FROM Albums WHERE title = 'Abbey Road'), (SELECT genre_id FROM Genres WHERE name = 'Pop'));
+
