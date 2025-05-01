@@ -179,17 +179,35 @@ INSERT INTO ArtistGenres (artist_id, genre_id) VALUES
 ((SELECT artist_id FROM Artists WHERE name = 'System of a Down'), (SELECT genre_id FROM Genres WHERE name = 'Metal')),
 ((SELECT artist_id FROM Artists WHERE name = 'System of a Down'), (SELECT genre_id FROM Genres WHERE name = 'Alternative')),
 ((SELECT artist_id FROM Artists WHERE name = 'System of a Down'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
+((SELECT artist_id FROM Artists WHERE name = 'BTS'), (SELECT genre_id FROM Genres WHERE name = 'K-pop')),
+((SELECT artist_id FROM Artists WHERE name = 'BTS'), (SELECT genre_id FROM Genres WHERE name = 'Hip Hop')),
+((SELECT artist_id FROM Artists WHERE name = 'BTS'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
 
 -- Insert Mezmerize album (added by admin)
 INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
 ((SELECT artist_id FROM Artists WHERE name = 'System of a Down'), 
-'Mezmerize', 
-'2005-05-17', 
-'Mezmerize is the fourth studio album by System of a Down. It was released on May 17, 2005, six months before the release of its companion album Hypnotize.',
-'/database/images/system-album.jpg',
+'System of A Down (self titled)', 
+'1998-06-30', 
+'System of a Down is the eponymous debut album by System of a Down, first released in 1998. The album was certified gold by the RIAA on February 2, 2000. Two years later, after the success of Toxicity, it was certified platinum.',--Source: Fandom.com
+'/database/images/system-album.jpg', -- Image source: Designer = John Heartfield, found on Wikipedia
 (SELECT user_id FROM Users WHERE username = 'PixieStix'));
 
--- Connect Mezmerize to its genres
+--Insert Love Yourself: Answer (added by admin)
+INSERT INTO Albums (artist_id, title, release_date, description, image_url, updated_by) VALUES 
+((SELECT artist_id FROM Artists WHERE name = 'BTS'), 
+'Love Yourself: Answer', 
+'2018-01-25', 
+'Love Yourself: Answer is the second studio album by South Korean boy band BTS. It was released on January 25, 2018, as a follow-up to their debut album Love Yourself: Her.',--Source: Fandom.com
+'/database/images/bts-album.jpg', -- Image source: Designer = HuskyFox, found on Wikipedia
+(SELECT user_id FROM Users WHERE username = 'PixieStix'));
+
+-- Connect System of A Down to its genres
 INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
-((SELECT album_id FROM Albums WHERE title = 'Mezmerize'), (SELECT genre_id FROM Genres WHERE name = 'Metal')),
-((SELECT album_id FROM Albums WHERE title = 'Mezmerize'), (SELECT genre_id FROM Genres WHERE name = 'Alternative'));
+((SELECT album_id FROM Albums WHERE title = 'System of A Down (self titled)'), (SELECT genre_id FROM Genres WHERE name = 'Metal')),
+((SELECT album_id FROM Albums WHERE title = 'System of A Down (self titled)'), (SELECT genre_id FROM Genres WHERE name = 'Alternative'));
+
+-- Connect Love Yourself: Answer to its genres
+INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
+((SELECT album_id FROM Albums WHERE title = 'Love Yourself: Answer'), (SELECT genre_id FROM Genres WHERE name = 'K-pop')),
+((SELECT album_id FROM Albums WHERE title = 'Love Yourself: Answer'), (SELECT genre_id FROM Genres WHERE name = 'Hip Hop')),
+((SELECT album_id FROM Albums WHERE title = 'Love Yourself: Answer'), (SELECT genre_id FROM Genres WHERE name = 'R&B'));
