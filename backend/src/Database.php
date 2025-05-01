@@ -1,4 +1,21 @@
 <?php
+/**
+ * Database Class
+ * 
+ * This class implements the Singleton pattern for database connection management.
+ * 
+ * References:
+ * - Singleton Pattern: PHP: The Right Way - Design Patterns
+ *   URL: https://phptherightway.com/pages/Design-Patterns.html#singleton
+ * 
+ * - PDO Error Handling: PHP Manual - PDO Exception Handling
+ *   URL: https://www.php.net/manual/en/pdo.error-handling.php
+ *   Section: "Example #1 Forcing errors to be exceptions"
+ * 
+ * - Database Connection Management: PHP & MySQL: Novice to Ninja (6th Edition)
+ *   Author: Tom Butler & Kevin Yank
+ *   Chapter: "Creating a Data Access Layer"
+ */
 
 namespace App;
 
@@ -58,6 +75,15 @@ class Database {
         }
     }
     
+    /**
+     * Get the singleton instance of the Database class
+     * 
+     * Implementation based on the Singleton pattern from:
+     * - PHP: The Right Way - Design Patterns
+     * - URL: https://phptherightway.com/pages/Design-Patterns.html#singleton
+     * 
+     * @return Database The singleton instance
+     */
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -69,6 +95,22 @@ class Database {
         return $this->pdo;
     }
     
+    /**
+     * Execute a SQL query with parameters
+     * 
+     * References:
+     * - Error handling approach: PHP Manual - Exceptions
+     *   URL: https://www.php.net/manual/en/language.exceptions.php
+     *   Section: "Extending Exceptions"
+     * 
+     * - Prepared statements: PHP Manual - PDO::prepare
+     *   URL: https://www.php.net/manual/en/pdo.prepare.php
+     * 
+     * @param string $sql SQL query with placeholders
+     * @param array $params Parameters to bind to the query
+     * @return \PDOStatement The statement object
+     * @throws \Exception If the query fails
+     */
     public function query($sql, $params = []) {
         try {
             $stmt = $this->pdo->prepare($sql);

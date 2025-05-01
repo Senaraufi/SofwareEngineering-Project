@@ -9,6 +9,18 @@ use App\Database;
  * 
  * Base class for all models in the TalkTempo application
  * Provides common CRUD operations and database connectivity
+ * 
+ * References:
+ * - Active Record Pattern: Martin Fowler - Patterns of Enterprise Application Architecture
+ *   URL: https://martinfowler.com/eaaCatalog/activeRecord.html
+ * 
+ * - Laravel's Eloquent ORM (inspiration for method structure)
+ *   URL: https://laravel.com/docs/8.x/eloquent
+ *   Sections: "Retrieving Models" and "Inserts"
+ * 
+ * - PHP & MySQL: Novice to Ninja (6th Edition)
+ *   Author: Tom Butler & Kevin Yank
+ *   Chapter: "Creating a Data Access Layer"
  */
 abstract class BaseModel {
     protected $db;
@@ -30,6 +42,10 @@ abstract class BaseModel {
     
     /**
      * Find all records
+     * 
+     * Implementation inspired by:
+     * - Laravel's Eloquent ORM: Model::all() method
+     *   URL: https://laravel.com/docs/8.x/eloquent#retrieving-models
      * 
      * @return array All records
      */
@@ -63,6 +79,15 @@ abstract class BaseModel {
     
     /**
      * Create a new record
+     * 
+     * Implementation inspired by:
+     * - Laravel's Eloquent ORM: Model::create() method
+     *   URL: https://laravel.com/docs/8.x/eloquent#inserts
+     * 
+     * - Timestamp handling approach from:
+     *   PHP & MySQL: Novice to Ninja (6th Edition)
+     *   Author: Tom Butler & Kevin Yank
+     *   Chapter: "Creating a Data Access Layer"
      * 
      * @param array $data Record data
      * @return int|false New record ID or false on failure

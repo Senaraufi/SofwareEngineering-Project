@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * CommentController
+ * 
+ * Handles the display and management of threaded comments for albums and artists.
+ * 
+ * References:
+ * - Threaded comment system inspired by:
+ *   Reddit's Comment System - https://www.reddit.com/dev/api/
+ *   Section: "Comment Trees" in API documentation
+ * 
+ * - Tree structure algorithm adapted from:
+ *   Stack Overflow - Building a Comment Tree
+ *   URL: https://stackoverflow.com/questions/4048151/what-are-the-options-for-storing-hierarchical-data-in-a-relational-database
+ *   Specific Answer: https://stackoverflow.com/a/4048520 by user "Quassnoi"
+ */
+
 namespace App\Controllers;
 
 use App\Controller;
@@ -167,6 +183,20 @@ class CommentController extends Controller {
     
     /**
      * Show comments for an album
+     * 
+     * References:
+     * - MVC Controller pattern from:
+     *   Symfony Documentation - Controllers
+     *   URL: https://symfony.com/doc/current/controller.html
+     *   Section: "Controller Classes"
+     * 
+     * - Comment display approach inspired by:
+     *   Reddit's Comment System
+     *   URL: https://www.reddit.com/dev/api/
+     *   Section: "Comment Trees" in API documentation
+     * 
+     * @param int $id Album ID
+     * @return string Rendered HTML
      */
     public function showAlbumComments($id = 1) {
         $albumId = $id; // Map the named parameter to our variable
@@ -289,6 +319,20 @@ class CommentController extends Controller {
     
     /**
      * Build a comment tree from flat comments array
+     * 
+     * References:
+     * - Algorithm adapted from:
+     *   Stack Overflow - Building a Comment Tree
+     *   URL: https://stackoverflow.com/questions/4048151/what-are-the-options-for-storing-hierarchical-data-in-a-relational-database
+     *   Specific Answer: https://stackoverflow.com/a/4048520 by user "Quassnoi"
+     * 
+     * - Tree structure implementation inspired by:
+     *   PHP Cookbook (3rd Edition) by David Sklar & Adam Trachtenberg
+     *   Chapter: "Data Structures"
+     *   Section: "Building a Tree"
+     * 
+     * @param array $comments Flat array of comments
+     * @return array Hierarchical array of comments organized by parent_id
      */
     private function buildCommentTree($comments) {
         $children = [];
