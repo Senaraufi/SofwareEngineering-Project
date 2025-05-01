@@ -1,5 +1,23 @@
 <?php
 
+/**
+ * UserController
+ * 
+ * Handles user authentication, registration, and profile management.
+ * 
+ * References:
+ * - User authentication approach: PHP Manual - Password Hashing Functions
+ *   URL: https://www.php.net/manual/en/function.password-hash.php
+ *   Section: "Example #1 password_hash() example"
+ * 
+ * - Form validation techniques: PHP: The Right Way - Data Validation
+ *   URL: https://phptherightway.com/#data_validation
+ * 
+ * - Error handling approach: PHP & MySQL: Novice to Ninja (6th Edition)
+ *   Author: Tom Butler & Kevin Yank
+ *   Chapter: "Handling Errors"
+ */
+
 namespace App\Controllers;
 
 use App\Controller;
@@ -18,6 +36,20 @@ class UserController extends Controller {
         ]);
     }
     
+    /**
+     * Process user signup form submission
+     * 
+     * References:
+     * - Form handling approach: PHP & MySQL: Novice to Ninja (6th Edition)
+     *   Author: Tom Butler & Kevin Yank
+     *   Chapter: "Processing Forms"
+     * 
+     * - Logging implementation: PHP Manual - Error Handling Functions
+     *   URL: https://www.php.net/manual/en/book.errorfunc.php
+     *   Section: "Logging errors"
+     * 
+     * @return string Rendered HTML response
+     */
     public function processSignup() {
         // Debug: Log the request method and POST data
         $logFile = __DIR__ . '/../../logs/signup_debug.log';
@@ -43,6 +75,13 @@ class UserController extends Controller {
         $terms = isset($_POST['terms']);
         
         // Validate input
+        // References:
+        // - Form validation approach: PHP Manual - Filter Functions
+        //   URL: https://www.php.net/manual/en/book.filter.php
+        //   Section: "Validating filters"
+        // 
+        // - Input validation best practices: OWASP Input Validation Cheat Sheet
+        //   URL: https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
         $errors = [];
         
         if (empty($username)) {
@@ -88,6 +127,9 @@ class UserController extends Controller {
         }
         
         // Hash the password
+        // Reference: PHP Manual - Password Hashing Functions
+        // URL: https://www.php.net/manual/en/function.password-hash.php
+        // Section: "Example #1 password_hash() example"
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         
         // Insert the user into the database
