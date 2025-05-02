@@ -184,8 +184,6 @@ INSERT INTO Users (username, password, email, phone_number, bio, profile_image_u
 INSERT INTO Artists (name, description, image_url, updated_by) VALUES 
 
 ('Radiohead', 'Radiohead is an English rock band formed in Liverpool in 1985. Known for their unique style combining rock, folk, and blues.', '/database/images/radiohead-artist.jpeg', (SELECT user_id FROM Users WHERE username = 'PixieStix')); --Source: https://www.fanpop.com/login?redirect_url=%2Fclubs%2Fradiohead%2Fimages%2F22916726%2Ftitle%2Fradiohead-photo
-
-
 ('System of a Down', 'System of a Down is an Armenian-American heavy metal band formed in Glendale, California, in 1994. Known for their unique style combining alternative metal, hard rock, and Armenian folk music.', '/database/images/systemofadown-artist.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix'));--Source: https://wall.alphacoders.com/big.php?i=506126
 ('Kendrick Lamar', 'Kendrick Lamar is an American rapper, singer, songwriter, and actor known for his socially conscious lyrics and innovative style.', '/database/images/kendricklamar-artist.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')), --Source: https://www.cnnbrasil.com.br/entretenimento/kendrick-lamar-promete-storytelling-em-seu-show-no-super-bowl/
 ('Taylor Swift', 'Taylor Swift is an American singer-songwriter known for her powerful voice and innovative style.', '/database/images/taylorswift-artist.jpg', (SELECT user_id FROM Users WHERE username = 'PixieStix')),--Source: https://people.com/music/taylor-swift-makes-surprise-donations-to-local-food-banks-amid-tour/
