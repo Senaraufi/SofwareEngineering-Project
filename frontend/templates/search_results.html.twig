@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search Results - TalkTempo{% endblock %}
+
+{% block content %}
+<!-- 
+References:
+- Search results layout inspired by Spotify's search results page: https://open.spotify.com/search
+- Card design adapted from Tailwind UI Card components: https://tailwindui.com/components/application-ui/lists/grid-lists
+- Empty state design pattern from Material Design guidelines: https://material.io/design/communication/empty-states.html
+-->
+<div class="container mx-auto px-4 py-8 mt-24">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Search Results for "{{ query }}"</h1>
+        {% if error is defined %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-4" role="alert">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if artists|length == 0 and albums|length == 0 and concerts|length == 0 %}
+        <div class="py-16 text-center">
+            <svg class="mx-auto h-24 w-24 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <h3 class="mt-2 text-lg font-medium text-gray-900">No results found</h3>
+            <p class="mt-1 text-gray-500">We couldn't find anything matching "{{ query }}".</p>
+            <div class="mt-6">
+                <a href="/" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <!-- Artists Section -->
+        {% if artists|length > 0 %}
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Artists</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {% for artist in artists %}
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                            <a href="/artists/{{ artist.artist_id }}">
+                                <img src="/database/images/{{ artist.image_url }}" alt="{{ artist.name }}" class="w-full h-48 object-cover">
+                                <div class="p-4">
+                                    <h3 class="text-lg font-semibold text-gray-900">{{ artist.name }}</h3>
+                                    <div class="mt-2 flex flex-wrap gap-2">
+                                        {% for genre in artist.genres %}
+                                            <span class="px-2 py-1 text-xs font-medium bg-gray-100 rounded-full text-gray-800">{{ genre }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Albums Section -->
+        {% if albums|length > 0 %}
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Albums</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {% for album in albums %}
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                            <a href="/albums/{{ album.id }}">
+                                <img src="/database/images/{{ album.image }}" alt="{{ album.title }}" class="w-full h-48 object-cover">
+                                <div class="p-4">
+                                    <h3 class="text-lg font-semibold text-gray-900">{{ album.title }}</h3>
+                                    <p class="text-gray-600">{{ album.artist }}</p>
+                                    <div class="mt-2 flex items-center">
+                                        <span class="px-2 py-1 text-xs font-medium bg-gray-100 rounded-full text-gray-800">{{ album.genre }}</span>
+                                        <span class="ml-2 text-sm text-gray-500">{{ album.release }}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Concerts Section -->
+        {% if concerts|length > 0 %}
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Concerts</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {% for concert in concerts %}
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                            <div class="md:flex">
+                                <div class="md:flex-shrink-0">
+                                    <img class="h-48 w-full object-cover md:w-48" src="/database/images/{{ concert.image }}" alt="{{ concert.artist }}">
+                                </div>
+                                <div class="p-8">
+                                    <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{{ concert.artist }}</div>
+                                    <h3 class="mt-1 text-lg leading-tight font-medium text-gray-900">{{ concert.venue }}</h3>
+                                    <p class="mt-2 text-gray-600">{{ concert.date|date('F j, Y') }} at {{ concert.time }}</p>
+                                    <div class="mt-4 flex items-center justify-between">
+                                        <span class="text-gray-900 font-bold">${{ concert.price|number_format(2) }}</span>
+                                        <a href="/concerts/{{ concert.id }}" class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

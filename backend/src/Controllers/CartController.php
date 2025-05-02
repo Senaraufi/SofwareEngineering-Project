@@ -1,15 +1,26 @@
 <?php
+/**
+ * Cart Controller
+ * 
+ * References:
+ * - Shopping cart implementation based on session handling techniques from PHP documentation: https://www.php.net/manual/en/book.session.php
+ * - Currency conversion implementation inspired by Money PHP library: https://github.com/moneyphp/money
+ * - Session management security follows the robust error handling and security patterns implemented in UserController.php
+ */
 
 namespace App\Controllers;
 
 use App\Controller;
 use App\Database;
+use App\Services\CurrencyService;
 
 class CartController extends Controller {
     private $db;
+    private $currencyService;
     
     public function __construct() {
         $this->db = Database::getInstance();
+        $this->currencyService = new CurrencyService();
     }
     
     public function index() {
@@ -29,15 +40,38 @@ class CartController extends Controller {
         $cartItems = $_SESSION['cart'] ?? [];
         $totalPrice = 0;
         
+        // Get selected currency (default to USD if not set)
+        $currency = $_SESSION['currency'] ?? 'USD';
+        
         // Calculate total price
         foreach ($cartItems as $item) {
             $totalPrice += $item['price'] * $item['quantity'];
         }
         
+        // Get available currencies for the dropdown
+        $availableCurrencies = $this->currencyService->getAvailableCurrencies();
+        
+        // Convert total price to selected currency
+        $convertedTotalPrice = $this->currencyService->convert($totalPrice, $currency);
+        
+        // Format prices for each item in the selected currency
+        $formattedCartItems = [];
+        foreach ($cartItems as $id => $item) {
+            $convertedPrice = $this->currencyService->convert($item['price'], $currency);
+            $item['formatted_price'] = $this->currencyService->format($convertedPrice, $currency);
+            $item['subtotal'] = $convertedPrice * $item['quantity'];
+            $item['formatted_subtotal'] = $this->currencyService->format($item['subtotal'], $currency);
+            $formattedCartItems[$id] = $item;
+        }
+        
         return $this->render('cart.html.twig', [
             'active_page' => 'cart',
-            'cart_items' => $cartItems,
-            'total_price' => $totalPrice
+            'cart_items' => $formattedCartItems,
+            'total_price' => $convertedTotalPrice,
+            'formatted_total' => $this->currencyService->format($convertedTotalPrice, $currency),
+            'currency' => $currency,
+            'available_currencies' => $availableCurrencies,
+            'currency_symbol' => $this->currencyService->getSymbol($currency)
         ]);
     }
     
@@ -230,6 +264,32 @@ class CartController extends Controller {
         exit;
     }
     
+    /**
+     * Set the currency for the shopping cart
+     */
+    public function setCurrency() {
+        // Start session if not already started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        // Get currency from POST
+        $currency = $_POST['currency'] ?? 'USD';
+        
+        // Validate currency
+        $availableCurrencies = $this->currencyService->getAvailableCurrencies();
+        if (!isset($availableCurrencies[$currency])) {
+            $currency = 'USD'; // Default to USD if invalid
+        }
+        
+        // Set currency in session
+        $_SESSION['currency'] = $currency;
+        
+        // Redirect back to cart page
+        header('Location: /cart');
+        exit;
+    }
+    
     public function checkout() {
         // Start session if not already started
         if (session_status() == PHP_SESSION_NONE) {
@@ -252,9 +312,29 @@ class CartController extends Controller {
             exit;
         }
         
+        // Get selected currency
+        $currency = $_SESSION['currency'] ?? 'USD';
+        
+        // Calculate total in selected currency
+        $totalPrice = 0;
+        foreach ($cartItems as $item) {
+            $totalPrice += $item['price'] * $item['quantity'];
+        }
+        $convertedTotalPrice = $this->currencyService->convert($totalPrice, $currency);
+        
         // Process checkout (in a real app, this would save to database)
         $orderId = 'TT-' . time() . '-' . rand(1000, 9999);
         $purchaseDate = date('Y-m-d H:i:s');
+        
+        // Store order details in session for confirmation page
+        $_SESSION['last_order'] = [
+            'order_id' => $orderId,
+            'purchase_date' => $purchaseDate,
+            'items' => $cartItems,
+            'total' => $convertedTotalPrice,
+            'currency' => $currency,
+            'currency_symbol' => $this->currencyService->getSymbol($currency)
+        ];
         
         // Clear cart
         $_SESSION['cart'] = [];
