@@ -274,8 +274,8 @@
                     <div class="artist-card bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl border border-gray-100 group flex flex-col h-full">
                         <div class="aspect-square overflow-hidden relative">
                             <a href="/artist/{{ artist.getId() }}" class="block">
-                                <img src="{{ artist.getImageUrl()|default('/assets/images/artists/' ~ artist.getName()|lower|replace({' ': '-'}) ~ '-artist.jpg') }}" alt="{{ artist.getName() }}" 
-                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                <img src="{{ artist.getImageUrl()|default('/assets/images/' ~ artist.getName()|lower|replace({' ': '-'}) ~ '-artist.jpg') }}" alt="{{ artist.getName() }}" 
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.src='/assets/images/default-artist.jpg';">
                                 
                                 <!-- Hover Overlay -->
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
@@ -329,7 +329,7 @@
                         <!-- Artist Image -->
                         <div class="w-24 h-24 md:w-32 md:h-32 relative overflow-hidden flex-shrink-0 artist-image">
                             <a href="/artist/{{ artist.getId() }}">
-                                <img src="{{ artist.getImageUrl()|default('/assets/images/artists/' ~ artist.getName()|lower|replace({' ': '-'}) ~ '-artist.jpg') }}" alt="{{ artist.getName() }}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                                <img src="{{ artist.getImageUrl()|default('/assets/images/' ~ artist.getName()|lower|replace({' ': '-'}) ~ '-artist.jpg') }}" alt="{{ artist.getName() }}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" onerror="this.src='/assets/images/default-artist.jpg';">
                                 <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
                                     <div class="transform translate-y-8 opacity-0 hover:translate-y-0 hover:opacity-100 transition-all duration-300">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">

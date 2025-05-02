@@ -13,6 +13,7 @@ use App\Controllers\CommentController;
 use App\Controllers\ConcertController;
 use App\Controllers\CartController;
 use App\Controllers\ReviewController;
+use App\Controllers\SearchController;
 use App\Twig\AppExtension;
 
 // Create Twig environment
@@ -36,6 +37,7 @@ $commentController = new CommentController();
 $concertController = new ConcertController();
 $cartController = new CartController();
 $reviewController = new ReviewController();
+$searchController = new SearchController();
 
 // Define routes
 $router->get('/', [$pageController, 'home']);
@@ -91,6 +93,13 @@ $router->post('/album/{id}/review/submit', [$reviewController, 'submitReview']);
 $router->get('/review/{id}/edit', [$reviewController, 'editReview']);
 $router->post('/review/{id}/update', [$reviewController, 'updateReview']);
 $router->post('/review/{id}/delete', [$reviewController, 'deleteReview']);
+
+// Search routes
+$router->get('/search', [$searchController, 'search']);
+$router->get('/search/suggestions', [$searchController, 'searchSuggestions']);
+
+// Currency conversion route
+$router->post('/cart/currency', [$cartController, 'setCurrency']);
 
 // Get the requested path and method
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

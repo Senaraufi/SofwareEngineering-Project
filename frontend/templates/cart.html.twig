@@ -77,9 +77,22 @@
                 
                 <!-- Order Summary -->
                 <div class="bg-gray-50 p-6 border-t border-gray-200">
+                    <!-- Currency Selection -->
+                    <div class="mb-4">
+                        <form action="/cart/currency" method="post" class="flex items-center justify-end space-x-2">
+                            <label for="currency" class="text-sm font-medium text-gray-700">Currency:</label>
+                            <select id="currency" name="currency" class="rounded-md border-gray-300 py-1.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500" onchange="this.form.submit()">
+                                {% for code, curr in available_currencies %}
+                                    <option value="{{ code }}" {% if currency == code %}selected{% endif %}>
+                                        {{ code }} ({{ curr.symbol }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </div>
                     <div class="flex justify-between text-base font-medium text-gray-900 mb-4">
                         <p>Subtotal</p>
-                        <p>${{ total_price|number_format(2) }}</p>
+                        <p>{{ formatted_total }}</p>
                     </div>
                     <div class="flex justify-between text-sm text-gray-500 mb-4">
                         <p>Service Fee (10%)</p>
