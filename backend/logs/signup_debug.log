@@ -138,3 +138,16 @@ POST Data: Array
 
 Attempting to insert user: randomuser1
 User inserted successfully with ID: 6
+
+
+2025-05-02 14:25:37 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => pixie
+    [email] => pixie@mail.com
+    [password] => 123456789
+    [confirm_password] => 123456789
+    [terms] => on
+)
+
