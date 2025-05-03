@@ -176,6 +176,4 @@ class Database {
             return null;
         }
     }
-    
-    // The getConnection method is already defined above (line 62)
 }
