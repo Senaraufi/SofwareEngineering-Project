@@ -151,3 +151,139 @@ POST Data: Array
     [terms] => on
 )
 
+
+
+2025-05-03 19:55:34 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => user13
+    [email] => imauser@gmail.com
+    [password] => 1234512345
+    [confirm_password] => 1234512345
+    [terms] => on
+)
+
+
+
+2025-05-03 19:55:58 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => new
+    [email] => new@gmail.com
+    [password] => newuser
+    [confirm_password] => newuser
+    [terms] => on
+)
+
+
+
+2025-05-03 19:56:22 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => whoisthis
+    [email] => user@gmail.com
+    [password] => 1234512345
+    [confirm_password] => 1234512345
+)
+
+
+
+2025-05-03 19:56:47 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => whoisthis
+    [email] => user@gmail.com
+    [password] => 1234512345
+    [confirm_password] => 1234512345
+    [terms] => on
+)
+
+
+
+2025-05-03 19:59:26 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => YourName_2025
+    [email] => senasemail@gmail.com
+    [password] => senaspassword
+    [confirm_password] => senaspassword
+    [terms] => on
+)
+
+
+
+2025-05-03 20:02:25 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => newrandomuser
+    [email] => mynewuser@mail.com
+    [password] => 123123123123
+    [confirm_password] => 123123123123
+    [terms] => on
+)
+
+Attempting to insert user: newrandomuser
+Error inserting user: Database insert operation failed. See error log for details.
+
+
+2025-05-03 20:04:04 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => newrandomuser
+    [email] => mynewuser@mail.com
+    [password] => 123123123123
+    [confirm_password] => 123123123123
+    [terms] => on
+)
+
+Attempting to insert user: newrandomuser
+Error inserting user: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'username' in 'field list'
+
+
+2025-05-03 20:04:34 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => newuser
+    [email] => radom@mail.com
+    [password] => 1111122222
+    [confirm_password] => 1111122222
+)
+
+
+
+2025-05-03 20:05:00 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => newuse
+    [email] => radom@gmail.com
+    [password] => 1111122222
+    [confirm_password] => 1111122222
+    [terms] => on
+)
+
+Attempting to insert user: newuse
+Error inserting user: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'username' in 'field list'
+
+
+2025-05-03 20:05:09 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => newuse
+    [email] => radom@gmail.com
+    [password] => 1111122222
+    [confirm_password] => 1111122222
+    [terms] => on
+)
+
+Attempting to insert user: newuse
+Error inserting user: Database insert operation failed. See error log for details.

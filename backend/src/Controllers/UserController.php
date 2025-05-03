@@ -176,7 +176,7 @@ class UserController extends Controller {
     
     private function usernameExists($username) {
         $user = $this->db->findOne('Users', ['username' => $username]);
-        return $user !== false;
+        return $user !== null && $user !== false;
     }
     
     private function emailExists($email) {
