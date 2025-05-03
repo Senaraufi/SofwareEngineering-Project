@@ -12,15 +12,12 @@ namespace App\Controllers;
 
 use App\Controller;
 use App\Database;
-use App\Services\CurrencyService;
 
 class CartController extends Controller {
     private $db;
-    private $currencyService;
     
     public function __construct() {
         $this->db = Database::getInstance();
-        $this->currencyService = new CurrencyService();
     }
     
     public function index() {
@@ -40,8 +37,8 @@ class CartController extends Controller {
         $cartItems = $_SESSION['cart'] ?? [];
         $totalPrice = 0;
         
-        // Get selected currency (default to USD if not set)
-        $currency = $_SESSION['currency'] ?? 'USD';
+        // Only using USD
+        $currency = 'USD';
         
         // Calculate total price
         foreach ($cartItems as $item) {
@@ -49,18 +46,18 @@ class CartController extends Controller {
         }
         
         // Get available currencies for the dropdown
-        $availableCurrencies = $this->currencyService->getAvailableCurrencies();
+        // Simplified - only using USD
         
         // Convert total price to selected currency
-        $convertedTotalPrice = $this->currencyService->convert($totalPrice, $currency);
+        $convertedTotalPrice = $totalPrice; // No conversion needed
         
         // Format prices for each item in the selected currency
         $formattedCartItems = [];
         foreach ($cartItems as $id => $item) {
-            $convertedPrice = $this->currencyService->convert($item['price'], $currency);
-            $item['formatted_price'] = $this->currencyService->format($convertedPrice, $currency);
+            $convertedPrice = $item['price']; // No conversion needed
+            $item['formatted_price'] = '$' . number_format($convertedPrice, 2);
             $item['subtotal'] = $convertedPrice * $item['quantity'];
-            $item['formatted_subtotal'] = $this->currencyService->format($item['subtotal'], $currency);
+            $item['formatted_subtotal'] = '$' . number_format($item['subtotal'], 2);
             $formattedCartItems[$id] = $item;
         }
         
@@ -68,10 +65,10 @@ class CartController extends Controller {
             'active_page' => 'cart',
             'cart_items' => $formattedCartItems,
             'total_price' => $convertedTotalPrice,
-            'formatted_total' => $this->currencyService->format($convertedTotalPrice, $currency),
+            'formatted_total' => '$' . number_format($convertedTotalPrice, 2),
             'currency' => $currency,
-            'available_currencies' => $availableCurrencies,
-            'currency_symbol' => $this->currencyService->getSymbol($currency)
+            'available_currencies' => ['USD' => 'US Dollar'],
+            'currency_symbol' => '$'
         ]);
     }
     
@@ -277,10 +274,9 @@ class CartController extends Controller {
         $currency = $_POST['currency'] ?? 'USD';
         
         // Validate currency
-        $availableCurrencies = $this->currencyService->getAvailableCurrencies();
-        if (!isset($availableCurrencies[$currency])) {
-            $currency = 'USD'; // Default to USD if invalid
-        }
+        // Simplified - only using USD
+        // Only USD is supported
+        $currency = 'USD';
         
         // Set currency in session
         $_SESSION['currency'] = $currency;
@@ -320,7 +316,81 @@ class CartController extends Controller {
         foreach ($cartItems as $item) {
             $totalPrice += $item['price'] * $item['quantity'];
         }
-        $convertedTotalPrice = $this->currencyService->convert($totalPrice, $currency);
+        $convertedTotalPrice = $totalPrice; // No conversion needed
+        
+        // Format cart items for display
+        $formattedCartItems = [];
+        foreach ($cartItems as $id => $item) {
+            $item['formatted_price'] = '$' . number_format($item['price'], 2);
+            $item['subtotal'] = $item['price'] * $item['quantity'];
+            $item['formatted_subtotal'] = '$' . number_format($item['subtotal'], 2);
+            $formattedCartItems[$id] = $item;
+        }
+        
+        // Render the checkout page
+        return $this->render('checkout.html.twig', [
+            'active_page' => 'cart',
+            'cart_items' => $formattedCartItems,
+            'total_price' => $convertedTotalPrice,
+            'formatted_total' => '$' . number_format($convertedTotalPrice, 2),
+            'currency' => $currency,
+            'currency_symbol' => '$'
+        ]);
+    }
+    
+    public function processCheckout() {
+        // Start session if not already started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        // Check if user is logged in
+        if (!isset($_SESSION['Active']) || $_SESSION['Active'] !== true) {
+            // Redirect to login page with a message
+            header('Location: /login?msg=auth_required&redirect=cart');
+            exit;
+        }
+        
+        // Get cart items from session
+        $cartItems = $_SESSION['cart'] ?? [];
+        
+        if (empty($cartItems)) {
+            // Redirect to cart page if cart is empty
+            header('Location: /cart');
+            exit;
+        }
+        
+        // Get form data
+        $email = $_POST['email'] ?? '';
+        $phone = $_POST['phone'] ?? '';
+        $firstName = $_POST['first_name'] ?? '';
+        $lastName = $_POST['last_name'] ?? '';
+        $address = $_POST['address'] ?? '';
+        $city = $_POST['city'] ?? '';
+        $state = $_POST['state'] ?? '';
+        $postalCode = $_POST['postal_code'] ?? '';
+        $country = $_POST['country'] ?? '';
+        $cardName = $_POST['card_name'] ?? '';
+        $cardNumber = $_POST['card_number'] ?? '';
+        $cardLast4 = substr(preg_replace('/\D/', '', $cardNumber), -4);
+        
+        // Get selected currency
+        $currency = $_SESSION['currency'] ?? 'USD';
+        
+        // Calculate total
+        $totalPrice = 0;
+        foreach ($cartItems as $item) {
+            $totalPrice += $item['price'] * $item['quantity'];
+        }
+        
+        // Format cart items for display
+        $formattedCartItems = [];
+        foreach ($cartItems as $id => $item) {
+            $item['formatted_price'] = '$' . number_format($item['price'], 2);
+            $item['subtotal'] = $item['price'] * $item['quantity'];
+            $item['formatted_subtotal'] = '$' . number_format($item['subtotal'], 2);
+            $formattedCartItems[$id] = $item;
+        }
         
         // Process checkout (in a real app, this would save to database)
         $orderId = 'TT-' . time() . '-' . rand(1000, 9999);
@@ -328,12 +398,23 @@ class CartController extends Controller {
         
         // Store order details in session for confirmation page
         $_SESSION['last_order'] = [
-            'order_id' => $orderId,
-            'purchase_date' => $purchaseDate,
-            'items' => $cartItems,
-            'total' => $convertedTotalPrice,
+            'id' => $orderId,
+            'date' => new \DateTime(),
+            'items' => $formattedCartItems,
+            'total' => $totalPrice,
+            'formatted_total' => '$' . number_format($totalPrice, 2),
             'currency' => $currency,
-            'currency_symbol' => $this->currencyService->getSymbol($currency)
+            'currency_symbol' => '$',
+            'email' => $email,
+            'card_last4' => $cardLast4,
+            'shipping' => [
+                'name' => $firstName . ' ' . $lastName,
+                'address' => $address,
+                'city' => $city,
+                'state' => $state,
+                'postal_code' => $postalCode,
+                'country' => $country
+            ]
         ];
         
         // Clear cart
@@ -341,7 +422,37 @@ class CartController extends Controller {
         $_SESSION['cart_count'] = 0;
         
         // Redirect to order confirmation page
-        header('Location: /order/confirmation/' . $orderId);
+        header('Location: /checkout/confirmation');
         exit;
+    }
+    
+    public function checkoutConfirmation() {
+        // Start session if not already started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        // Check if user is logged in
+        if (!isset($_SESSION['Active']) || $_SESSION['Active'] !== true) {
+            // Redirect to login page
+            header('Location: /login');
+            exit;
+        }
+        
+        // Check if there's an order in the session
+        if (!isset($_SESSION['last_order'])) {
+            // Redirect to home page if no order found
+            header('Location: /');
+            exit;
+        }
+        
+        // Get order details from session
+        $order = $_SESSION['last_order'];
+        
+        // Render the confirmation page
+        return $this->render('checkout_confirmation.html.twig', [
+            'active_page' => 'cart',
+            'order' => $order
+        ]);
     }
 }

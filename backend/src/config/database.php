@@ -3,7 +3,7 @@
  * Database Configuration
  * 
  * This file contains the database connection parameters.
- * Keep this file secure and don't commit it to version control with real credentials.
+ * Keep this file secure and don't commit it with real credentials.
  */
 
 return [

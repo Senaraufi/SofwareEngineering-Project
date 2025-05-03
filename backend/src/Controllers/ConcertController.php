@@ -88,9 +88,6 @@ class ConcertController extends Controller {
             exit;
         }
         
-        // In a real application, this would process the ticket purchase
-        // For now, we'll just show a confirmation page
-        
         // Sample concert data (in a real app, this would come from the database)
         $concerts = [
             1 => [
@@ -139,11 +136,31 @@ class ConcertController extends Controller {
         
         $concert = $concerts[$concertId];
         
-        return $this->render('ticket_confirmation.html.twig', [
-            'active_page' => 'concerts',
-            'concert' => $concert,
-            'order_id' => 'TT-' . time() . '-' . rand(1000, 9999),
-            'purchase_date' => date('Y-m-d H:i:s')
-        ]);
+        // Clear the cart first for a direct purchase
+        $_SESSION['cart'] = [];
+        $_SESSION['cart_count'] = 0;
+        
+        // Add the concert to the cart
+        $item = [
+            'id' => $concert['id'],
+            'name' => $concert['artist'] . ' - Concert Ticket',
+            'price' => $concert['price'],
+            'quantity' => 1,
+            'image' => $concert['image'],
+            'type' => 'concert',
+            'details' => [
+                'venue' => $concert['venue'],
+                'date' => $concert['date'],
+                'time' => $concert['time']
+            ]
+        ];
+        
+        // Add to cart
+        $_SESSION['cart'][$concert['id']] = $item;
+        $_SESSION['cart_count'] = 1;
+        
+        // Redirect to checkout page
+        header('Location: /checkout');
+        exit;
     }
 }

@@ -5,17 +5,43 @@
  * 
  * Handles user authentication, registration, and profile management.
  * 
- * References:
- * - User authentication approach: PHP Manual - Password Hashing Functions
+ * Code References:
+ * 
+ * - Password hashing implementation:
+ *   Source: PHP Manual - Password Hashing Functions
  *   URL: https://www.php.net/manual/en/function.password-hash.php
- *   Section: "Example #1 password_hash() example"
+ *   Code: $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+ *   Used in: processSignup() method
  * 
- * - Form validation techniques: PHP: The Right Way - Data Validation
+ * - Password verification:
+ *   Source: PHP Manual - password_verify
+ *   URL: https://www.php.net/manual/en/function.password-verify.php
+ *   Code: if ($user && password_verify($password, $user['password']))
+ *   Used in: processLogin() method
+ * 
+ * - Session security implementation:
+ *   Source: PHP Manual - Session Security
+ *   URL: https://www.php.net/manual/en/session.security.php
+ *   Code: session_regenerate_id(true);
+ *   Used in: processLogin() method
+ * 
+ * - Form validation techniques:
+ *   Source: PHP: The Right Way - Data Validation
  *   URL: https://phptherightway.com/#data_validation
+ *   Code: if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+ *   Used in: processSignup() method
  * 
- * - Error handling approach: PHP & MySQL: Novice to Ninja (6th Edition)
- *   Author: Tom Butler & Kevin Yank
- *   Chapter: "Handling Errors"
+ * - Session destruction during logout:
+ *   Source: PHP Manual - session_destroy
+ *   URL: https://www.php.net/manual/en/function.session-destroy.php
+ *   Code: session_destroy();
+ *   Used in: logout() method
+ * 
+ * - Cookie handling for logout:
+ *   Source: OWASP Session Management Cheat Sheet
+ *   URL: https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
+ *   Code: setcookie(session_name(), '', time() - 42000, ...)
+ *   Used in: logout() method
  */
 
 namespace App\Controllers;
