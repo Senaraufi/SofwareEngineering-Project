@@ -100,7 +100,7 @@ Sena Raufi:
 - 
 
 Pixie Grogan: 
-- I've been programming since I was about 15 years old, I've worked with many lanuages, most of whhich are linked on my personal portfolio on GitHub and my LinkedIn profile. I've also worked with many frameworks and libraries, such as Node.js, and my main programming languages are Java, Python, but in web would be JavaScript and PHP, as well as HTML and CSS. I've also worked with many databases, such as MySQL and Firebase. In this project, I have stuck to only what I know, and used my resources from the WDSS module to learn PHP and MySQL, as well as what I've learned last year in the Database module and well as my Web Development module.
+- I've been programming since I was about 15 years old, I've worked with many lanuages, most of whhich are linked on my personal portfolio on GitHub and my LinkedIn profile: https://www.linkedin.com/in/pixie-grogan-ab1184351/. I've also worked with many frameworks and libraries, such as Node.js, and my main programming languages are Java, Python, but in web would be JavaScript and PHP, as well as HTML and CSS. I've also worked with many databases, such as MySQL and Firebase. In this project, I have stuck to only what I know, and used my resources from the WDSS module to learn PHP and MySQL, as well as what I've learned last year in the Database module and well as my Web Development module.
 
 
 Ojal Rakwal: 
