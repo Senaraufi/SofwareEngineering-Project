@@ -97,4 +97,4 @@ PHP and backend code was written based of the WDSS module. Every 3rd party code 
 
 ## Contribution Statement
 
-We, Sena Raufi, Pixie Grogan, and Ojal Rakwal declare that all work presented in this project is our own original work, except where clearly acknowledged. Third-party assets and code references have been properly cited in the References section above.
+We, Sena Raufi, Pixie Grogan, and Ojal Rakwal declare that all work presented in this project is our own original work, except where clearly acknowledged. Third-party assets and code references have been properly cited whithin the code and the References section above.
