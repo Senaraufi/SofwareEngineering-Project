@@ -96,14 +96,15 @@ Database schema design is made based in the Databse fundamentals module from sem
 PHP and backend code was written based of the WDSS module. Every 3rd party code has been referenced in the code files.
 
 ## What We Know
-Sena Raufi: 
-- 
 
-Pixie Grogan: 
+### Pixie Grogan: 
 - I've been programming since I was about 15 years old, I've worked with many lanuages, most of whhich are linked on my personal portfolio on GitHub and my LinkedIn profile: https://www.linkedin.com/in/pixie-grogan-ab1184351/. I've also worked with many frameworks and libraries, such as Node.js, and my main programming languages are Java, Python, but in web would be JavaScript and PHP, as well as HTML and CSS. I've also worked with many databases, such as MySQL and Firebase. In this project, I have stuck to only what I know, and used my resources from the WDSS module to learn PHP and MySQL, as well as what I've learned last year in the Database module and well as my Web Development module.
 
+### Sena Raufi:
+- I began learning HTML at the age of 12, driven by a strong interest in web development. Over the years, I’ve built a solid foundation in frontend technologies and have become highly proficient in HTML. In addition to this, I’ve worked extensively with PHP on a variety of personal and academic projects, allowing me to gain experience in backend development as well. I also have a good understanding of JavaScript, which I’ve used to add interactivity and functionality to my web applications. All the code in this repository is written by me and reflects my own learning and development journey.
+[Website](https://senaraufi.github.io/website_rs/)
 
-Ojal Rakwal: 
+### Ojal Rakwal: 
 - 
 
 
