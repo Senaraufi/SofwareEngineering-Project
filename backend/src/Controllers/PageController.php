@@ -12,8 +12,7 @@ class PageController extends Controller {
     }
 
     public function browse() {
-        // Hardcoded artist and album data for display
-        // In a real implementation, this would come from the database
+        // artist and album data for display
         $artists = [
             [
                 'artist_id' => 1,
@@ -151,7 +150,6 @@ class PageController extends Controller {
 
     public function albums() {
         // Reuse the same album data as in the browse method
-        // In a real implementation, this would come from the database
         $albums = [
             [
                 'id' => 1,

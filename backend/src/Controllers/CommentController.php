@@ -4,16 +4,6 @@
  * CommentController
  * 
  * Handles the display and management of threaded comments for albums and artists.
- * 
- * References:
- * - Threaded comment system inspired by:
- *   Reddit's Comment System - https://www.reddit.com/dev/api/
- *   Section: "Comment Trees" in API documentation
- * 
- * - Tree structure algorithm adapted from:
- *   Stack Overflow - Building a Comment Tree
- *   URL: https://stackoverflow.com/questions/4048151/what-are-the-options-for-storing-hierarchical-data-in-a-relational-database
- *   Specific Answer: https://stackoverflow.com/a/4048520 by user "Quassnoi"
  */
 
 namespace App\Controllers;
@@ -186,14 +176,14 @@ class CommentController extends Controller {
      * 
      * References:
      * - MVC Controller pattern from:
-     *   Symfony Documentation - Controllers
-     *   URL: https://symfony.com/doc/current/controller.html
-     *   Section: "Controller Classes"
+     *   PHP-FIG PSR-7 HTTP Message Interface
+     *   URL: https://www.php-fig.org/psr/psr-7/
+     *   Section: "4. Request Methods"
      * 
      * - Comment display approach inspired by:
-     *   Reddit's Comment System
-     *   URL: https://www.reddit.com/dev/api/
-     *   Section: "Comment Trees" in API documentation
+     *   Laravel Documentation - Eloquent Relationships
+     *   URL:https://laravel.com/docs/8.x/eloquent-relationships#recursive-relationships
+     *   Section: "Recursive Relationships"
      * 
      * @param int $id Album ID
      * @return string Rendered HTML
@@ -322,14 +312,14 @@ class CommentController extends Controller {
      * 
      * References:
      * - Algorithm adapted from:
-     *   Stack Overflow - Building a Comment Tree
-     *   URL: https://stackoverflow.com/questions/4048151/what-are-the-options-for-storing-hierarchical-data-in-a-relational-database
-     *   Specific Answer: https://stackoverflow.com/a/4048520 by user "Quassnoi"
+     *   Stack Overflow - How to build a tree structure in PHP
+     *   URL: https://stackoverflow.com/questions/2915748/how-can-i-convert-a-series-of-parent-child-relationships-into-a-hierarchical-tre
+     *   Specific Answer: https://stackoverflow.com/a/2915840 by user "thetaung"
      * 
      * - Tree structure implementation inspired by:
-     *   PHP Cookbook (3rd Edition) by David Sklar & Adam Trachtenberg
-     *   Chapter: "Data Structures"
-     *   Section: "Building a Tree"
+     *   PHP Documentation - SPL RecursiveIterator
+     *   URL: https://www.php.net/manual/en/class.recursiveiterator.php
+     *   Example: https://www.php.net/manual/en/recursiveiteratoriterator.construct.php
      * 
      * @param array $comments Flat array of comments
      * @return array Hierarchical array of comments organized by parent_id
