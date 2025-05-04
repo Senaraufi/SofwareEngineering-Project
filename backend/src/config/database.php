@@ -7,10 +7,10 @@
  */
 
 return [
-    'host' => 'localhost',
-    'dbname' => 'test',
+    'host' => 'localhost:3307', // the new port 
+    'dbname' => 'talktempo',
     'username' => 'root',
-    'password' => '',
+    'password' => '',       // Updated this just in case MySQL has a password
     'charset' => 'utf8mb4',
     'options' => [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,// Set error mode to exception
