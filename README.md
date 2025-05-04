@@ -95,6 +95,19 @@ Tailwind CSS was used for styling and some components, and they are properly ref
 Database schema design is made based in the Databse fundamentals module from semester 1. Every 3rd party code has been referenced in the code files.
 PHP and backend code was written based of the WDSS module. Every 3rd party code has been referenced in the code files.
 
+## What We Know
+Sena Raufi: 
+- 
+
+Pixie Grogan: 
+- I've been programming since I was about 15 years old, I've worked with many lanuages, most of whhich are linked on my personal portfolio on GitHub and my LinkedIn profile. I've also worked with many frameworks and libraries, such as Node.js, and my main programming languages are Java, Python, but in web would be JavaScript and PHP, as well as HTML and CSS. I've also worked with many databases, such as MySQL and Firebase. In this project, I have stuck to only what I know, and used my resources from the WDSS module to learn PHP and MySQL, as well as what I've learned last year in the Database module and well as my Web Development module.
+
+
+Ojal Rakwal: 
+- 
+
+
 ## Contribution Statement
 
 We, Sena Raufi, Pixie Grogan, and Ojal Rakwal declare that all work presented in this project is our own original work, except where clearly acknowledged. Third-party assets and code references have been properly cited whithin the code and the References section above.
+
