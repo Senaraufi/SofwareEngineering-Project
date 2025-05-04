@@ -150,9 +150,6 @@ CREATE TABLE IF NOT EXISTS UserFollows (
     FOREIGN KEY (following_id) REFERENCES Users(user_id)
 );
 
-
-
-
 -- Insert some basic genres
 INSERT INTO Genres (name) VALUES 
 ('Rock'), ('Pop'), ('Hip Hop'), ('Jazz'), ('Classical'), 
@@ -168,15 +165,10 @@ INSERT INTO Users (username, password, email, phone_number, bio, profile_image_u
 ('PixieStix', 'root1234SQL', 'pixiestix@talktempo.com', '+1234567890', 'My names Pixie and Im one of the founders of TalkTempo!', '/database/images/profile-default.jpg', 1),
 ('SenaRaufi', 'superCool1234HTML', 'senaraufi@talktempo.com', '+1234567890', 'My names Sena and Im one of the founders of TalkTempo!', '/database/images/profile-default.jpg', 1),
 ('OjalRakwal', 'woahdude1234PHP', 'ojalrakwal@talktempo.com', '+1234567890', 'My names Ojal and Im one of the founders of TalkTempo!', '/database/images/profile-default.jpg', 1),
+-- Add new user accounts below this line (they will be automatically added to the database when users register)
 -- Normal User Accounts from here
 ('UltimateSOADFan45', 'soadBestBandEver', 'serjtankian@yahoo.com', '+5556667778', 'I love System Of A Down theyre the best band in the world!', '/database/images/profile-default.jpg', 0),
 ('FionnaAppleStan78', 'bonnie2984', 'marieyunova@gmail.com', '+5556667778', 'I love music and love to listen to it', '/database/images/profile-default.jpg', 0);
-
-
-
-
-
-
 
 -- INFO FOR: Albums and Artists (Only Admins can add/edit these)
 -- Insert System of a Down artist profile
@@ -229,10 +221,10 @@ INSERT INTO ArtistGenres (artist_id, genre_id) VALUES
 ((SELECT artist_id FROM Artists WHERE name = 'Radiohead'), (SELECT genre_id FROM Genres WHERE name = 'Alternative'));
 ((SELECT artist_id FROM Artists WHERE name = 'Radiohead'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
 
-((SELECT artist_id FROM Artists WHERE name = 'Artic Monkeys'), (SELECT genre_id FROM Genres WHERE name = 'Alternative'));
+((SELECT artist_id FROM Artists WHERE name = 'Artic Monkeys'), (SELECT genre_id FROM Genres WHERE name = 'Alternative')),
 ((SELECT artist_id FROM Artists WHERE name = 'Artic Monkeys'), (SELECT genre_id FROM Genres WHERE name = 'Rock'));
 
-((SELECT artist_id FROM Artists WHERE name = 'Taylor Swift'), (SELECT genre_id FROM Genres WHERE name = 'Pop'));
+((SELECT artist_id FROM Artists WHERE name = 'Taylor Swift'), (SELECT genre_id FROM Genres WHERE name = 'Pop')),
 ((SELECT artist_id FROM Artists WHERE name = 'Taylor Swift'), (SELECT genre_id FROM Genres WHERE name = 'Country'));
 
 
@@ -413,7 +405,3 @@ INSERT INTO AlbumGenres (album_id, genre_id) VALUES
 INSERT INTO AlbumGenres (album_id, genre_id) VALUES 
 ((SELECT album_id FROM Albums WHERE title = '1989'), (SELECT genre_id FROM Genres WHERE name = 'Pop')),
 ((SELECT album_id FROM Albums WHERE title = '1989'), (SELECT genre_id FROM Genres WHERE name = 'Country'));
-
-
-
-

@@ -287,3 +287,31 @@ POST Data: Array
 
 Attempting to insert user: newuse
 Error inserting user: Database insert operation failed. See error log for details.
+
+
+2025-05-04 22:38:26 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => PixieTester123
+    [email] => 123455678@yahoo.com
+    [password] => 123456
+    [confirm_password] => 123456
+    [terms] => on
+)
+
+
+
+2025-05-04 22:38:49 - Signup Request
+Request Method: POST
+POST Data: Array
+(
+    [username] => PixieTester123
+    [email] => 123455678@yahoo.com
+    [password] => 696969696969
+    [confirm_password] => 696969696969
+    [terms] => on
+)
+
+Attempting to insert user: PixieTester123
+User inserted successfully with ID: 6

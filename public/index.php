@@ -14,6 +14,7 @@ use App\Controllers\ConcertController;
 use App\Controllers\CartController;
 use App\Controllers\ReviewController;
 use App\Controllers\SearchController;
+use App\Controllers\UserExportController;
 use App\Twig\AppExtension;
 
 // Create Twig environment
@@ -38,6 +39,7 @@ $concertController = new ConcertController();
 $cartController = new CartController();
 $reviewController = new ReviewController();
 $searchController = new SearchController();
+$userExportController = new UserExportController();
 
 // Define routes
 $router->get('/', [$pageController, 'home']);
@@ -72,6 +74,7 @@ $router->get('/admin/users', [$adminController, 'users']);
 $router->get('/admin/users/edit/{id}', [$adminController, 'editUser']);
 $router->post('/admin/users/edit/{id}', [$adminController, 'editUser']);
 $router->get('/admin/users/delete/{id}', [$adminController, 'deleteUser']);
+$router->get('/admin/users/export', [$userExportController, 'exportUsers']);
 
 // Comment routes for albums
 $router->get('/album/{id}/comments', [$commentController, 'showAlbumComments']); // Album comments with ID parameter

@@ -42,12 +42,20 @@
  *   URL: https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
  *   Code: setcookie(session_name(), '', time() - 42000, ...)
  *   Used in: logout() method
+ * 
+ * - W3Schools References:
+ *   - PHP Sessions: https://www.w3schools.com/php/php_sessions.asp
+ *   - PHP Form Handling: https://www.w3schools.com/php/php_forms.asp
+ *   - PHP Form Validation: https://www.w3schools.com/php/php_form_validation.asp
+ *   - PHP MySQL Database: https://www.w3schools.com/php/php_mysql_intro.asp
+ *   - PHP PDO: https://www.w3schools.com/php/php_mysql_prepared_statements.asp
+ *   - PHP Password Hashing: https://www.w3schools.com/php/func_password_hash.asp
  */
-
 namespace App\Controllers;
 
 use App\Controller;
 use App\Database;
+use App\Controllers\UserExportController;
 
 class UserController extends Controller {
     private $db;
@@ -73,6 +81,11 @@ class UserController extends Controller {
      * - Logging implementation: PHP Manual - Error Handling Functions
      *   URL: https://www.php.net/manual/en/book.errorfunc.php
      *   Section: "Logging errors"
+     * 
+     * - W3Schools PHP Form Validation: https://www.w3schools.com/php/php_form_validation.asp
+     * - W3Schools PHP Form Required: https://www.w3schools.com/php/php_form_required.asp
+     * - W3Schools PHP Form URL/Email: https://www.w3schools.com/php/php_form_url_email.asp
+     * - W3Schools PHP Filters: https://www.w3schools.com/php/php_filter.asp
      * 
      * @return string Rendered HTML response
      */
@@ -175,6 +188,11 @@ class UserController extends Controller {
             
             // Log success
             file_put_contents($logFile, "User inserted successfully with ID: " . $userId . "\n", FILE_APPEND);
+            
+            // Export users to backup SQL file
+            // Reference: https://www.w3schools.com/php/php_file_create.asp (For file creation)
+            // Reference: https://www.w3schools.com/php/func_filesystem_file_put_contents.asp (For writing to file)
+            UserExportController::hookAfterSignup($userId);
             
             // Set a session variable to display success message after redirect
             session_start();
