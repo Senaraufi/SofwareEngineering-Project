@@ -1,20 +1,6 @@
 <?php
 /**
  * Database Class
- * 
- * This class implements the Singleton pattern for database connection management.
- * 
- * References:
- * - Singleton Pattern: PHP: The Right Way - Design Patterns
- *   URL: https://phptherightway.com/pages/Design-Patterns.html#singleton
- * 
- * - PDO Error Handling: PHP Manual - PDO Exception Handling
- *   URL: https://www.php.net/manual/en/pdo.error-handling.php
- *   Section: "Example #1 Forcing errors to be exceptions"
- * 
- * - Database Connection Management: PHP & MySQL: Novice to Ninja (6th Edition)
- *   Author: Tom Butler & Kevin Yank
- *   Chapter: "Creating a Data Access Layer"
  */
 
 namespace App;
