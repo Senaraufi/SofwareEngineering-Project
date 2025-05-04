@@ -7,7 +7,7 @@
  */
 
 return [
-    'host' => 'localhost:3307', // new port
+    'host' => 'localhost:3306', // default MySQL port
     'dbname' => 'talktempo',
     'username' => 'root',
     'password' => '',       // Updated this just in case MySQL has a password
