@@ -26,19 +26,26 @@ A music platform inspired by Letterboxd, allowing users to discover, review, com
 
 ## Project Structure
 ```
-📂 SoftwareEngineeringProject
-├── 📂 backend
-├── 📂 frontend
-├── 📂 public
-├── 📂 vendor
-├── 📄 .gitattributes
-├── 📄 .gitignore
-├── 📄 composer.json
-├── 📄 composer.lock
-├── 📄 README.md
-├── 🖥️ start.bat
-├── 🖥️ start.sh
-              # Figma designs and prototypes
+📂 SofwareEngineering-Project
+├── 📂 backend            # Server-side PHP logic
+├── 📂 docs               # Documentation files
+├── 📂 exportedDB         # Exported database files
+├── 📂 frontend           # Client-side files (HTML, CSS, JS)
+├── 📂 node_modules       # Node.js dependencies
+├── 📂 public             # Publicly accessible files
+├── 📂 submission         # Submission files
+│   └── 📄 database_submission.sql   # SQL database schema and data
+├── 📂 tests              # Unit and functional tests
+├── 📂 vendor             # PHP dependencies
+├── 📄 .gitattributes     # Git attributes configuration
+├── 📄 .gitignore         # Git ignore configuration
+├── 📄 composer.json      # PHP dependency management
+├── 📄 composer.lock      # PHP dependency lock file
+├── 📄 package.json       # Node.js dependency management
+├── 📄 phpunit.xml        # PHPUnit test configuration
+├── 📄 README.md          # This file
+├── 🖥️ start.bat          # Windows startup script
+└── 🖥️ start.sh           # Linux/MacOS startup script
 ```
 
 ## Core Features
@@ -56,12 +63,40 @@ A music platform inspired by Letterboxd, allowing users to discover, review, com
 5. Testing 
 
 ## Setup Instructions
-1. Clone the repository
-2. Set up local MySQL database
-3. Configure PHP environment
-4. Import database schema
-5. Update configuration files
-6. Start local development server (run start.sh on Linux or MacOs, or start.bat on Windows)
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Senaraufi/SofwareEngineering-Project.git
+   cd SofwareEngineering-Project
+   ```
+
+2. Set up local MySQL database:
+   - Create a new database (e.g., `talktempo`)
+   - Import the database schema from `submission/database_submission.sql`
+
+3. Configure PHP environment:
+   - Install PHP 7.4+ and ensure it's available in your PATH
+   - Install required PHP extensions: mysqli, pdo_mysql
+
+4. Install dependencies:
+   ```bash
+   # Install PHP dependencies
+   composer install
+   
+   # Install JavaScript dependencies (if needed)
+   npm install
+   ```
+
+5. Start the application:
+   - On Windows: Double-click `start.bat` or run it from Command Prompt
+   - On Linux/macOS: Run `./start.sh` in terminal (you may need to make it executable with `chmod +x start.sh`)
+   
+6. Access the application:
+   - Open your web browser and navigate to `http://localhost:8000`
+
+## Database
+- The full database schema and sample data are available in `submission/database_submission.sql`
+- User accounts are stored in the MySQL database in the Users table
+- New user accounts are created via the signup process and stored directly in the database
 
 ## Requirements
 - PHP 7.4+
@@ -111,4 +146,3 @@ PHP and backend code was written based of the WDSS module. Every 3rd party code 
 ## Contribution Statement
 
 We, Sena Raufi, Pixie Grogan, and Ojal Rakwal declare that all work presented in this project is our own original work, except where clearly acknowledged. Third-party assets and code references have been properly cited whithin the code and the References section above.
-
