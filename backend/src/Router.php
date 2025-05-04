@@ -48,6 +48,6 @@ class Router {
         }
         
         header('HTTP/1.0 404 Not Found');
-        return ['template' => 'index.html.twig', 'data' => ['active_page' => 'home']];
+        return ['template' => 'home.html.twig', 'data' => ['active_page' => 'home', 'error_message' => 'Page not found']];
     }
 }
