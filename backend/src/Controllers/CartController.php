@@ -4,7 +4,6 @@
  * 
  * References:
  * - Shopping cart implementation based on session handling techniques from PHP documentation: https://www.php.net/manual/en/book.session.php
- * - Currency conversion implementation inspired by Money PHP library: https://github.com/moneyphp/money
  * - Session management security follows the robust error handling and security patterns implemented in UserController.php
  */
 
@@ -37,26 +36,16 @@ class CartController extends Controller {
         $cartItems = $_SESSION['cart'] ?? [];
         $totalPrice = 0;
         
-        // Only using USD
-        $currency = 'USD';
-        
         // Calculate total price
         foreach ($cartItems as $item) {
             $totalPrice += $item['price'] * $item['quantity'];
         }
         
-        // Get available currencies for the dropdown
-        // Simplified - only using USD
-        
-        // Convert total price to selected currency
-        $convertedTotalPrice = $totalPrice; // No conversion needed
-        
-        // Format prices for each item in the selected currency
+        // Format prices for each item
         $formattedCartItems = [];
         foreach ($cartItems as $id => $item) {
-            $convertedPrice = $item['price']; // No conversion needed
-            $item['formatted_price'] = '$' . number_format($convertedPrice, 2);
-            $item['subtotal'] = $convertedPrice * $item['quantity'];
+            $item['formatted_price'] = '$' . number_format($item['price'], 2);
+            $item['subtotal'] = $item['price'] * $item['quantity'];
             $item['formatted_subtotal'] = '$' . number_format($item['subtotal'], 2);
             $formattedCartItems[$id] = $item;
         }
@@ -64,10 +53,8 @@ class CartController extends Controller {
         return $this->render('cart.html.twig', [
             'active_page' => 'cart',
             'cart_items' => $formattedCartItems,
-            'total_price' => $convertedTotalPrice,
-            'formatted_total' => '$' . number_format($convertedTotalPrice, 2),
-            'currency' => $currency,
-            'available_currencies' => ['USD' => 'US Dollar'],
+            'total_price' => $totalPrice,
+            'formatted_total' => '$' . number_format($totalPrice, 2),
             'currency_symbol' => '$'
         ]);
     }
@@ -261,30 +248,7 @@ class CartController extends Controller {
         exit;
     }
     
-    /**
-     * Set the currency for the shopping cart
-     */
-    public function setCurrency() {
-        // Start session if not already started
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        
-        // Get currency from POST
-        $currency = $_POST['currency'] ?? 'USD';
-        
-        // Validate currency
-        // Simplified - only using USD
-        // Only USD is supported
-        $currency = 'USD';
-        
-        // Set currency in session
-        $_SESSION['currency'] = $currency;
-        
-        // Redirect back to cart page
-        header('Location: /cart');
-        exit;
-    }
+
     
     public function checkout() {
         // Start session if not already started
@@ -308,15 +272,11 @@ class CartController extends Controller {
             exit;
         }
         
-        // Get selected currency
-        $currency = $_SESSION['currency'] ?? 'USD';
-        
-        // Calculate total in selected currency
+        // Calculate total
         $totalPrice = 0;
         foreach ($cartItems as $item) {
             $totalPrice += $item['price'] * $item['quantity'];
         }
-        $convertedTotalPrice = $totalPrice; // No conversion needed
         
         // Format cart items for display
         $formattedCartItems = [];
@@ -331,9 +291,8 @@ class CartController extends Controller {
         return $this->render('checkout.html.twig', [
             'active_page' => 'cart',
             'cart_items' => $formattedCartItems,
-            'total_price' => $convertedTotalPrice,
-            'formatted_total' => '$' . number_format($convertedTotalPrice, 2),
-            'currency' => $currency,
+            'total_price' => $totalPrice,
+            'formatted_total' => '$' . number_format($totalPrice, 2),
             'currency_symbol' => '$'
         ]);
     }
@@ -374,8 +333,7 @@ class CartController extends Controller {
         $cardNumber = $_POST['card_number'] ?? '';
         $cardLast4 = substr(preg_replace('/\D/', '', $cardNumber), -4);
         
-        // Get selected currency
-        $currency = $_SESSION['currency'] ?? 'USD';
+
         
         // Calculate total
         $totalPrice = 0;
@@ -403,7 +361,6 @@ class CartController extends Controller {
             'items' => $formattedCartItems,
             'total' => $totalPrice,
             'formatted_total' => '$' . number_format($totalPrice, 2),
-            'currency' => $currency,
             'currency_symbol' => '$',
             'email' => $email,
             'card_last4' => $cardLast4,
